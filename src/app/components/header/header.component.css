@@ -1,0 +1,90 @@
+a{
+    text-decoration: none;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+}
+/* .flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+} */
+nav{
+    background-color:#FFFFFF;
+    position: relative;
+    padding: 0.2rem;
+    width: 100%;
+    /* padding-left:2% ; */
+    padding-right: 8%;
+    min-height: 10vh;
+    /* overflow: hidden; */
+    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.2);
+    top: 0;
+    z-index: 1000;
+     
+}
+.navbar-brand img{
+    width: 70px;
+}
+.profile{
+    display: flex;
+}
+.profile img{
+    border-radius: 35px;
+    /* margin-right: 0.5rem; */
+}
+.profile section{
+    display: flex;
+    flex-direction: column;
+}
+article{
+    font-size: 15px;
+    font-family: poppins;
+    font-weight: 400;
+    color: #2D3748;
+}
+.profile span{
+    font-family: poppins;
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(45, 55, 72, 0.75);
+}
+mat-icon{
+    color: #2D3748;
+}
+.landing{
+    padding: 0 0.5rem;
+    font-size: 1.1rem;
+    position:relative;
+    font-family:poppins;
+}
+
+.landing:hover {
+    /* background-color: #007AFF; */
+    color: #007AFF;
+    /* border-radius: 2px; */
+}
+#signup{
+    border: 0.5px solid #007AFF;
+    border-radius: 5px;
+    padding: 5px;
+    color: #007AFF;
+    margin: 0.5rem;
+}
+#signup:hover{
+    background-color: #007AFF;
+    color: #fff;
+}
+#signin{
+    background-color: #007AFF;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    
+}
+#signin:hover{
+    background-color: #1470d3;
+    color: #fff;
+}
+.landingli{
+    margin:0.5rem;
+}

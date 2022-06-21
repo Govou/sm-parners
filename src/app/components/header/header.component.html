@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+      <span style="cursor: pointer;" (click)="homepage()" class="navbar-brand"><img src="/assets/Untitled-1-Recovered 1.png" alt=""></span>
+      <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      
+      <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent" >
+        <ng-template [ngIf]="item == 'yes'">
+        <ul class="navbar-nav ms-auto"  >
+          <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a class="landing" routerLink="/cart" tabindex="0" id="navbarDropdown3" role="button" routerLink="">
+             HaloSphere
+            </a>
+          </li>
+          <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a class="landing" routerLink="/cart" tabindex="0" id="navbarDropdown3" role="button">
+             Support
+            </a>
+          </li>
+          <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a class="landing" routerLink="/cart" tabindex="0" id="navbarDropdown3" role="button">
+             About
+            </a>
+          </li>
+          <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a  id="signup"  routerLink="/authentication" tabindex="0" role="button">
+             Sign up
+            </a>
+          </li>
+          <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a  id="signin" routerLink="/authentication" tabindex="0" role="button">
+             Sign in
+            </a>
+          </li>
+
+        </ul>
+        </ng-template>
+        <ng-template [ngIf]="item == 'show'">
+        <ul class="navbar-nav ms-auto">
+          
+          
+          <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
+            <a class="nav-link" tabindex="0" id="navbarDropdown3" role="button">
+             <mat-icon>notifications_none</mat-icon>
+            </a>
+          </li>
+          <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
+            <a routerLink="/profile" class="nav-link" tabindex="0" id="navbarDropdown3" role="button">
+              <div class="profile">
+                <img src="/assets/personal.png" alt="" width="35px" height="35px" >
+                <section>
+                  <article>Lucky Daniel</article><span>User ID #23456</span>
+                </section>
+            </div>
+            </a>
+          </li>
+          
+        </ul>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
