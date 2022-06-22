@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net'
+  halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
+  defaultImageUrl: '../assets/images/CameraShutterColor.svg'
 };
 
 /*

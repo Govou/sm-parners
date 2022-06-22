@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
-import {NgxPageScrollModule} from 'ngx-page-scroll';
+// import {NgxPageScrollModule} from 'ngx-page-scroll';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxUiLoaderModule } from "ngx-ui-loader";
-
+import { Angular4PaystackModule } from 'angular4-paystack';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,11 +55,11 @@ import { MatInputModule } from '@angular/material/input';
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
-    NgxPageScrollModule,
+    // NgxPageScrollModule,
     HttpClientModule,
     NgxUiLoaderModule,
+    Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx')
 
-   
   ],
   providers: [],
   bootstrap: [AppComponent]

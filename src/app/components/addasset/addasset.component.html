@@ -28,124 +28,137 @@
                 </div>
             </div>
             <ng-template [ngIf]="page == 'asset'">
-                <form class="col-8"  #assetForm="ngForm" >
+                <form [formGroup]="assetRegistrationForm" class="col-8" >
                     <div class="col-6">
                         <label for="maker" class="form-label">Make of Car</label>
-                        <select #makeSelected class="form-select" ngModel name="make" (change)="fetchModels(makeSelected.value)" required>
+                        <select formControlName="make" #makeSelected class="form-select" id="make" (change)="fetchModels(makeSelected.value)">
                             <option [value]="mk.id" *ngFor="let mk of makes">{{mk.name}}</option>
                         </select>
                     </div>
                     <div class="col-6">
                         <label for="model" class="form-label">Model of Car</label>
-                        <select name="model" ngModel class="form-select" #carmodel required>
+                        <select formControlName="model" id="model" class="form-select">
                           <option [value]="md.id" *ngFor="let md of models">{{md.name}}</option>
                       </select>
                     </div>
                     <div class="col-6">
                         <label for="year" class="form-label">Year of Make</label>
-                        <input type="number" ngModel class="form-control" name="year" required>
+                        <input formControlName="year" type="number" class="form-control" id="year">
                     </div>
                     <div class="col-6">
                         <label for="type" class="form-label">Type</label>
-                        <select ngModel name="type" class="form-select" #cartype required>
+                        <select formControlName="type" name="type" class="form-select">
                           <option [value]="ct.categoryId" *ngFor="let ct of categories">{{ct.categoryName}}</option>
                       </select>
                     </div>
                     <div class="col-6">
                         <label for="platenumber" class="form-label">Plate Number</label>
-                        <input type="text" ngModel class="form-control" name="platenumber" required>
+                        <input formControlName="platenumber" type="text" class="form-control" id="platenumber">
                     </div>
                     <div class="col-6">
                         <label for="chasis" class="form-label">Chasis Number</label>
-                        <input type="text" ngModel class="form-control" name="chasis" required>
+                        <input formControlName="chasis" type="text" class="form-control" id="chasis">
                     </div>
-                    <button type="button" class="btn btn-primary col-6" [disabled]="!assetForm.valid">Next</button>
+                      <button type="button" class="btn btn-primary col-6" [disabled]="!assetRegistrationForm.valid" (click)="visualsForm()">Next</button>
+
 
                 </form>
             </ng-template>
             <ng-template [ngIf]="page == 'visuals'">
-                <form class="col-8" #visuals ="ngForm">
+              <form [formGroup]="assetRegistrationForm_Visuals" class="col-8" >
                     <div class="assetView">
                         <p>Picture (Front)</p>
-                        <img [src]="url" title="Profile Picture" >
-                        <label for="img" class="form-label" id="file">
+                        <img [src]="frontimageUrl" title="Profile Picture" >
+                        <label for="frontImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
-                        <input [(ngModel)]="addAsset.frontViewImage" type="file" id="img" style="display:none" accept="image/*" (change)="onSelect($event)" required>
+                        <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageSelect($event)">
                     </div>
                     <div class="assetView">
                         <p>Picture (Back)</p>
-                        <img [src]="url" title="Profile Picture" >
-                        <label for="back" class="form-label" id="file">
+                        <img [src]="backimageUrl" title="Profile Picture" >
+                        <label for="backImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
-                        <input [(ngModel)]="addAsset.rearViewImage" type="file" id="back" style="display:none" accept="image/*" (change)="onSelect($event)">
+                        <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageSelect($event)">
                     </div>
                     <div class="assetView">
                         <p>Picture (Left Side)</p>
-                        <img [src]="url" title="Profile Picture" >
-                        <label for="left" class="form-label" id="file">
+                        <img [src]="leftimageUrl" title="Profile Picture">
+                        <label for="leftImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
-                        <input [(ngModel)]="addAsset.leftViewImage"  type="file" id="left" style="display:none" accept="image/*" (change)="onSelect($event)">
+                        <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageSelect($event)">
                     </div>
                     <div class="assetView">
                         <p>Picture (Right Side)</p>
-                        <img [src]="url" title="Profile Picture" >
-                        <label for="right" class="form-label" id="file">
+                        <img [src]="rightimageUrl" title="Profile Picture" >
+                        <label for="rightImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
-                        <input [(ngModel)]="addAsset.rightViewImage" type="file" id="right" style="display:none" accept="image/*" (change)="onSelect($event)">
+                        <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageSelect($event)">
                     </div>
                     <div class="assetView">
                         <p>Picture (Interior)</p>
-                        <img [src]="url" title="Profile Picture" >
-                        <label for="interior" class="form-label" id="file">
+                        <img [src]="interiorimageUrl" title="Profile Picture" >
+                        <label for="interiorImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
-                        <input [(ngModel)]="addAsset.interiorViewImage" type="file" id="interior" style="display:none" accept="image/*"
-                            (change)="onSelect($event)">
+                        <input formControlName="interiorImage" type="file" id="interiorImage" style="display:none" accept="image/*"
+                            (change)="onInteriorImageSelect($event)">
                     </div>
-                    <div>
-                        <button class="next btn btn-primary"  [disabled]="!visuals.valid">Next</button>
-                    </div>
+                        <button class="next btn btn-primary" [disabled]="!assetRegistrationForm_Visuals.valid" (click)="scheduleForm()">Next</button>
+                        <button class="next btn btn-default" (click)="assetForm()">Back</button>
+
                 </form>
             </ng-template>
 
             <ng-template [ngIf]="page == 'schedule'">
-                <form class="col-8" #schedule="ngForm">
+                <form [formGroup]="assetRegistrationForm_Schedule" class="col-8" #schedule="ngForm">
                     <div class="col-6">
                         <label for="state" class="form-label">State</label>
-                        <select #stateSelected class="form-select" ngModel name="statename" (change)="fetchServiceCentres(stateSelected.value)">
+                        <select formControlName="statename" #stateSelected class="form-select" ngModel id="statename" (change)="fetchServiceCentres(stateSelected.value)">
                             <option [value]="st.stateName" *ngFor="let st of states">{{st.stateName}}</option>
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="center" class="form-label">Service Center</label>
-                        <select name="" id="center" class="form-select">
-                          <option *ngFor="let sc of serviceCentres">{{sc.address}}</option>
+                        <select formControlName="center" #centreSelected  id="center" class="form-select" (change)="SelectServiceCentres(centreSelected.value)">
+                          <option [value]="sc.centre_id" *ngFor="let sc of serviceCentres">{{sc.address}}</option>
                       </select>
                     </div>
                     <div class="col-6" id="datetime">
                         <div class="col-6">
                             <label for="date" class="form-label">Date</label>
-                            <input type="date" name="" class="form-control" id="date">
+                            <input type="date" formControlName="date" class="form-control" id="date">
                         </div>
                         <div class="col-5">
                             <label for="time" class="form-label">Time</label>
-                            <input type="time" class="form-control" id="time">
+                            <input formControlName="time" type="time" class="form-control" id="time">
                         </div>
                     </div>
                     <div class="col-6" id="datetime">
                         <label for="inputEmail3" class="col-2 col-form-label">Price &#8358; </label>
                         <div class="col-10">
-                            <input type="text" class="form-control">
+                            <input formControlName="price" readonly id="price" type="text" class="form-control">
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary col-6" [disabled]="!schedule.valid">Book Appointment</button>
+                    <!-- <button type="button" class="btn btn-primary col-6" [disabled]="!schedule.valid">Book Appointment</button> -->
+                    <angular4-paystack
+                    [email]="'mailexample@mail.com'"
+                    [amount]="5000000"
+                    [ref]="reference"
+                    [channels]="['bank']"
 
+                    [class]="'btn btn-primary col-6'"
+                    (onClose)="paymentCancel()"
+                    (callback)="paymentDone($event)"
+                  >
+                  Book Appointment
+                  </angular4-paystack>
+                    <button class="next btn btn-default" (click)="visualsForm()">Back</button>
 
                 </form>
             </ng-template>
