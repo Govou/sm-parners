@@ -25,8 +25,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { RouterModule, Routes } from '@angular/router';
 
-
+const routes: Routes = [
+  {path: 'dashboard', component: DashboardComponent}
+];
 
 
 @NgModule({
@@ -58,9 +61,10 @@ import { MatInputModule } from '@angular/material/input';
     // NgxPageScrollModule,
     HttpClientModule,
     NgxUiLoaderModule,
-    Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx')
-
+    Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
+    RouterModule.forChild(routes)
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })

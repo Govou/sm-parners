@@ -46,91 +46,48 @@
                 <div class="individual">
                     <h1>Create account</h1>
                     <p>Fill the form to create your individual account</p>
-                    <form class="row g-3" #personalForm="ngForm" (ngSubmit)="getPersonalForm(personalForm.value)">
+                    <form [formGroup]="individualRegistrationForm" class="row g-3">
                         <div class="col-md-6">
                             <label for="first" class="form-label">First name</label>
-                            <input type="text" [(ngModel)]="contact.firstName" name="first" class="form-control"
-                                id="first" required #first="ngModel">
-                            <div style="color: red;" *ngIf="first.invalid && (first.dirty || first.touched)">
-                                <span *ngIf="first.errors?.['required']">
-                                    First name is required.
-                                </span>
-                            </div>
+                            <input type="text" formControlName="firstname" class="form-control" id="firstname">
                         </div>
                         <div class="col-md-6">
                             <label for="last" class="form-label">Last name</label>
-                            <input type="text" ngModel name="last" class="form-control" id="last"
-                                [(ngModel)]="contact.lastName" required #last="ngModel">
-                            <div style="color: red;" *ngIf="last.invalid && (last.dirty || last.touched)">
-                                <span *ngIf="last.errors?.['required']">
-                                    Last name is required.
-                                </span>
-                            </div>
+                            <input type="text" formControlName="lastname" class="form-control" id="lastname">
                         </div>
                         <div class="col-12">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" ngModel name="email" class="form-control" id="email"
-                                [(ngModel)]="contact.email" email required #email="ngModel">
-                            <div style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
-                                <span *ngIf="email.errors?.['required']">
-                                    Email is required.
-                                </span>
-                                <span *ngIf="email.errors?.['email']">
-                                    Enter a valid email.
-                                </span>
-                            </div>
+                            <input type="email" formControlName="email" class="form-control" id="email" email>
                         </div>
                         <div class="col-12">
-                            <label for="date" class="form-label">Date of birth</label>
-                            <input type="date" ngModel name="dob" class="form-control" id="date" max="2004-12-31"
-                                [(ngModel)]="contact.dateOfBirth" required #dob="ngModel">
-                            <div style="color: red;" *ngIf="dob.invalid && (dob.dirty || dob.touched)">
-                                <span *ngIf="dob.errors?.['required']">
-                                    Date of birth is required.
-                                </span>
-
-                            </div>
+                            <label for="dateofbirth" class="form-label">Date of birth</label>
+                            <input type="date" formControlName="dateofbirth" class="form-control" id="dateofbirth" max="2004-12-31">
                         </div>
                         <div class="col-12">
-                            <label for="email" class="form-label">Phone number</label>
-                            <input placeholder="+234..." type="tel" ngModel name="phone" class="form-control" id="phone"
-                                pattern="(+234)[0-9]{10}" [(ngModel)]="contact.phoneNumber" required #phone="ngModel">
-                            <div style="color: red;" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                                <span *ngIf="phone.errors?.['required']">
-                                    phone number is required.
-                                </span>
-                                <span *ngIf="phone.errors?.['pattern']">
-                                    Enter a valid phone number.
-                                </span>
-
-                            </div>
+                            <label for="phone" class="form-label">Phone number</label>
+                            <input placeholder="+234..."  formControlName="phone" class="form-control" id="phone">
                         </div>
                         <div class="col-ms-12">
                             <b>Gender</b>
                         </div>
                         <!-- <div class="col-12"> -->
                         <div class="form-check col-md-3 ">
-                            <input class="form-check-input active" type="radio" ngModel name="gender" id="male"
-                                value="M" [(ngModel)]="contact.gender" required #gender="ngModel">
+                            <input class="form-check-input active" type="radio" formControlName="gender" id="male"
+                                value="M">
                             <label class="form-check-label" for="male">
                                 Male
                             </label>
                         </div>
                         <div class="form-check col-md-3">
-                            <input class="form-check-input" type="radio" ngModel name="gender" id="female" value="F"
-                                [(ngModel)]="contact.gender">
+                            <input class="form-check-input" type="radio" formControlName="gender" id="female" value="F">
                             <label class="form-check-label" for="female">
                                 Female
                             </label>
                         </div>
-                        <div style="color: red;" *ngIf="gender.invalid && (gender.dirty || gender.touched)">
-                            <span *ngIf="gender.errors?.['required']">
-                                Select a gender.
-                            </span>
-                        </div>
+
                         <!-- </div> -->
                         <div class="col-12 d-grid">
-                            <button type="submit" class="btn btn-primary" [disabled]="!personalForm.valid">Next</button>
+                            <button type="buton" class="btn btn-primary" [disabled]="!individualRegistrationForm.valid" (click)="getPersonalForm()">Next</button>
                         </div>
                     </form>
                 </div>
@@ -147,53 +104,29 @@
                 <div class="individualAddress">
                     <h1>Create account</h1>
                     <p>Please, let's know your location</p>
-                    <form class="row g-3" #personalAdd="ngForm" (ngSubmit)="getPersonalAdd(personalAdd.value)">
+                    <form class="row g-3" [formGroup]="individualRegistrationForm_Location">
                         <div class="col-md-6">
                             <label for="inputState" class="form-label">State</label>
-                            <select id="inputState" ngModel name="state" class="form-select"
-                                [(ngModel)]="contact.stateId" required #state="ngModel" (change)="getlga(state.value)">
-                                <option value="1">state</option>
-                                <option *ngFor="let item of stateLis" value="{{item.stateId}}">{{item.stateName}}</option>
-                                <!-- <option *ngFor="let item of stateLis" value="{{item.stateId}}">{{item.stateName}}</option> -->
-                                <!-- <option *ngFor="let item of stateList['responseData']['result']" value="{{item.stateId}}" >{{item.stateName}}</option> -->
+                            <select id="state" formControlName="state" #stateSelected class="form-select" (change)="fetchLGAs(stateSelected.value)">
+                                <option *ngFor="let st of states" [value]="st.stateId">{{st.stateName}}</option>
                             </select>
-                            <div style="color: red;" *ngIf="state.invalid && (state.dirty || state.touched)">
-                                <span *ngIf="state.errors?.['required']">
-                                    Select state of residence.
-                                </span>
-                            </div>
-                            <!-- <li *ngFor="let item of stateList.responseData.result">{{item.stateId}}--{{item.stateName}}</li> -->
 
                         </div>
                         <div class="col-md-6">
                             <label for="address" class="form-label">Lga</label>
-                            <select id="inputState" ngModel name="lga" class="form-select" [(ngModel)]="contact.lgaId"
-                                required #lga="ngModel">
-                                <option value="2">state</option>
-                                <option *ngFor="let item of lgaLis" value="{{item.lgaId}}">{{item.lgaName}}</option>
-
-
-                                <!-- <option *ngFor="let item of lgaLis" value="{{item.lgaId}}">{{item.lgaName}}</option> -->
+                            <select id="lga" formControlName="lga" class="form-select" >
+                                <option *ngFor="let lg of lgas" [value]="lg.lgaId">{{lg.lgaName}}</option>
                             </select>
-                            <div style="color: red;" *ngIf="lga.invalid && (lga.dirty || lga.touched)">
-                                <span *ngIf="lga.errors?.['required']">
-                                    Select local government of residense.
-                                </span>
-                            </div>
                         </div>
 
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" ngModel name="address" class="form-control" id="address"
-                                [(ngModel)]="contact.address" required #address="ngModel">
-                            <div style="color: red;" *ngIf="address.invalid && (address.dirty || address.touched)">
-                                <span *ngIf="address.errors?.['required']">
-                                    Address is required
-                                </span>
-                            </div>
+                            <input type="text" formControlName="address" class="form-control" id="address"  >
+
                         </div>
                         <div class="col-12 d-grid">
-                            <button type="submit" class="btn btn-primary" [disabled]="!personalAdd.valid">Next</button>
+                            <button type="button" class="btn btn-primary" (click)="getPersonalAdd()" [disabled]="!individualRegistrationForm_Location.valid">Next</button>
+                            <button type="button" class="btn btn-default" (click)="indAccount()">Back</button>
                         </div>
                     </form>
                 </div>
@@ -212,42 +145,22 @@
                         Password
                     </h1>
                     <p>Set your password</p>
-                    <form class="row g-3" #personalPassword="ngForm"
-                        (ngSubmit)="getPersonalPassword(personalPassword.value)">
+                    <form class="row g-3" [formGroup]="individualRegistrationForm_Credential" (ngSubmit)="onSubmitIndividualAccoutCreation()">
                         <div class="col-12">
                             <label for="pass" class="form-label">Password</label>
-                            <input type="password" ngModel name="password1" class="form-control" id="pass"
-                                [(ngModel)]="contact.password" required [pattern]="passwordPtn" #password1="ngModel"
+                            <input type="password" #pass formControlName="password1" class="form-control" id="pass"
+                                  [pattern]="passwordPtn"
                                 minlength="8">
                             <br>
-                            <div style="color: red;"
-                                *ngIf="password1.invalid && (password1.dirty || password1.touched)">
-                                <span *ngIf="password1.errors?.['required']">
-                                    Password is required
-                                </span>
-                                <span *ngIf="password1.errors?.['pattern']">
-                                    Password must be at least 8 characters, and must contain at least a number, a
-                                    capital
-                                    letter, a small letter an a special character.
-                                </span>
-                            </div>
                         </div>
                         <div class="col-12">
                             <label for="cpass" class="form-label">Confirm password</label>
-                            <input type="password" ngModel name="password2" class="form-control" id="cpass"
-                                [(ngModel)]="contact.password2" required #password2="ngModel">
-                            <!-- <span style="color: red;"  *ngIf="(password2.touched||personalPassword.submitted) && password2.errors?.['required']">
-                          Confirm password is required 
-                        </span> -->
+                            <input type="password" formControlName="password1" #pass2 class="form-control" id="cpass" >
                             <br>
-                            <span style="color: red;"
-                                *ngIf="contact.password !== contact.password2 && (password2.touched||password2.dirty)">
-                                Password mismatch
-                            </span>
                         </div>
                         <div class="col-12 d-grid">
-                            <button type="submit" class="btn btn-primary"
-                                [disabled]="!personalPassword.valid || (contact.password !== contact.password2)">Register</button>
+                            <button type="submit" [disabled]="pass.value != pass2.value || !individualRegistrationForm_Credential.valid" class="btn btn-primary">Register</button>
+                            <button type="button" class="btn btn-default" (click)="backToPersonalAdd()">Back</button>
                         </div>
                     </form>
                 </div>
@@ -265,57 +178,33 @@
                 <div class="bussiness">
                     <h1>Create account</h1>
                     <p>Fill form to create your Business account</p>
-                    <form class="row g-3" #bussinessForm="ngForm" (ngSubmit)="getCompanyDetail(bussinessForm.value)">
+                    <form class="row g-3" [formGroup]="businessRegistrationForm">
                         <div class="col-12">
                             <label for="company" class="form-label">Company name</label>
-                            <input type="text" class="form-control" ngModel name="company" id="company"
-                                [(ngModel)]="businessContact.companyName" required #company="ngModel">
-                            <div style="color: red;" *ngIf="company.invalid && (company.dirty || company.touched)">
-                                <span *ngIf="company.errors?.['required']">
-                                    Company name is required.
-                                </span>
-                            </div>
+                            <input type="text" class="form-control" formControlName="company" id="company">
+
                         </div>
                         <div class="col-12" data-dropup-auto="false">
                             <label for="type" class="form-label">Business type</label>
-                            <select class="form-select" name="biztype" id="type" ngModel #biztype="ngModel"
-                                [(ngModel)]="businessContact.industryId">
-                                <option value="">Type of business</option>
-                                <!-- <option *ngFor="let item of bussinessList.responseData.result" value="{{item.id}}">{{item.name}}</option> -->
+                            <select class="form-select" formControlName="biztype" id="type">
+                             <option *ngFor="let bt of businessTypes" [value]="bt.name">{{bt.name}}</option>
 
                             </select>
                         </div>
                         <div class="col-12">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" name="email" ngModel id="email"
-                                [(ngModel)]="businessContact.email" required email #email="ngModel">
-                            <div style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
-                                <span *ngIf="email.errors?.['required']">
-                                    Email is required.
-                                </span>
-                                <span *ngIf="email.errors?.['email']">
-                                    Please enter a valid email.
-                                </span>
-                            </div>
+                            <input type="email" class="form-control" formControlName="email" id="email" email>
+
                         </div>
-                        <!-- <div class="col-12">
-                          <label for="rc" class="form-label">Registerd Company Number</label>
-                          <input type="rc" class="form-control" name="RC" id="rc" [(ngModel)]="businessContact.email" required #RC="ngModel">
-                        </div> -->
+
                         <div class="col-12">
                             <label for="phone" class="form-label">Phone number</label>
-                            <input type="tel" name="phone" class="form-control" ngModel id="phone"
-                                [(ngModel)]="businessContact.phoneNumber" required #phone="ngModel">
-                            <div style="color: red;" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                                <span *ngIf="phone.errors?.['required']">
-                                    Phone number is required.
-                                </span>
-                            </div>
+                            <input type="tel" formControlName="phone" class="form-control"  id="phone">
+
                         </div>
 
                         <div class="col-12 d-grid">
-                            <button [disabled]="!bussinessForm.valid" type="submit"
-                                class="btn btn-primary">Next</button>
+                          <button [disabled]="!businessRegistrationForm.valid" type="submit" (click)="getCompanyAdrress()" class="btn btn-primary">Next</button>
                         </div>
                     </form>
 
@@ -325,7 +214,7 @@
     </ng-template>
 
     <ng-template [ngIf]="page == 'bizAddress'">
-        <div class="contain" @fade> 
+        <div class="contain" @fade>
             <div class="contain2">
                 <span id="backP" (click)="backToCompanyDetail()">
                     <mat-icon>arrow_back_ios</mat-icon>Back
@@ -333,37 +222,28 @@
                 <div class="businessAddress">
                     <h1>Create account</h1>
                     <p>Please, let's know your Business location</p>
-                    <form class="row g-3" #bussinessAddress="ngForm"
-                        (ngSubmit)="getBusinessAddress(bussinessAddress.value)">
+                    <form class="row g-3" [formGroup]="businessRegistrationForm_Location">
                         <div class="col-md-6">
                             <label for="inputState" class="form-label">State</label>
-                            <select id="inputState" class="form-select" ngModel name="state"
-                                [(ngModel)]="businessContact.stateId" required #state="ngModel">
-                                <option selected>State</option>
-                                <!-- <option *ngFor="let item of stateLis" value="{{item.stateId}}">{{item.stateName}}</option> -->
+                            <select id="state" #stateSelected class="form-select" (change)="fetchLGAs(stateSelected.value)" formControlName="state">
+                                <option *ngFor="let st of states" [value]="st.stateId">{{st.stateName}}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="inputLga" class="form-label">Lga</label>
-                            <select id="inputLga" class="form-select" ngModel name="lga"
-                                [(ngModel)]="businessContact.lgaId" required #lga="ngModel">
-                                <option selected>Lga</option>
-                                <!-- <option *ngFor="let item of lgaLis" value="{{item.lgaId}}">{{item.lgaName}}</option> -->
+                            <select id="lga" class="form-select" formControlName="lga">
+                                <option *ngFor="let lg of lgas" [value]="lg.lgaId">{{lg.lgaName}}</option>
                             </select>
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Address</label>
-                            <input type="address" class="form-control" id="address" name="address"
-                                [(ngModel)]="businessContact.address" required #address="ngModel">
-                            <div style="color: red;" *ngIf="address.invalid && (address.dirty || address.touched)">
-                                <span *ngIf="address.errors?.['required']">
-                                    Address is required.
-                                </span>
-                            </div>
+                            <input type="address" class="form-control" id="address" formControlName="address">
                         </div>
                         <div class="col-12 d-grid">
-                            <button [disabled]="!bussinessAddress.valid" type="submit"
+                            <button [disabled]="!businessRegistrationForm_Location.valid" type="submit" (click)="getContactPerson()"
                                 class="btn btn-primary">Next</button>
+                                <button type="submit"
+                                class="btn btn-default" (click)="backToCompanyDetail()">Back</button>
                         </div>
                     </form>
                 </div>
@@ -380,75 +260,47 @@
                 <div class="businessContact">
                     <h1>Create account</h1>
                     <p id="ctp">Fill the form to create the bussiness <b> contact person </b></p>
-                    <form class="row g-3" #bussinessContact="ngForm"
-                        (ngSubmit)="getContactPerson(bussinessContact.value)">
+                    <form class="row g-3" [formGroup]="businessRegistrationForm_ContactPerson">
                         <div class="col-md-6">
                             <label for="first" class="form-label">First name</label>
-                            <input type="text" class="form-control" name="first" id="first"
-                                [(ngModel)]="businessContact.firstName" required #first="ngModel">
-                            <div style="color: red;" *ngIf="first.invalid && (first.dirty || first.touched)">
-                                <span *ngIf="first.errors?.['required']">
-                                    First name is required.
-                                </span>
-                            </div>
+                            <input type="text" class="form-control" formControlName="firstname" id="first">
+
                         </div>
                         <div class="col-md-6">
                             <label for="last" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="last" name="last"
-                                [(ngModel)]="businessContact.lastName" required #last="ngModel">
-                            <div style="color: red;" *ngIf="last.invalid && (last.dirty || last.touched)">
-                                <span *ngIf="last.errors?.['required']">
-                                    Last name is required.
-                                </span>
-                            </div>
+                            <input type="text" class="form-control" id="last" formControlName="lastname">
+
                         </div>
                         <div class="col-12">
                             <label for="date" class="form-label">Date of birth</label>
-                            <input type="date" class="form-control" id="date" name="dob"
-                                [(ngModel)]="businessContact.dateOfBirth" required #dob="ngModel">
-                            <div style="color: red;" *ngIf="dob.invalid && (dob.dirty || dob.touched)">
-                                <span *ngIf="dob.errors?.['required']">
-                                    Date of birth is required.
-                                </span>
-                            </div>
+                            <input type="date" class="form-control" id="dob" formControlName="dob">
+
                         </div>
                         <div class="col-12">
                             <label for="email" class="form-label">Phone number</label>
-                            <input type="tel" class="form-control" id="phone" name="phone"
-                                [(ngModel)]="businessContact.phoneNumber2" required #phone="ngModel">
-                            <div style="color: red;" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                                <span *ngIf="phone.errors?.['required']">
-                                    Phone number is required.
-                                </span>
-                            </div>
+                            <input type="tel" class="form-control" id="phone" formControlName="phone" >
+
                         </div>
                         <div class="col-12">
                             <b>Gender</b>
                         </div>
                         <!-- <div class="col-md-10" id="gend" > -->
                         <div class="form-check col-md-3">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="M"
-                                [(ngModel)]="businessContact.gender" required #gender="ngModel">
+                            <input class="form-check-input" type="radio" formControlName="gender" id="male" value="M">
                             <label class="form-check-label" for="male">
                                 Male
                             </label>
                         </div>
                         <div class="form-check disabled col-md-6">
-                            <input class="form-check-input" type="radio" name="gender" id="female" value="F"
-                                [(ngModel)]="businessContact.gender" required #gender="ngModel">
+                            <input class="form-check-input" type="radio" formControlName="gender" id="female" value="F">
                             <label class="form-check-label" for="female">
                                 Female
                             </label>
                         </div>
-                        <div style="color: red;" *ngIf="gender.invalid && (gender.dirty || gender.touched)">
-                            <span *ngIf="gender.errors?.['required']">
-                                Select a gender.
-                            </span>
-                        </div>
-                        <!-- </div> -->
                         <div class="col-12 d-grid">
-                            <button [disabled]="!bussinessContact.valid" type="submit"
+                            <button [disabled]="!businessRegistrationForm_ContactPerson.valid" type="submit" (click)="getBusinessPassword()"
                                 class="btn btn-primary">Next</button>
+                              <button type="submit" class="btn btn-default" (click)="backToBusinessAddress()">Back</button>
                         </div>
                     </form>
                 </div>
@@ -465,39 +317,24 @@
                 <div class="businessPassword">
                     <h1>Password</h1>
                     <p>Set your Password</p>
-                    <form class="row g-3" #bussinessPassword="ngForm"
-                        (ngSubmit)="getBusinessPassword(bussinessPassword.value)">
+                    <form class="row g-3" [formGroup]="businessRegistrationForm_Credential">
                         <div class="col-12">
                             <label for="pass" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="pass" name="password1"
-                                [(ngModel)]="businessContact.password" required [pattern]="passwordPtn"
-                                #password1="ngModel" minlength="8">
+                            <input type="password" #bpass1 class="form-control" id="pass" formControlName="password1"
+                                  [pattern]="passwordPtn"
+                                 minlength="8">
                             <br>
-                            <div style="color: red;"
-                                *ngIf="password1.invalid && (password1.dirty || password1.touched)">
-                                <span *ngIf="password1.errors?.['required']">
-                                    Password is required
-                                </span>
-                                <span *ngIf="password1.errors?.['pattern']">
-                                    Password must be at least 8 characters, and must contain at least a number, a
-                                    capital
-                                    letter, a small letter an a special character.
-                                </span>
-                            </div>
                         </div>
                         <div class="col-12">
                             <label for="cpass" class="form-label">Confirm password</label>
-                            <input type="password" class="form-control" id="cpass" name="password2"
-                                [(ngModel)]="businessContact.password2" required #password2="ngModel">
+                            <input type="password" #bpass2 class="form-control" id="cpass" formControlName="password2" >
                         </div>
                         <br>
-                        <span style="color: red;"
-                            *ngIf="businessContact.password !== businessContact.password2 && (password2.touched||password2.dirty)">
-                            Password mismatch
-                        </span>
                         <div class="col-12 d-grid">
-                            <button [disabled]="!bussinessPassword.valid" type="submit"
-                                class="btn btn-primary">Register</button>
+                            <button [disabled]="!businessRegistrationForm_Credential.valid || bpass1.value != bpass2.value" type="submit"
+                              (click)="onSubmitBusinessAccoutCreation()"  class="btn btn-primary">Register</button>
+                             <button type="submit"
+                                class="btn btn-default" (click)="backToContactPerson()">Back</button>
                         </div>
                     </form>
                 </div>
@@ -517,27 +354,22 @@
                     <!-- <small style="color:red ;" >{{responseOtp}}</small> -->
                     <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
                     <div>
-                        <form class="otp" #otpForm="ngForm">
-                            <input #txt1 maxlength="1" (keyup)="move($event,'',txt1,txt2)" type="text" name="txt1"
-                                ngModel>
+                        <form class="otp" [formGroup]="otpForm">
+                            <input #txt1 maxlength="1" formControlName="txt1" (keyup)="move($event,'',txt1,txt2)" type="text" id="txt1">
                             <span>-</span>
-                            <input #txt2 maxlength="1" type="text" (keyup)="move($event,txt1,txt2,txt3)" name="txt2"
-                                ngModel>
+                            <input #txt2 maxlength="1" formControlName="txt2" type="text" (keyup)="move($event,txt1,txt2,txt3)" id="txt2">
                             <span>-</span>
-                            <input #txt3 maxlength="1" type="text" (keyup)="move($event,txt2,txt3,txt4)" name="txt3"
-                                ngModel>
+                            <input #txt3 maxlength="1" formControlName="txt3" type="text" (keyup)="move($event,txt2,txt3,txt4)" id="txt3">
                             <span>-</span>
-                            <input #txt4 maxlength="1" type="text" (keyup)="move($event,txt3,txt4,txt5)" name="txt4"
-                                ngModel>
+                            <input #txt4 maxlength="1" formControlName="txt4" type="text" (keyup)="move($event,txt3,txt4,txt5)" id="txt4">
                             <span>-</span>
-                            <input #txt5 maxlength="1" type="text" (keyup)="move($event,txt4,txt5,txt6)" name="txt5"
-                                ngModel>
+                            <input #txt5 maxlength="1" formControlName="txt5" type="text" (keyup)="move($event,txt4,txt5,txt6)" id="txt5">
                             <span>-</span>
-                            <input #txt6 maxlength="1" type="text" (keyup)="move($event,txt5,txt6,'')" name="txt6"
-                                ngModel>
+                            <input #txt6 maxlength="1" formControlName="txt6" type="text" (keyup)="move($event,txt5,txt6,'')" id="txt6">
                         </form>
                     </div>
-                    <button class="btn btn-primary" (click)="getOtp(otpForm.value)">Proceed</button>
+                    <!-- <button class="btn btn-primary" (click)="getOtp(otpForm.value)">Proceed</button> -->
+                    <button class="btn btn-primary" (click)="onSubmitVerifyCode()">Proceed</button>
                     <button class="btn btn-outline-primary" id="resend">Resend Email</button>
                 </div>
             </div>
@@ -545,6 +377,7 @@
     </ng-template>
 
     <!-- Sign in -->
+
     <ng-template [ngIf]="page == 'signInEmail'">
         <div class="contain" @fade>
             <div class="contain2">
@@ -553,10 +386,12 @@
                 </span>
                 <div class="login">
                     <h1>Sign in</h1>
-                    <p>Rgister as a partner</p>
+                    <form [formGroup]="signInForm">
+                    <p>Register as a partner</p>
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="" id="email">
+                    <input type="email" class="form-control" formControlName="email" id="email">
                     <button class="btn btn-primary" (click)="signInPassword()">Continue</button>
+                  </form>
                 </div>
             </div>
         </div>
@@ -570,20 +405,22 @@
                 </span>
                 <div class="loginPassword">
                     <h1>Enter your password</h1>
+                    <form [formGroup]="signInFormPassword" (ngSubmit)="onSubmitLogin()">
                     <div class="info">
                         <img src="/assets/images/ios-14-default-wallpapers-1.jpg" alt="">
                         <p><span>Business account</span> <span>Example@gmail.com</span></p>
                     </div>
                     <label for="password" class="form-label">Password</label>
-                    <input class="form-control" type="password" name="" id="password">
-                    <button class="btn btn-primary" (click)="getSignInPassword()">Continue</button>
+                    <input class="form-control" type="password" formControlName="password" id="password">
+                    <button class="btn btn-primary">Continue</button>
                     <p>Forgot your password? <a href="">Reset</a></p>
                     <p><a href=""> Sign in to a different account </a></p>
-
+                  </form>
                 </div>
             </div>
         </div>
     </ng-template>
+
 
     <div class="section2">
         <div class="inner">

@@ -185,14 +185,11 @@ export class AddassetComponent implements OnInit {
   SelectServiceCentres(centre: string){
     this.assetRegistrationForm_Schedule.patchValue({
       'price': ''
-      // formControlName2: myValue2 (can be omitted)
     });
     let selectedCentre = this.serviceCentres.filter((x:ServiceCenterResponse)=>{ return x.centre_id == centre;})[0];
     console.log(selectedCentre);
-    //this.assetRegistrationForm_Schedule.get('price')?.value = selectedCentre.amount.toString()
     this.assetRegistrationForm_Schedule.patchValue({
       'price': selectedCentre.amount,
-      // formControlName2: myValue2 (can be omitted)
     });
   }
 

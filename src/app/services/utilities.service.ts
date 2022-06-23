@@ -32,6 +32,40 @@ export class UtilitiesService {
 
   }
 
+  getLGAs(stateId: number){
+    return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/Utilities/GetLocalGovtAreas?stateId=${stateId}`)
+                          .pipe(map(res => {
+                              const lgas: {lgaName: string, lgaId: number, stateId: number}[] = [];
+                              if(res.responseCode =="00")
+                              {
+                                for(const key in res.responseData)
+                                {
+                                  lgas.push({...res.responseData[key], id: key});
+                                }
+                              }
+                              return lgas;
+                            })
+                          )
+
+  }
+
+
+  getBusinessTypes(){
+    return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/Utilities/GetBusinessTypes`)
+                          .pipe(map(res => {
+                              const businessTypes: {id: number, name: string}[] = [];
+                              if(res.responseCode =="00")
+                              {
+                                for(const key in res.responseData)
+                                {
+                                  businessTypes.push({...res.responseData[key], id: key});
+                                }
+                              }
+                              return businessTypes;
+                            })
+                          )
+
+  }
 
 
 }

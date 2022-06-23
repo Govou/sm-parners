@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { personalContact, createBussiness } from 'src/app/model/authentication';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { slideInAnimation, frameAnimation } from 'src/app/animations/app.animation';
 import { EndpointsService } from 'src/app/services/endpoints.service';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { NgToastService } from 'ng-angular-popup';
-
-
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { IndividualAddress, IndividualDetails } from 'src/app/model/individual-account-registration';
+import { AccountLogin, IndividualSignup } from 'src/app/model/individual-signup';
+import { SignupService } from 'src/app/services/signup.service';
+import { BusinessContact, BusinessCred, BusinessDetail, BusinessLocation } from 'src/app/model/business-account-registration';
+import { BusinessSignUp } from 'src/app/model/business-signup';
 
 
 @Component({
@@ -20,53 +23,112 @@ import { NgToastService } from 'ng-angular-popup';
 })
 export class AuthenticationComponent implements OnInit {
 
-  constructor(private router: Router,private endpoint:EndpointsService,private ngxService: NgxUiLoaderService,private toast: NgToastService) { }
+  constructor(private router: Router,
+    private endpoint:EndpointsService,
+    private ngxService: NgxUiLoaderService,
+    private toast: NgToastService,
+    private utilitiesService: UtilitiesService,
+    private signupService: SignupService
+    ) { }
+
+
   SPINNER = SPINNER
-  contact = new personalContact('','','','','',0,0,'','','','','');
-  businessContact = new createBussiness('',0,'','',0,0,'','','','','','','','','','');
   passwordPtn = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$'
   page:any
-  stateList:any
- stateLis:any
- lgaList:any
- lgaLis:any 
- errorMsg:any;
+  errorMsg:any;
+
+  email: string = '';
+
+  states: {stateName: string, stateId: number}[] = [];
+  lgas: {lgaName: string, lgaId: number, stateId: number}[] = [];
+  businessTypes: {id: number, name: string}[] = [];
+
+  individualRegistrationForm!: FormGroup;
+  individualRegistrationForm_Location!: FormGroup;
+  individualRegistrationForm_Credential!: FormGroup;
+  businessRegistrationForm!: FormGroup;
+  businessRegistrationForm_Location!: FormGroup;
+  businessRegistrationForm_ContactPerson!: FormGroup;
+  businessRegistrationForm_Credential!: FormGroup;
+  otpForm!: FormGroup;
+  signInForm!: FormGroup;
+  signInFormPassword!: FormGroup;
 
   ngOnInit(): void {
     this.page='home';
-    this.endpoint.getState().subscribe(data =>{this.stateList=data; this.stateLis=this.stateList.responseData})
 
-  }
-  getlga(id:any){
-    this.endpoint.getlga(id).subscribe(data =>{this.lgaList=data;  this.lgaLis=this.lgaList.responseData})
+     this.utilitiesService.getStates().subscribe(res => {
+      this.states = res;
+    });
+
+    this.utilitiesService.getBusinessTypes().subscribe(res => {
+      this.businessTypes = res;
+    });
+
+    this.individualRegistrationForm = new FormGroup({
+      'firstname': new FormControl(null, Validators.required),
+      'lastname': new FormControl(null, Validators.required),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'dateofbirth': new FormControl(null, Validators.required),
+      'phone': new FormControl(null, [Validators.required, Validators.minLength(9)]),
+      'gender': new FormControl(null, Validators.required)
+    });
+
+    this.individualRegistrationForm_Location = new FormGroup({
+      'state': new FormControl(null, Validators.required),
+      'lga': new FormControl(null, Validators.required),
+      'address': new FormControl(null, Validators.required)
+    });
+
+    this.individualRegistrationForm_Credential = new FormGroup({
+      'password1': new FormControl(null, [Validators.required]),
+    });
+
+    this.businessRegistrationForm = new FormGroup({
+      'company': new FormControl(null, Validators.required),
+      'biztype': new FormControl(null, Validators.required),
+      'email': new FormControl(null, Validators.required),
+      'phone': new FormControl(null, Validators.required)
+    });
+
+    this.businessRegistrationForm_Location = new FormGroup({
+      'state': new FormControl(null, Validators.required),
+      'lga': new FormControl(null, Validators.required),
+      'address': new FormControl(null, Validators.required)
+    });
+
+    this.businessRegistrationForm_ContactPerson = new FormGroup({
+      'firstname': new FormControl(null, Validators.required),
+      'lastname': new FormControl(null, Validators.required),
+      'dob': new FormControl(null, Validators.required),
+      'gender': new FormControl(null, Validators.required),
+      'phone': new FormControl(null, Validators.required)
+    });
+
+    this.businessRegistrationForm_Credential = new FormGroup({
+      'password1': new FormControl(null, Validators.required),
+      'password2': new FormControl(null, Validators.required)
+    });
+
+    this.otpForm = new FormGroup({
+      'txt1': new FormControl(null, Validators.required),
+      'txt2': new FormControl(null, Validators.required),
+      'txt3': new FormControl(null, Validators.required),
+      'txt4': new FormControl(null, Validators.required),
+      'txt5': new FormControl(null, Validators.required),
+      'txt6': new FormControl(null, Validators.required)
+    });
+
+    this.signInForm = new FormGroup({
+      'email': new FormControl(null, Validators.required)
+
+    });
+
+    this.signInFormPassword = new FormGroup({
+      'password': new FormControl(null, Validators.required)
+    })
   }
 
-  supplierName = this.contact.firstName +' '+this.contact.lastName
-  createPersonalResponse:any;
-  createPersonalResponseData:any;
-  createPersonal(){
-    this.ngxService.start();
-    this.endpoint.createPersonal({supplierName:this.supplierName, description:this.contact.address,supplierCategoryId: 1,
-      mobileNumber:this.contact.phoneNumber,stateId:this.contact.stateId, state:this.contact.stateId, lgaId:this.contact.lgaId,
-      street:this.contact.address, address:this.contact.address, imageUrl:this.contact.firstName, primaryContactName:this.supplierName,
-      primaryContactEmail:this.contact.email, primaryContactMobile:this.contact.phoneNumber, primaryContactGender:this.contact.gender,
-      accountLogin:{email:this.contact.email, password:this.contact.password}
-
-    }).subscribe((data) => {console.log(data), this. createPersonalResponse=data;
-    if(this.createPersonalResponse.responseCode == '00'){
-      this.createPersonalResponseData = this.createPersonalResponse.responseData;
-      this.ngxService.stop();
-    }
-      else{
-        this.showWarn(this.createPersonalResponse.responseCode.responseMsg);
-        this.ngxService.stop();
-      }
-    },(error) => {
-      this.errorMsg=error
-      this.ngxService.stop();
-      this.showError(this.errorMsg);
-    }) 
-  }
   showSuccess(message: any) {
     this.toast.success({ detail: "SUCCESS", summary: message, duration: 5000 });
   }
@@ -79,7 +141,7 @@ export class AuthenticationComponent implements OnInit {
   showWarn(message:any) {
     this.toast.warning({detail:"WARN",summary:message,duration:5000});
   }
-  
+
   accountType(){
     this.page='accountType'
   }
@@ -109,99 +171,41 @@ export class AuthenticationComponent implements OnInit {
     this.page='accountType'
   }
 
-  getPersonalForm(data:any){
-    console.warn(data)
+  getPersonalForm(){
     this.page = 'getPersonalAdd'
   }
   backToPersonalForm(){
     this.page='indAccount'
   }
-  getPersonalAdd(data:NgForm){
-    console.warn(data)
+  getPersonalAdd(){
     this.page = 'getPersonalPassword'
   }
   backToPersonalAdd(){
     this.page = 'getPersonalAdd'
   }
-  getPersonalPassword(data:any){
-    console.log(data);
-    this.page = 'otp';
-    // this.endpoint.savePersonal({
-    //   firstName:this.contact.firstName, lastName:this.contact.lastName, dateOfBirth:this.contact.dateOfBirth,
-    //   phoneNumber:this.contact.phoneNumber,gender:this.contact.gender, stateId:this.contact.stateId,lgaId:this.contact.lgaId,
-    //   address:this.contact.address,imageUrl:this.contact.imageUrl,accountLogin:{email:this.contact.email, password:this.contact.password} 
-    // }).subscribe((result)=>{this.response=result; this.responseP=this.response.responseMsg; console.warn(this.response.responseMsg);
 
-    //   if(this.response.responseMsg =='SUCCESS'){
-    //     this.page='email';
-    //   }
-    //   else{
-    //     this.page='createPass';
-    //   };
-    // });
-  
-  }
-  getCompanyDetail(data:any){
-    console.warn(data)
-    this.page='bizAddress'
-    this.businessContact.industry = data.biztype
+  getCompanyAdrress(){
+    this.page = 'bizAddress'
   }
   backToCompanyDetail(){
     this.page = 'bizAccount'
   }
-  getBusinessAddress(data:NgForm){
-    console.warn(data)
+  getBusinessAddress(){
     this.page = 'bizContactPaerson'
   }
   backToBusinessAddress(){
     this.page = 'bizAddress'
   }
-  getContactPerson(data:NgForm){
-    console.warn(data)
-    this.page = 'bizPassword'
+  getContactPerson(){
+    this.page = 'bizContactPaerson'
   }
   backToContactPerson(){
     this.page = 'bizContactPaerson'
   }
-  getBusinessPassword(data:any){
-    console.log(data);
-    this.page= 'otp';
-    // this.businessContact.industry = data.biztype;
-    // console.warn(data);
-    // this.endpoint.createBusiness({companyName:this.businessContact.companyName,industryId:this.businessContact.industryId,industry:this.businessContact.industry,
-    //   phoneNumber:this.businessContact.phoneNumber,stateId:this.businessContact.stateId,lgaId:this.businessContact.lgaId,address:this.businessContact.address,
-    //   logoUrl:this.businessContact.logoUrl,accountLogin:{email:this.businessContact.email,password:this.businessContact.password},contactPerson:{
-    //     firstName:this.businessContact.firstName, lastName:this.businessContact.lastName, dateOfBirth:this.businessContact.dateOfBirth, phoneNumber:this.businessContact.phoneNumber2, gender:this.businessContact.gender
-    //   }
-
-    // }).subscribe((result)=>{this.response=result;this.responseB=this.response.responseMsg;  console.warn(this.response.responseCode); 
-    //   if(this.response.responseCode =='00'){
-    //     this.page='email';
-    //   }
-    //   else{
-    //     this.page='createPassB';
-    //   };
-    // })
+  getBusinessPassword(){
+    this.page = 'bizPassword'
   }
 
-  otpCode:any;
-  getOtp(item:any){
-    this.otpCode=item.txt1+item.txt2+item.txt3+item.txt4+item.txt5+item.txt6;
-    console.warn(this.otpCode);
-    this.router.navigate(['/addasset']);
-    // this.endpoint.vrifyCode({email:this.contact.email, code:this.otpCode}).
-    // subscribe((data) => {this.response1=data;this.responseOtp=this.response1.responseMsg; console.warn(this.response1.responseCode);
-    //   if(this.response1.responseCode =='00'){
-    //     this.section2 = 'no'
-    //     this.page = 'successful';
-    //     // this.router.navigate(['/book-trip']);
-    //     // this.interaction.sendMessage('show')
-    //   }
-    //   else{
-    //     this.page='email';
-    //   };
-    // });
-  }
   move(e:any,p:any,c:any,n:any){
     var length = c.value.length;
     var maxlength = c.getAttribute('maxlength');
@@ -210,4 +214,132 @@ export class AuthenticationComponent implements OnInit {
       if(e.key === 'Backspace'){
         if(p != ''){p.focus();}}
   }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///                                                                                                                           ///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+fetchLGAs(state: string){
+  let stateId = Number.parseInt(state);
+  this.utilitiesService.getLGAs(stateId).subscribe(res =>{
+    this.lgas = res
+  })
+}
+
+onSubmitIndividualAccoutCreation(){
+  const indDetail: IndividualDetails = this.individualRegistrationForm.value;
+  const indAdrress: IndividualAddress = this.individualRegistrationForm_Location.value;
+  const indCred: {password1: string, password2: string} = this.individualRegistrationForm_Credential.value;
+
+  const address = '';
+  const stateName = '';
+  const supplierCategoryId = 1;
+
+  let signUpCred: AccountLogin = {
+    email: indDetail.email,
+    password: indCred.password1
+  };
+
+  let signUp: IndividualSignup = {
+    firstName: indDetail.firstname,
+    lastName: indDetail.lastname,
+    gender: indDetail.gender,
+    supplierCategoryId: supplierCategoryId,
+    dateOfBirth: indDetail.dateofbirth,
+    mobileNumber: indDetail.phone,
+    stateId: Number.parseInt(indAdrress.state),
+    state: stateName,
+    lgaId: Number.parseInt(indAdrress.lga),
+    street: indAdrress.address,
+    address: address,
+    imageUrl: '',
+    primaryContactName:  indDetail.firstname + " " + indDetail.lastname,
+    primaryContactEmail: indDetail.email,
+    primaryContactMobile: indDetail.phone,
+    primaryContactGender: indDetail.email,
+    accountLogin: signUpCred
+  };
+
+  this.signupService.individualSignupService(signUp).subscribe(res => {
+    this.email = indDetail.email;
+    if(res == "success"){
+      this.page = 'otp';
+    }
+  });
+
+
+
+}
+
+onSubmitBusinessAccoutCreation(){
+  const busDetail: BusinessDetail = this.businessRegistrationForm.value;
+  const busAdrress: BusinessLocation = this.businessRegistrationForm_Location.value;
+  const busCred: BusinessCred  = this.businessRegistrationForm_Credential.value;
+  const busContact: BusinessContact = this.businessRegistrationForm_ContactPerson.value;
+
+  const address = '';
+  const stateName = '';
+  const supplierCategoryId = 1;
+
+  let signUpCred: AccountLogin = {
+    email: busDetail.email,
+    password: busCred.password1
+  };
+
+  let signUp: BusinessSignUp = {
+    supplierName: busDetail.company,
+    description: '',
+    supplierCategoryId: supplierCategoryId,
+    mobileNumber: busDetail.phone,
+    stateId: Number.parseInt(busAdrress.state),
+    state: stateName,
+    lgaId: Number.parseInt(busAdrress.lga) ,
+    street: busAdrress.address,
+    address: address,
+    imageUrl: '',
+    primaryContactName: busContact.firstname + ' ' + busContact.lastname,
+    primaryContactEmail: busDetail.email,
+    primaryContactMobile: busContact.phone,
+    primaryContactGender: busContact.gender,
+    accountLogin: signUpCred
+  }
+
+  this.signupService.businessSignupService(signUp).subscribe(res => {
+    this.email = busDetail.email;
+    if(res == "success"){
+      this.page = 'otp';
+    }
+  });
+}
+
+onSubmitVerifyCode(){
+   const otp: {txt1: string, txt2: string, txt3: string, txt4: string, txt5: string, txt6: string} = this.otpForm.value;
+   const otpStr = otp.txt1 + otp.txt2 + otp.txt3 + otp.txt4 + otp.txt5 + otp.txt6;
+
+   this.signupService.verifyCode({email: this.email, code: otpStr}).subscribe(res => {
+
+    if(res == "success"){
+      this.page = 'signInPassword';
+    }
+  });
+}
+
+onSubmitLogin(){
+  const ema: {email: string} = this.signInForm.value;
+  const pass: {password: string} = this.signInFormPassword.value;
+  const credentials = {email: ema.email, password: pass.password};
+  this.signupService.signIn(credentials).subscribe(res => {
+   if(res.responseCode == "success"){
+     console.log(res);
+    localStorage.setItem('signInToken', res.responseData.token);
+    this.router.navigate(['/dashboard']);
+   }
+   else{
+
+   }
+  })
+}
+
 }
