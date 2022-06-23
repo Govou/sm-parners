@@ -53,7 +53,7 @@ export class AssetsService {
   getVehicleMakes(){
     return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/GetVehicleMakes`)
                           .pipe(map(res => {
-                            const makes: {id: number, name: string}[] = [];
+                            const makes: {makeId: number, name: string}[] = [];
                             if(res.responseCode =="00")
                             {
                               for(const key in res.responseData)
@@ -70,7 +70,7 @@ export class AssetsService {
   getVehicleModels(makeId: number){
     return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/GetVehicleModels?makeId=${makeId}`)
                           .pipe(map(res => {
-                            const models: {id: number, name: string, makeId: number}[] = [];
+                            const models: {modelId: number, name: string, makeId: number}[] = [];
                             if(res.responseCode =="00")
                             {
                               for(const key in res.responseData)

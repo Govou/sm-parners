@@ -32,13 +32,13 @@
                     <div class="col-6">
                         <label for="maker" class="form-label">Make of Car</label>
                         <select formControlName="make" #makeSelected class="form-select" id="make" (change)="fetchModels(makeSelected.value)">
-                            <option [value]="mk.id" *ngFor="let mk of makes">{{mk.name}}</option>
+                            <option [value]="mk.makeId" *ngFor="let mk of makes">{{mk.name}}</option>
                         </select>
                     </div>
                     <div class="col-6">
                         <label for="model" class="form-label">Model of Car</label>
                         <select formControlName="model" id="model" class="form-select">
-                          <option [value]="md.id" *ngFor="let md of models">{{md.name}}</option>
+                          <option [value]="md.modelId" *ngFor="let md of models">{{md.name}}</option>
                       </select>
                     </div>
                     <div class="col-6">

@@ -19,8 +19,8 @@ export class AddassetComponent implements OnInit {
 
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
-  makes:  {id: number, name: string}[] = [];
-  models: {id: number, name: string}[] = [];
+  makes:  {makeId: number, name: string}[] = [];
+  models: {modelId: number, name: string, makeId: number}[] = [];
   categories: {categoryId: number, categoryName: string}[] = [];
 
   frontimageUrl: string = "";
@@ -176,7 +176,6 @@ export class AddassetComponent implements OnInit {
     // let selectedMake = this.makes.filter((x:{id: number, name: string})=>{ return x.name == make;})[0];
     // console.log(selectedMake);
     let makeId = Number.parseInt(make);
-    makeId = makeId + 1;
     this.assetService.getVehicleModels(makeId).subscribe(res => {
       this.models = res;
     });
