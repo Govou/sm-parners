@@ -5,7 +5,8 @@ import { ServiceCenterResponse } from 'src/app/model/dtos/service-centre-respons
 import { AssetsService } from 'src/app/services/assets.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
-
+import { activatewallet } from 'src/app/model/wallet';
+import { NgbModalConfig,NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AddassetComponent implements OnInit {
 
-  constructor(private assetService: AssetsService, private utilitiesService: UtilitiesService) { }
+  constructor(private modalService: NgbModal,private assetService: AssetsService, private utilitiesService: UtilitiesService) { }
 
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
@@ -97,6 +98,11 @@ export class AddassetComponent implements OnInit {
   }
   scheduleForm(){
     this.page = 'schedule'
+  }
+  paymentPage(content:any){
+    this.page = 'payment'
+    this.modalService.open(content);
+
   }
 
 
@@ -196,9 +202,23 @@ export class AddassetComponent implements OnInit {
     });
   }
 
+  openVerticallyCentered(content:any) {
+    this.modalService.open(content);
+  }
+  closeModal(content:any){
+    this.modalService.dismissAll(content)
+  }
+
+  walletregistration = new activatewallet('','','','','',20000,'','');
+  key='pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447'
+  amt=''
+  eml:any
+  walletMessage:any
+  walletResult:any
 
   paymentInit() {
     console.log('Payment initialized');
+    this.walletregistration.amount = 20000
   }
 
   paymentDone(ref: any) {

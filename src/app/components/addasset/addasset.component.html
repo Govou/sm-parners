@@ -7,21 +7,21 @@
             <div class="steps-form">
                 <div class="steps-row setup-panel">
                     <div class="steps-step">
-                        <a pageScroll (click)="assetForm()" type="button" class="btn btn-indigo btn-circle">1</a>
+                        <a pageScroll (click)="assetForm()" type="button" class="btn btn-indigo btn-circle " [ngClass]="{'validForm':assetRegistrationForm.valid,'notValidForm':!assetRegistrationForm.valid}">1</a>
                         <p>Asset information</p>
                     </div>
                     <div class="steps-step">
-                        <a (click)="visualsForm()" type="button" class="btn btn-default btn-circle"
+                        <a (click)="visualsForm()" type="button" class="btn btn-default btn-circle " [ngClass]="{'validForm':assetRegistrationForm_Visuals.valid,'notValidForm':!assetRegistrationForm_Visuals.valid}"
                             disabled="disabled">2</a>
                         <p>Visuals</p>
                     </div>
                     <div class="steps-step">
-                        <a (click)="scheduleForm()" type="button" class="btn btn-default btn-circle"
+                        <a (click)="scheduleForm()" type="button" class="btn btn-default btn-circle" [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
                             disabled="disabled">3</a>
                         <p>Schedule Inspection</p>
                     </div>
                     <div class="steps-step">
-                        <a pageScroll href="#step-11" type="button" class="btn btn-default btn-circle"
+                        <a pageScroll (click)="paymentPage(content)" type="button" class="btn btn-default btn-circle" [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
                             disabled="disabled">4</a>
                         <p>Payment</p>
                     </div>
@@ -68,15 +68,16 @@
               <form [formGroup]="assetRegistrationForm_Visuals" class="col-8" >
                     <div class="assetView">
                         <p>Picture (Front)</p>
-                        <img [src]="frontimageUrl" title="Profile Picture" >
+                        <img [src]="frontimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
                         <label for="frontImage" class="form-label" id="file">
-                            <mat-icon>photo_camera</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage" style="color: red;">delete</mat-icon>
                         </label>
                         <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageSelect($event)">
                     </div>
                     <div class="assetView">
                         <p>Picture (Back)</p>
-                        <img [src]="backimageUrl" title="Profile Picture" >
+                        <img [src]="backimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
                         <label for="backImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
@@ -84,7 +85,7 @@
                     </div>
                     <div class="assetView">
                         <p>Picture (Left Side)</p>
-                        <img [src]="leftimageUrl" title="Profile Picture">
+                        <img [src]="leftimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
                         <label for="leftImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
@@ -92,7 +93,7 @@
                     </div>
                     <div class="assetView">
                         <p>Picture (Right Side)</p>
-                        <img [src]="rightimageUrl" title="Profile Picture" >
+                        <img [src]="rightimageUrl" title="Profile Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
                         <label for="rightImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
@@ -100,7 +101,7 @@
                     </div>
                     <div class="assetView">
                         <p>Picture (Interior)</p>
-                        <img [src]="interiorimageUrl" title="Profile Picture" >
+                        <img [src]="interiorimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
                         <label for="interiorImage" class="form-label" id="file">
                             <mat-icon>photo_camera</mat-icon>
                         </label>
@@ -145,23 +146,99 @@
                         </div>
                     </div>
 
-                    <!-- <button type="button" class="btn btn-primary col-6" [disabled]="!schedule.valid">Book Appointment</button> -->
-                    <angular4-paystack
+                    <button type="button" class="btn btn-primary col-6" [disabled]="!assetRegistrationForm_Schedule.valid" (click)="paymentPage(content)">Book Appointment</button>
+                    <!-- <angular4-paystack
                     [email]="'mailexample@mail.com'"
-                    [amount]="5000000"
+                    [amount]="walletregistration.amount * 100"
                     [ref]="reference"
                     [channels]="['bank']"
 
                     [class]="'btn btn-primary col-6'"
                     (onClose)="paymentCancel()"
                     (callback)="paymentDone($event)"
-                  >
+                  > 
                   Book Appointment
-                  </angular4-paystack>
-                    <button class="next btn btn-default" (click)="visualsForm()">Back</button>
+                  </angular4-paystack> -->
+                    <!-- <button class="next btn btn-default" (click)="visualsForm()">Back</button> -->
 
                 </form>
             </ng-template>
+
+
+            <ng-template  #content let-c="close" let-d="dismiss">
+                <div class="closebtn">
+                    <button (click)="d('Cross click')">&#x2715;</button>
+                </div>
+                <div class="modal-body">
+                    <h1>How would you like to top-up</h1>
+                    <div class="paymentOptionGroup">
+                        <div class="paymentOption">
+                            <div class="paymentGateway">
+                                <input type="radio" id="flutterwave" ngModel name="payment" id="flutterwave"
+                                    value="flutterwave" [(ngModel)]="walletregistration.gateway">
+                                <label for="flutter"><img src="/assets/Flutterwave-logo 2.png" alt="">Flutterwave</label>
+                            </div>
+                            <div class="paymentGateway">
+                                <input type="radio" id="paystack" ngModel name="payment" id="paystack" value="paystack"
+                                    [(ngModel)]="walletregistration.gateway">
+                                <label for="flutter"><img src="/assets/Paystack-mark-white-twitter 2.png" alt="">
+                                    Paystack</label>
+                            </div>
+                            <div class="paymentGateway">
+                                <input type="radio" ngModel name="payment" id="remita" value="remita"
+                                    [(ngModel)]="walletregistration.gateway">
+                                <label for="flutter"><img src="/assets/unnamed 2.png" alt="">Remita</label>
+                            </div>
+                            <div class="paymentGateway">
+                                <input type="radio" ngModel name="payment" id="inter" value="inter"
+                                    [(ngModel)]="walletregistration.gateway">
+                                <label for="flutter"><img src="/assets/cropped-favicon 2.png" alt="">Interswitch
+                                    webpay</label>
+                            </div>
+                        </div>
+                        <img src="/assets/images/Wallet-rafiki 2 (1).png" alt="" width="100%">
+                    </div>
+    
+                    <div class="amount">
+                        <p>Amount(&#8358;)</p>
+                        <div class="enterAmount">
+                            <span style="color: red;">{{walletMessage}}</span>
+                            <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
+                                [(ngModel)]="assetRegistrationForm_Schedule">
+                            <button
+                                [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
+                                angular4-paystack [email]="'mailexample@mail.com'"
+                                [amount]="5000000"
+                                [ref]="reference" 
+                                [key]="key"
+                                 [class]="'btn btn-primary'" (paymentInit)="paymentInit()"
+                                (onClose)="paymentCancel()" (callback)="paymentDone($event)">Pay with
+                                Paystack</button>
+                            <button (click)="paymentInit()"
+                                [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                with Flutter</button>
+                            <button (click)="paymentInit()"
+                                [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                with Remita</button>
+                            <button (click)="paymentInit()"
+                                [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                with Interswitch</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="notes">
+                        <b>Please note</b>
+                        <ol>
+                            <li>Minimum top-up amount is NGN 100.00 - you can top-up at least NGN 100.00 in one transaction.
+                            </li>
+                            <li>Maximum per transaction is NGN 9,999,999.00 - you can deposit up to NGN 9,999,999.00 in one
+                                transaction.</li>
+                            <li>Top-up is free, there are no transaction fees.</li>
+                        </ol>
+                    </div>
+                </div>
+            </ng-template>
+    
         </div>
     </body>
 
