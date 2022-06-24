@@ -132,7 +132,7 @@ border-radius: 10px;
     width: 50%;
 }
 .paymentOption{
- 
+
 }
 .paymentGateway{
     margin:10px;
@@ -144,7 +144,7 @@ font-size: 15px;
 }
 .paymentGateway input{
     opacity: 0.5;
-    
+
 }
 .paymentGateway img{
     width: 25px;
@@ -160,7 +160,7 @@ font-size: 15px;
 .amount .enterAmount{
     display: flex;
     flex-direction: column;
-    
+
 }
 .amount .enterAmount input{
     border: 0.5px solid rgba(0, 0, 0, 0.15);
@@ -193,4 +193,21 @@ border: 0;
     font-weight: 600;
     font-size: 16px;
     border: 0;
+}
+
+
+.form-container-align-items{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* justify-items: stretch; */
+}
+
+.right-padding{
+  padding-right: 20px;
+  padding-bottom: 30px;
+}
+
+.left-padding{
+  padding-right: 20px;
+  padding-bottom: 30px;
 }

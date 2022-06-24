@@ -26,6 +26,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent}
@@ -61,10 +63,11 @@ const routes: Routes = [
     // NgxPageScrollModule,
     HttpClientModule,
     NgxUiLoaderModule,
+    NgxSpinnerModule,
     Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
-    RouterModule.forChild(routes)
+
+    RouterModule.forRoot(routes)
   ],
-  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })

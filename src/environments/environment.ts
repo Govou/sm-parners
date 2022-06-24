@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
- // halobizBaseUrl: 'https://localhost:44353',
-  defaultImageUrl: '../assets/images/CameraShutterColor.svg'
+  //halobizBaseUrl: 'https://localhost:44353',
+  defaultImageUrl: '../assets/images/CameraShutterColor.svg',
+  paystackKey: 'pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447'
 };
 
 /*

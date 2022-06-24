@@ -4,7 +4,7 @@
     <body>
         <h1>Add New Assets</h1>
         <div class="assetDetail">
-            <div class="steps-form">
+            <div class="steps-form ">
                 <div class="steps-row setup-panel">
                     <div class="steps-step">
                         <a pageScroll (click)="assetForm()" type="button" class="btn btn-indigo btn-circle " [ngClass]="{'validForm':assetRegistrationForm.valid,'notValidForm':!assetRegistrationForm.valid}">1</a>
@@ -26,47 +26,60 @@
                         <p>Payment</p>
                     </div>
                 </div>
+                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+                  <p style="color: white">Please Wait... </p>
+                  </ngx-spinner>
             </div>
             <ng-template [ngIf]="page == 'asset'">
                 <form [formGroup]="assetRegistrationForm" class="col-8" >
-                    <div class="col-6">
+                  <div class="form-container-align-items">
+                    <div class="col-12 right-padding">
                         <label for="maker" class="form-label">Make of Car</label>
                         <select formControlName="make" #makeSelected class="form-select" id="make" (change)="fetchModels(makeSelected.value)">
                             <option [value]="mk.makeId" *ngFor="let mk of makes">{{mk.name}}</option>
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 left-padding">
                         <label for="model" class="form-label">Model of Car</label>
                         <select formControlName="model" id="model" class="form-select">
-                          <option [value]="md.modelId" *ngFor="let md of models">{{md.name}}</option>
+                          <option [value]="md.name" *ngFor="let md of models">{{md.name}}</option>
                       </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 right-padding">
+                      <label for="modelnumber" class="form-label">Model Number</label>
+                      <input formControlName="modelnumber" type="text" class="form-control" id="modelnumber">
+                  </div>
+                  <div class="col-12 left-padding">
+                    <label for="identificationnumber" class="form-label ">Identification Number</label>
+                    <input formControlName="identificationnumber" type="text" class="form-control" id="identificationnumber">
+                </div>
+                    <div class="col-12 right-padding">
                         <label for="year" class="form-label">Year of Make</label>
                         <input formControlName="year" type="number" class="form-control" id="year">
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 left-padding">
                         <label for="type" class="form-label">Type</label>
                         <select formControlName="type" name="type" class="form-select">
-                          <option [value]="ct.categoryId" *ngFor="let ct of categories">{{ct.categoryName}}</option>
+                          <option [value]="ct" *ngFor="let ct of carTypes">{{ct}}</option>
+
                       </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 right-padding">
                         <label for="platenumber" class="form-label">Plate Number</label>
                         <input formControlName="platenumber" type="text" class="form-control" id="platenumber">
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 left-padding">
                         <label for="chasis" class="form-label">Chasis Number</label>
                         <input formControlName="chasis" type="text" class="form-control" id="chasis">
                     </div>
+                  </div>
                       <button type="button" class="btn btn-primary col-6" [disabled]="!assetRegistrationForm.valid" (click)="visualsForm()">Next</button>
-
-
                 </form>
             </ng-template>
             <ng-template [ngIf]="page == 'visuals'">
               <form [formGroup]="assetRegistrationForm_Visuals" class="col-8" >
-                    <div class="assetView">
+                <div class="form-container-align-items">
+                    <div class="assetView right-padding">
                         <p>Picture (Front)</p>
                         <img [src]="frontimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
                         <label for="frontImage" class="form-label" id="file">
@@ -75,7 +88,7 @@
                         </label>
                         <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageSelect($event)">
                     </div>
-                    <div class="assetView">
+                    <div class="assetView left-padding">
                         <p>Picture (Back)</p>
                         <img [src]="backimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
                         <label for="backImage" class="form-label" id="file">
@@ -83,7 +96,7 @@
                         </label>
                         <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageSelect($event)">
                     </div>
-                    <div class="assetView">
+                    <div class="assetView right-padding">
                         <p>Picture (Left Side)</p>
                         <img [src]="leftimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
                         <label for="leftImage" class="form-label" id="file">
@@ -91,7 +104,7 @@
                         </label>
                         <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageSelect($event)">
                     </div>
-                    <div class="assetView">
+                    <div class="assetView left-padding">
                         <p>Picture (Right Side)</p>
                         <img [src]="rightimageUrl" title="Profile Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
                         <label for="rightImage" class="form-label" id="file">
@@ -99,7 +112,7 @@
                         </label>
                         <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageSelect($event)">
                     </div>
-                    <div class="assetView">
+                    <div class="assetView right-padding">
                         <p>Picture (Interior)</p>
                         <img [src]="interiorimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
                         <label for="interiorImage" class="form-label" id="file">
@@ -108,6 +121,7 @@
                         <input formControlName="interiorImage" type="file" id="interiorImage" style="display:none" accept="image/*"
                             (change)="onInteriorImageSelect($event)">
                     </div>
+                  </div>
                         <button class="next btn btn-primary" [disabled]="!assetRegistrationForm_Visuals.valid" (click)="scheduleForm()">Next</button>
                         <button class="next btn btn-default" (click)="assetForm()">Back</button>
 
@@ -125,8 +139,8 @@
 
                     <div class="col-6">
                         <label for="center" class="form-label">Service Center</label>
-                        <select formControlName="center" #centreSelected  id="center" class="form-select" (change)="SelectServiceCentres(centreSelected.value)">
-                          <option [value]="sc.centre_id" *ngFor="let sc of serviceCentres">{{sc.address}}</option>
+                        <select formControlName="center" #centreSelected  id="center" class="form-select" (change)="selectServiceCentres(centreSelected.value)">
+                          <option [value]="sc.centre_id" *ngFor="let sc of serviceCentres">{{sc.centre_id + ' - ' + sc.address }}</option>
                       </select>
                     </div>
                     <div class="col-6" id="datetime">
@@ -145,22 +159,7 @@
                             <input formControlName="price" readonly id="price" type="text" class="form-control">
                         </div>
                     </div>
-
                     <button type="button" class="btn btn-primary col-6" [disabled]="!assetRegistrationForm_Schedule.valid" (click)="paymentPage(content)">Book Appointment</button>
-                    <!-- <angular4-paystack
-                    [email]="'mailexample@mail.com'"
-                    [amount]="walletregistration.amount * 100"
-                    [ref]="reference"
-                    [channels]="['bank']"
-
-                    [class]="'btn btn-primary col-6'"
-                    (onClose)="paymentCancel()"
-                    (callback)="paymentDone($event)"
-                  > 
-                  Book Appointment
-                  </angular4-paystack> -->
-                    <!-- <button class="next btn btn-default" (click)="visualsForm()">Back</button> -->
-
                 </form>
             </ng-template>
 
@@ -198,18 +197,18 @@
                         </div>
                         <img src="/assets/images/Wallet-rafiki 2 (1).png" alt="" width="100%">
                     </div>
-    
+
                     <div class="amount">
                         <p>Amount(&#8358;)</p>
                         <div class="enterAmount">
                             <span style="color: red;">{{walletMessage}}</span>
                             <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
-                                [(ngModel)]="assetRegistrationForm_Schedule">
+                                [(ngModel)]="bookingPrice">
                             <button
                                 [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
                                 angular4-paystack [email]="'mailexample@mail.com'"
-                                [amount]="5000000"
-                                [ref]="reference" 
+                                [amount]="bookingPrice * 100"
+                                [ref]="reference"
                                 [key]="key"
                                  [class]="'btn btn-primary'" (paymentInit)="paymentInit()"
                                 (onClose)="paymentCancel()" (callback)="paymentDone($event)">Pay with
@@ -224,6 +223,7 @@
                                 [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
                                 with Interswitch</button>
                         </div>
+
                     </div>
                     <hr>
                     <div class="notes">
@@ -237,8 +237,11 @@
                         </ol>
                     </div>
                 </div>
+                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+                  <p style="color: white">Please Wait... </p>
+                  </ngx-spinner>
             </ng-template>
-    
+
         </div>
     </body>
 

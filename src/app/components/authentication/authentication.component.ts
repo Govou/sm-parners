@@ -11,7 +11,7 @@ import { AccountLogin, IndividualSignup } from 'src/app/model/individual-signup'
 import { SignupService } from 'src/app/services/signup.service';
 import { BusinessContact, BusinessCred, BusinessDetail, BusinessLocation } from 'src/app/model/business-account-registration';
 import { BusinessSignUp } from 'src/app/model/business-signup';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-authentication',
@@ -28,7 +28,8 @@ export class AuthenticationComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private toast: NgToastService,
     private utilitiesService: UtilitiesService,
-    private signupService: SignupService
+    private signupService: SignupService,
+    private spinnerService: NgxSpinnerService
     ) { }
 
 
@@ -229,6 +230,7 @@ fetchLGAs(state: string){
 }
 
 onSubmitIndividualAccoutCreation(){
+  this.spinnerService.show();
   const indDetail: IndividualDetails = this.individualRegistrationForm.value;
   const indAdrress: IndividualAddress = this.individualRegistrationForm_Location.value;
   const indCred: {password1: string, password2: string} = this.individualRegistrationForm_Credential.value;
@@ -264,16 +266,19 @@ onSubmitIndividualAccoutCreation(){
 
   this.signupService.individualSignupService(signUp).subscribe(res => {
     this.email = indDetail.email;
+    this.spinnerService.hide();
     if(res == "success"){
       this.page = 'otp';
     }
   });
 
+  this.resetForm();
 
 
 }
 
 onSubmitBusinessAccoutCreation(){
+  this.spinnerService.show();
   const busDetail: BusinessDetail = this.businessRegistrationForm.value;
   const busAdrress: BusinessLocation = this.businessRegistrationForm_Location.value;
   const busCred: BusinessCred  = this.businessRegistrationForm_Credential.value;
@@ -307,39 +312,63 @@ onSubmitBusinessAccoutCreation(){
   }
 
   this.signupService.businessSignupService(signUp).subscribe(res => {
+    this.spinnerService.hide();
     this.email = busDetail.email;
     if(res == "success"){
       this.page = 'otp';
     }
   });
+
+ this.resetForm();
 }
 
 onSubmitVerifyCode(){
+  this.spinnerService.show();
    const otp: {txt1: string, txt2: string, txt3: string, txt4: string, txt5: string, txt6: string} = this.otpForm.value;
    const otpStr = otp.txt1 + otp.txt2 + otp.txt3 + otp.txt4 + otp.txt5 + otp.txt6;
 
    this.signupService.verifyCode({email: this.email, code: otpStr}).subscribe(res => {
-
+    this.spinnerService.hide();
     if(res == "success"){
       this.page = 'signInPassword';
     }
   });
+  this.resetForm();
 }
 
 onSubmitLogin(){
+  this.spinnerService.show();
   const ema: {email: string} = this.signInForm.value;
   const pass: {password: string} = this.signInFormPassword.value;
   const credentials = {email: ema.email, password: pass.password};
   this.signupService.signIn(credentials).subscribe(res => {
-   if(res.responseCode == "success"){
+    this.spinnerService.hide();
+   if(res.responseCode == "00"){
      console.log(res);
     localStorage.setItem('signInToken', res.responseData.token);
-    this.router.navigate(['/dashboard']);
+    localStorage.setItem('profileId', res.responseData.userProfile.id)
+    this.router.navigate(['dashboard']);
+    console.log('not responding');
    }
    else{
 
    }
   })
+
+
+}
+
+resetForm(){
+  this.individualRegistrationForm.reset(this.individualRegistrationForm.value);
+  this.individualRegistrationForm_Location.reset(this.individualRegistrationForm_Location.value)
+  this.individualRegistrationForm_Credential.reset(this.individualRegistrationForm_Credential.value);
+  this.businessRegistrationForm.reset(this.businessRegistrationForm.value);
+  this.businessRegistrationForm_Location.reset(this.businessRegistrationForm_Location.value);
+  this.businessRegistrationForm_ContactPerson.reset(this.businessRegistrationForm_ContactPerson.value);
+  this.businessRegistrationForm_Credential.reset(this.businessRegistrationForm_Credential.value);
+  this.otpForm.reset(this.otpForm.value);
+  this.signInForm.reset(this.signInForm.value);
+  this.signInFormPassword.reset(this.signInFormPassword.value);
 }
 
 }

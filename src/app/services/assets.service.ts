@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { ServiceCenterResponse } from '../model/dtos/service-centre-response';
 import { ServiceAddition } from '../model/service-addition';
+import { AddAsset } from '../model/dtos/addasset';
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +15,15 @@ export class AssetsService {
 
   halobizBaseUrl = environment['halobizBaseUrl']
 
-  addNewService(request: ServiceAddition){
-    return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSSupplier/GetServiceCenters`, request)
+  addNewAsset(asset: AddAsset){
+    return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSSupplier/AddNewAsset`, asset)
                           .pipe(map(res => {
-                            let result = "";
-                            if(res.responseCode =="00")
-                            {
-                              result = "success"
-                            }
-                            else{
-                              result = `failed - ${res.responseData}`
-                            }
-                            return result;
-                            })
-                          )
+                            return res;
+                          })
+                        )
 
   }
+
 
 
   getServiceCentres(state: string){
@@ -40,7 +34,7 @@ export class AssetsService {
                               {
                                 for(const key in res.responseData)
                                 {
-                                  serviceCentres.push({...res.responseData[key], id: key});
+                                  serviceCentres.push({...res.responseData[key], sid: key});
                                 }
                               }
                               return serviceCentres;
@@ -100,4 +94,6 @@ export class AssetsService {
                         )
 
   }
+
+
 }
