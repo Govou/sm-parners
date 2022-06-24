@@ -22,7 +22,7 @@
                     </div>
                     <div class="steps-step">
                         <a pageScroll (click)="paymentPage(content)" type="button" class="btn btn-default btn-circle" [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
-                            disabled="disabled">4</a>
+                            >4</a>
                         <p>Payment</p>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                         <p>Picture (Front)</p>
                         <img [src]="frontimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
                         <label for="frontImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage" style="color: red;">delete</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage" class="material-icons-outlined">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
                         </label>
                         <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageSelect($event)">
                     </div>
@@ -79,7 +79,9 @@
                         <p>Picture (Back)</p>
                         <img [src]="backimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
                         <label for="backImage" class="form-label" id="file">
-                            <mat-icon>photo_camera</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.backImage" class="material-icons-outlined">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.backImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
                         </label>
                         <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageSelect($event)">
                     </div>
@@ -87,7 +89,9 @@
                         <p>Picture (Left Side)</p>
                         <img [src]="leftimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
                         <label for="leftImage" class="form-label" id="file">
-                            <mat-icon>photo_camera</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.leftImage" class="material-icons-outlined">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.leftImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
                         </label>
                         <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageSelect($event)">
                     </div>
@@ -95,7 +99,9 @@
                         <p>Picture (Right Side)</p>
                         <img [src]="rightimageUrl" title="Profile Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
                         <label for="rightImage" class="form-label" id="file">
-                            <mat-icon>photo_camera</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.rightImage" class="material-icons-outlined">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.rightImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
                         </label>
                         <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageSelect($event)">
                     </div>
@@ -103,7 +109,9 @@
                         <p>Picture (Interior)</p>
                         <img [src]="interiorimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
                         <label for="interiorImage" class="form-label" id="file">
-                            <mat-icon>photo_camera</mat-icon>
+                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.interiorImage" class="material-icons-outlined">photo_camera</mat-icon>
+                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.interiorImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
                         </label>
                         <input formControlName="interiorImage" type="file" id="interiorImage" style="display:none" accept="image/*"
                             (change)="onInteriorImageSelect($event)">
@@ -204,7 +212,7 @@
                         <div class="enterAmount">
                             <span style="color: red;">{{walletMessage}}</span>
                             <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
-                                [(ngModel)]="assetRegistrationForm_Schedule">
+                                [(ngModel)]="assetRegistrationForm_Schedule.value.price">
                             <button
                                 [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
                                 angular4-paystack [email]="'mailexample@mail.com'"
