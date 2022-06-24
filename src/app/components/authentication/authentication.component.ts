@@ -353,7 +353,7 @@ onSubmitVerifyCode(){
    this.signupService.verifyCode({email: this.email, code: otpStr}).subscribe(res => {
     this.spinnerService.hide();
     if(res == "success"){
-      this.page = 'signInPassword';
+      this.page = 'successful';
     }
   });
   this.resetForm();
