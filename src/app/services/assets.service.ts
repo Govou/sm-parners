@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ServiceCenterResponse } from '../model/dtos/service-centre-response';
 import { ServiceAddition } from '../model/service-addition';
 import { AddAsset } from '../model/dtos/addasset';
+import { DashboardDetails } from '../model/dashboard';
 
 @Injectable({
   providedIn: 'root'
@@ -95,5 +96,18 @@ export class AssetsService {
 
   }
 
+  getDashboarsItems(profileId: any){
+    return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/Dashboard?profileId=${profileId}`)
+    .pipe(map(res => {
+      let dashboard!: DashboardDetails;
+      if(res.responseCode =="00")
+      {
+         dashboard = res.responseData;
+      }
+      return dashboard;
+    })
+  )
+
+  }
 
 }

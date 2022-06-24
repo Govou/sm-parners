@@ -4,7 +4,7 @@
       <section class="section1">
         <div class="part1">
           <div class="text">
-            <h1>Good day Lucky Daniel!</h1>
+            <h1>Good day {{dashboard.supplierName}}!</h1>
             <p>Glad to have you back, here's an overview for you</p>
           </div>
           <div class="image">
@@ -15,7 +15,7 @@
           <ngb-datepicker class="part2" #dp [(ngModel)]="model" ></ngb-datepicker>
         </div>
       </section>
-      
+
       <section class="section2">
         <div class="completed">
           <div class="ico">
@@ -23,7 +23,7 @@
             <p>Under Management</p>
           </div>
           <div class="row2">
-            75
+            {{dashboard.totalAssetUnderManagement}}
           </div>
         </div>
         <div class="schedule">
@@ -31,24 +31,24 @@
             <p>Distinct Types</p>
           </div>
           <div class="row2">
-            75
+            {{dashboard.distinctTypes}}
           </div>
         </div>
         <div class="resources">
           <div class="ico">
-            <p>Assets Awaiting</p>  
-            <p>Inspection / Review</p>   
+            <p>Assets Awaiting</p>
+            <p>Inspection / Review</p>
           </div>
           <div class="row2">
-            75
+            0
           </div>
         </div>
-  
+
       </section>
-      
+
     </div>
     </body>
   </main>
-  
-  
-  
+
+
+

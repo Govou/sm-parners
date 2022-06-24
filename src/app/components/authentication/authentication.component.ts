@@ -12,6 +12,7 @@ import { SignupService } from 'src/app/services/signup.service';
 import { BusinessContact, BusinessCred, BusinessDetail, BusinessLocation } from 'src/app/model/business-account-registration';
 import { BusinessSignUp } from 'src/app/model/business-signup';
 import { NgxSpinnerService } from "ngx-spinner";
+import { coerceStringArray } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'app-authentication',
@@ -361,6 +362,7 @@ onSubmitVerifyCode(){
 
 onSubmitLogin(){
   this.spinnerService.show();
+  console.log("attempt");
   const ema: {email: string} = this.signInForm.value;
   const pass: {password: string} = this.signInFormPassword.value;
   const credentials = {email: ema.email, password: pass.password};

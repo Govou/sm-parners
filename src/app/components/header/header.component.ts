@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 
+  isLoggedIn: boolean = false;
   constructor(private location:Location,private router:Router) { }
   item:any;
   userName:any;
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   homepage(){
+    this.isLoggedIn = true;
     // if(localStorage.getItem('token')){
     //   this.router.navigate(['/dashboard'])
     //   window.location.reload();
@@ -27,7 +29,7 @@ export class HeaderComponent implements OnInit {
     //   this.item='yes'
     //   window.location.reload();
     // }
-    
+
   }
   collapsed = true;
 

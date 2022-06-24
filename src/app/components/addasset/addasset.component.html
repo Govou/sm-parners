@@ -211,7 +211,7 @@
                         <div class="enterAmount">
                             <span style="color: red;">{{walletMessage}}</span>
                             <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
-                                [(ngModel)]="bookingPrice">
+                                [(ngModel)]="bookingPrice" disabled="true">
                             <button
                                 [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
                                 angular4-paystack [email]="'mailexample@mail.com'"
