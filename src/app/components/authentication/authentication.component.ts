@@ -207,6 +207,29 @@ export class AuthenticationComponent implements OnInit {
     this.page = 'bizPassword'
   }
 
+  successful(){
+    // this.section2 = 'yes'
+    this.page='signInEmail'
+  }
+  otpCode:any;
+  getOtp(item:any){
+    this.otpCode=item.txt1+item.txt2+item.txt3+item.txt4+item.txt5+item.txt6;
+    console.warn(this.otpCode);
+    this.page = 'successful';
+    // this.router.navigate(['/addasset']);
+    // this.endpoint.vrifyCode({email:this.contact.email, code:this.otpCode}).
+    // subscribe((data) => {this.response1=data;this.responseOtp=this.response1.responseMsg; console.warn(this.response1.responseCode);
+    //   if(this.response1.responseCode =='00'){
+    //     this.section2 = 'no'
+    //     this.page = 'successful';
+    //     // this.router.navigate(['/book-trip']);
+    //     // this.interaction.sendMessage('show')
+    //   }
+    //   else{
+    //     this.page='email';
+    //   };
+    // });
+  }
   move(e:any,p:any,c:any,n:any){
     var length = c.value.length;
     var maxlength = c.getAttribute('maxlength');

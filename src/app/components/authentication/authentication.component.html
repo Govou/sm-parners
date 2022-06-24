@@ -1,4 +1,4 @@
-<main>
+<div class="main">
     <ng-template [ngIf]="page == 'home'">
         <div class="section1" @fade>
             <p>Let's <span id="important">Partner</span>,<br> It takes both <br> sides to build a <br><span
@@ -387,6 +387,17 @@
 
     <!-- Sign in -->
 
+    <ng-template [ngIf]="page == 'successful'">
+        <div class="successful">
+          <p>Your account has been created successfully!</p>
+          <div class="image">
+            <img src="/assets/images/undraw_well_done_i2wr 2 (1).png" alt="" width="100%">
+          </div>
+          <button (click)="successful()">Sign in</button>
+        </div>
+      </ng-template>
+
+
     <ng-template [ngIf]="page == 'signInEmail'">
         <div class="contain" @fade>
             <div class="contain2">
@@ -439,4 +450,5 @@
             <img src="/assets/images/Back to back-pana 1 (1).png" alt="">
         </div>
     </div>
-</main>
+
+</div>
