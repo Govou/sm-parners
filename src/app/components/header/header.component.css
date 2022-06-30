@@ -60,25 +60,34 @@ mat-icon{
 
 .landing:hover {
     /* background-color: #007AFF; */
-    color: #007AFF;
+    color: #0f1b49;
     /* border-radius: 2px; */
 }
 #signup{
-    border: 0.5px solid #007AFF;
+    border: 1px solid #1C2B66;
     border-radius: 5px;
     padding: 5px;
-    color: #007AFF;
+    color:  #1C2B66;
     margin: 0.5rem;
+    font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+
 }
 #signup:hover{
-    background-color: #007AFF;
+    background-color: #1C2B66;
     color: #fff;
 }
 #signin{
-    background-color: #007AFF;
-    border-radius: 5px;
-    padding: 5px;
+    background: #1C2B66;
+border-radius: 5px;
+    padding: 5px 10px;
     color: white;
+    font-weight: 500;
+font-size: 18px;
+line-height: 27px;
+margin: 0.5rem;
+
     
 }
 #signin:hover{

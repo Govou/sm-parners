@@ -32,6 +32,8 @@ import { environment } from "../environments/environment";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from '@angular/fire/compat';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgToastModule } from 'ng-angular-popup';
+
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), // Your config
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    NgToastModule
+
   ],
   exports: [RouterModule],
   providers: [AuthGuard, ],

@@ -23,8 +23,11 @@ body{
     /* border: 2px solid; */
     height: 90%;
 }
+.opac{
+    opacity: 0.5;
+}
 .management{
-    margin: 10px;
+    margin: 20px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -34,10 +37,13 @@ body{
 height: 255px;
 left: 317px;
 top: 121px;
-
+cursor: pointer;
 background: #FFFFFF;
 box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 border-radius: 20px;
+}
+.management:hover{
+    transform: scale(1.1);
 }
 .image{
     width: 150px;
