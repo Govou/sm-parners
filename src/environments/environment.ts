@@ -4,17 +4,25 @@
 
 export const environment = {
   production: false,
-  halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
-  //halobizBaseUrl: 'https://localhost:44353',
+ // halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
+  halobizBaseUrl: 'https://localhost:44353',
   defaultImageUrl: '../assets/images/CameraShutterColor.svg',
-  paystackKey: 'pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447'
+  paystackKey: 'pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447',
+  // firebaseConfig: {
+  //   apiKey: "AIzaSyAnFmIEWYpc8QYgBcp6uajH_1LvxR6VKEc",
+  //   authDomain: "halo-biz.firebaseapp.com",
+  //   projectId: "halo-biz",
+  //   storageBucket: "halo-biz.appspot.com",
+  //   messagingSenderId: "995912706561",
+  //   appId: "1:995912706561:web:f7e52139b03e85fa45ae00",
+  // }
+   firebaseConfig: {
+    apiKey: "AIzaSyCdQkShCc1pTOquUcBLKkPN1RX3JtdOtXI",
+    authDomain: "my-halobiz-projects.firebaseapp.com",
+    projectId: "my-halobiz-projects",
+    storageBucket: "my-halobiz-projects.appspot.com",
+    messagingSenderId: "937706939066",
+    appId: "1:937706939066:web:eeb95ddb7b23cc71fd1883",
+    measurementId: "G-XV5PPFGJ4P"
+  }
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

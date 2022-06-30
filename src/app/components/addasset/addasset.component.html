@@ -81,54 +81,65 @@
                 <div class="form-container-align-items">
                     <div class="assetView right-padding">
                         <p>Picture (Front)</p>
-                        <img [src]="frontimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
+                        <img [src]="frontimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
                         <label for="frontImage" class="form-label" id="file">
                             <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage" class="material-icons-outlined">photo_camera</mat-icon>
                             <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
                         </label>
-                        <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageSelect($event)">
+                        <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageChange($event)">
                     </div>
                     <div class="assetView left-padding">
                         <p>Picture (Back)</p>
-                        <img [src]="backimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
+                        <img  [src]="backimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
                         <label for="backImage" class="form-label" id="file">
                             <mat-icon [hidden]="assetRegistrationForm_Visuals.value.backImage" class="material-icons-outlined">photo_camera</mat-icon>
                             <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.backImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
                         </label>
-                        <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageSelect($event)">
+                        <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageChange($event)">
                     </div>
                     <div class="assetView right-padding">
                         <p>Picture (Left Side)</p>
-                        <img [src]="leftimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
+                        <img  [src]="leftimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
                         <label for="leftImage" class="form-label" id="file">
                             <mat-icon [hidden]="assetRegistrationForm_Visuals.value.leftImage" class="material-icons-outlined">photo_camera</mat-icon>
                             <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.leftImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
                         </label>
-                        <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageSelect($event)">
+                        <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageChange($event)">
                     </div>
                     <div class="assetView left-padding">
                         <p>Picture (Right Side)</p>
-                        <img [src]="rightimageUrl" title="Profile Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
+                        <img [src]="rightimageUrl" title="Vehicle Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
                         <label for="rightImage" class="form-label" id="file">
                             <mat-icon [hidden]="assetRegistrationForm_Visuals.value.rightImage" class="material-icons-outlined">photo_camera</mat-icon>
                             <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.rightImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
                         </label>
-                        <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageSelect($event)">
+                        <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageChange($event)">
                     </div>
                     <div class="assetView right-padding">
                         <p>Picture (Interior)</p>
-                        <img [src]="interiorimageUrl" title="Profile Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
+                        <img [src]="interiorimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
                         <label for="interiorImage" class="form-label" id="file">
                             <mat-icon [hidden]="assetRegistrationForm_Visuals.value.interiorImage" class="material-icons-outlined">photo_camera</mat-icon>
                             <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.interiorImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
                         </label>
                         <input formControlName="interiorImage" type="file" id="interiorImage" style="display:none" accept="image/*"
-                            (change)="onInteriorImageSelect($event)">
+                            (change)="onInteriorImageChange($event)">
                     </div>
+                    <div class="assetView left-padding">
+                      <p>Picture (Top)</p>
+                      <img [src]="topimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.topImage">
+                      <label for="topImage" class="form-label" id="file">
+                          <mat-icon [hidden]="assetRegistrationForm_Visuals.value.topImage" class="material-icons-outlined">photo_camera</mat-icon>
+                          <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.topImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
+                      </label>
+                      <input formControlName="topImage" type="file" id="topImage" style="display:none" accept="image/*"
+                          (change)="onTopImageChange($event)">
+                  </div>
                   </div>
                         <button class="next btn btn-primary" [disabled]="!assetRegistrationForm_Visuals.valid" (click)="scheduleForm()">Next</button>
                         <button class="next btn btn-default" (click)="assetForm()">Back</button>
@@ -140,7 +151,7 @@
                 <form [formGroup]="assetRegistrationForm_Schedule" class="col-8" #schedule="ngForm">
                     <div class="col-6">
                         <label for="state" class="form-label">State</label>
-                        <select formControlName="statename" #stateSelected class="form-select" ngModel id="statename" (change)="fetchServiceCentres(stateSelected.value)">
+                        <select formControlName="statename" #stateSelected class="form-select" id="statename" (change)="fetchServiceCentres(stateSelected.value)">
                             <option [value]="st.stateName" *ngFor="let st of states">{{st.stateName}}</option>
                         </select>
                     </div>
@@ -148,7 +159,7 @@
                     <div class="col-6">
                         <label for="center" class="form-label">Service Center</label>
                         <select formControlName="center" #centreSelected  id="center" class="form-select" (change)="selectServiceCentres(centreSelected.value)">
-                          <option [value]="sc.centre_id" *ngFor="let sc of serviceCentres">{{sc.centre_id + ' - ' + sc.address }}</option>
+                          <option [value]="sc.service_desc" *ngFor="let sc of serviceCentres">{{sc.service_desc + '  -  ' + sc.address }}</option>
                       </select>
                     </div>
                     <div class="col-6" id="datetime">
@@ -168,7 +179,11 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary col-6" [disabled]="!assetRegistrationForm_Schedule.valid" (click)="paymentPage(content)">Book Appointment</button>
+                    <button type="button" class="btn btn-default col-6" (click)="visualsForm()">Back</button>
                 </form>
+                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+                  <p style="color: white">Please Wait... </p>
+                  </ngx-spinner>
             </ng-template>
 
 

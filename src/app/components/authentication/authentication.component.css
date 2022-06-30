@@ -23,7 +23,7 @@ h1{
     justify-content: center;
     align-items: center;
 }
-.section1 p{ 
+.section1 p{
     font-style: normal;
     font-weight: 500;
     font-size: 60px;
@@ -38,7 +38,7 @@ h1{
     margin: 0 5px;
 }
 #important{
-    color:#11437A; 
+    color:#11437A;
 }
 .signin{
     padding: 10px;
@@ -103,9 +103,9 @@ border: 0;
 .signin .frame{
     width: 100%;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px 0; 
+    margin: 10px 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .signin .frame h1,p{
@@ -121,7 +121,7 @@ border: 0;
     cursor: pointer;
 }
 .type{
-    display: flex; 
+    display: flex;
 }
 .bus, .ind{
     display: flex;
@@ -136,7 +136,7 @@ border: 0;
 }
 .bus img{
     width: 60%;
-    height: 60%; 
+    height: 60%;
 }
 .back:hover{
     border: 2px solid #7db8f8;
@@ -147,7 +147,7 @@ border: 0;
     align-items: center;
     width: 50px;
     height: 50px;
-    border-radius: 50px; 
+    border-radius: 50px;
     background-color: rgba(104, 104, 104, 0.2);
 }
 .bus span{
@@ -155,7 +155,7 @@ border: 0;
 }
 .ind img{
     width: 90%;
-    height: 90%; 
+    height: 90%;
     border-radius: 15px;
 }
 .ind span{
@@ -179,9 +179,9 @@ border: 0;
 .login{
     width: 100%;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px 0; 
+    margin: 10px 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     font-family: 'Poppins', sans-serif;
 
@@ -199,9 +199,9 @@ border: 0;
 .loginPassword{
     width: 100%;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px 0; 
+    margin: 10px 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     font-family: 'Poppins', sans-serif;
 }
@@ -241,18 +241,18 @@ border: 0;
 .individual,.individualAddress, .individualPassword{
     width: 100%;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px 0; 
+    margin: 10px 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     font-family: 'Poppins', sans-serif;
 }
 .bussiness,.businessAddress,.businessContact,.businessPassword{
     width: 100%;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     padding: 20px;
-    margin: 10px 0; 
+    margin: 10px 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     font-family: 'Poppins', sans-serif;
 }
@@ -262,7 +262,7 @@ border: 0;
     display: flex;
     flex-direction: column;
     border: 2px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;  
+    border-radius: 10px;
     width: 25rem;
     padding: 20px;
     /* margin: 20px 0;  */
@@ -276,7 +276,7 @@ border: 0;
     font-size: 13px;
 }
 .otpCode button{
-    
+
     margin: 5px 0;
     font-family: Poppins;
 }
@@ -332,6 +332,15 @@ border: 0;
         flex-direction: column;
         margin: 50px 0;
         overflow: scroll;
-        
+
     }
+}
+
+.error-message-signin{
+  color: red;
+   padding-left: 15px;
+}
+
+.margintop{
+  margin-top: 10px;
 }

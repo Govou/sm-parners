@@ -22,9 +22,9 @@ export class AppComponent {
   }
 
   isauthRouth(){
-    return this.router.url === '/authentication';
+    return this.router.url === '/auth';
   }
-  
+
   isSideNavCollapsed = false;
   screenWidth = 0;
   onToggleSideNav( data: SideNavToggle):void{

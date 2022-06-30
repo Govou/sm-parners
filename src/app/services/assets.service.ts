@@ -6,6 +6,7 @@ import { ServiceCenterResponse } from '../model/dtos/service-centre-response';
 import { ServiceAddition } from '../model/service-addition';
 import { AddAsset } from '../model/dtos/addasset';
 import { DashboardDetails } from '../model/dashboard';
+import { PostTransactions } from '../model/dtos/post-transactions';
 
 @Injectable({
   providedIn: 'root'
@@ -96,7 +97,7 @@ export class AssetsService {
 
   }
 
-  getDashboarsItems(profileId: any){
+  getDashboardItems(profileId: any){
     return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/Dashboard?profileId=${profileId}`)
     .pipe(map(res => {
       let dashboard!: DashboardDetails;
@@ -110,4 +111,14 @@ export class AssetsService {
 
   }
 
+  postTransaction(transaction: PostTransactions){
+    return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSContract/PostSupplierTransaction`, transaction)
+                          .pipe(map(res => {
+                            return res;
+                          })
+                        )
+
+  }
+
 }
+

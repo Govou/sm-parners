@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "my-halobiz-projects": {
+      "hosting": {
+        "partners": [
+          "my-halobiz-projects"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "my-halobiz-projects"
+  }
+}

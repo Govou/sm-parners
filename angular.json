@@ -101,6 +101,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "partners:build:production",
+            "firebaseProject": "my-halobiz-projects",
+            "firebaseHostingSite": "my-halobiz-projects"
+          }
         }
       }
     }

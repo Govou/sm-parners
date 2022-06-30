@@ -27,11 +27,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxSpinnerModule } from "ngx-spinner";
-
-
-const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent}
-];
+import { AuthGuard } from './auth-guard.guard';
+import { environment } from "../environments/environment";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireModule } from '@angular/fire/compat';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 
 @NgModule({
@@ -65,10 +65,12 @@ const routes: Routes = [
     NgxUiLoaderModule,
     NgxSpinnerModule,
     Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
-
-    RouterModule.forRoot(routes)
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig), // Your config
+    LazyLoadImageModule
   ],
-  providers: [],
+  exports: [RouterModule],
+  providers: [AuthGuard, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

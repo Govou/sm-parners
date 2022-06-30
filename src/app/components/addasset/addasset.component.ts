@@ -10,7 +10,11 @@ import { NgbModalConfig,NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AssetRegistrationForm_1, AssetRegistrationForm_Schedule, AssetRegistrationForm_Visuals } from 'src/app/model/assetaddition';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
-
+import { AngularFireStorage } from "@angular/fire/compat/storage";
+import { initializeApp } from "firebase/app";
+import { Observable } from 'rxjs/internal/Observable';
+import { finalize } from 'rxjs';
+import { PostTransactions } from 'src/app/model/dtos/post-transactions';
 
 @Component({
   selector: 'app-addasset',
@@ -23,7 +27,8 @@ export class AddassetComponent implements OnInit {
     private assetService: AssetsService,
     private utilitiesService: UtilitiesService,
     private router: Router,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private storage: AngularFireStorage
     ) { }
 
   serviceCentres: ServiceCenterResponse[] = [];
@@ -33,16 +38,35 @@ export class AddassetComponent implements OnInit {
   categories: {categoryId: number, categoryName: string}[] = [];
   carTypes: string[] = [];
 
-  frontimageUrl: string = "";
-  backimageUrl: string = "";
-  leftimageUrl: string = "";
-  rightimageUrl: string = "";
-  interiorimageUrl: string = "";
+  frontimageUrl: any;
+  backimageUrl: any;
+  leftimageUrl: any;
+  rightimageUrl:any;
+  interiorimageUrl: any;
+  topimageUrl: any;
+
+  uploadedfrontimageUrl: any;
+  uploadedbackimageUrl: any;
+  uploadedleftimageUrl: any;
+  uploadedrightimageUrl:any;
+  uploadedinteriorimageUrl: any;
+  uploadedtopimageUrl: any;
+
+  frontimageFile!: any;
+  backimageFile!: any;
+  leftimageFile!: any;
+  rightimageFile!: any;
+  interiorimageFile!: any;
+  topimageFile!: any;
+
+  downloadURL: Observable<string> | undefined;
+  imageUrl: any;
 
   reference = '';
   title = '';
   bookingPrice = 0;
   seletedMake = '';
+  paymentStatus = '';
 
   assetRegistrationForm!: FormGroup;
   assetRegistrationForm_Visuals! : FormGroup;
@@ -85,7 +109,8 @@ export class AddassetComponent implements OnInit {
       'backImage': new FormControl(null, Validators.required),
       'leftImage': new FormControl(null, Validators.required),
       'rightImage': new FormControl(null, Validators.required),
-      'interiorImage': new FormControl(null, Validators.required)
+      'interiorImage': new FormControl(null, Validators.required),
+      'topImage': new FormControl(null)
     });
 
     this.assetRegistrationForm_Schedule = new FormGroup({
@@ -120,74 +145,171 @@ export class AddassetComponent implements OnInit {
 
   }
 
+  onFrontImageChange(event: any) {
+    const reader = new FileReader();
 
-  onLeftImageSelect(event:any) {
-    let fileType = event.target.files[0].type;
-    if (fileType.match(/image\/*/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.leftimageUrl = event.target.result;
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.frontimageFile = file;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.frontimageUrl = reader.result as string;
       };
-    } else {
-      window.alert('Please select correct image format');
+      this.frontImageUpload();
     }
   }
 
-  onRightImageSelect(event:any) {
-    let fileType = event.target.files[0].type;
-    if (fileType.match(/image\/*/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.rightimageUrl = event.target.result;
+  onBackImageChange(event: any) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.backimageFile = file
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.backimageUrl = reader.result as string;
       };
-    } else {
-      window.alert('Please select correct image format');
+      this.backImageUpload();
     }
   }
 
-  onBackImageSelect(event:any) {
-    let fileType = event.target.files[0].type;
-    if (fileType.match(/image\/*/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.backimageUrl = event.target.result;
+  onLeftImageChange(event: any) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.leftimageFile = file;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.leftimageUrl = reader.result as string;
       };
-    } else {
-      window.alert('Please select correct image format');
+      this.leftImageUpload();
     }
   }
 
-  onInteriorImageSelect(event:any) {
-    let fileType = event.target.files[0].type;
-    if (fileType.match(/image\/*/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.interiorimageUrl = event.target.result;
+  onRightImageChange(event: any) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.rightimageFile = file;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.rightimageUrl = reader.result as string;
       };
-    } else {
-      window.alert('Please select correct image format');
+      this.rightImageUpload();
     }
   }
 
-  onFrontImageSelect(event:any) {
-    let fileType = event.target.files[0].type;
-    if (fileType.match(/image\/*/)) {
-      let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.frontimageUrl = event.target.result;
+  onInteriorImageChange(event: any) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.interiorimageFile = file;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.interiorimageUrl = reader.result as string;
       };
-    } else {
-      window.alert('Please select correct image format');
+      this.interiorImageUpload();
     }
   }
+
+  onTopImageChange(event: any) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.topimageFile = file;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.topimageUrl = reader.result as string;
+      };
+      this.topImageUpload();
+    }
+  }
+
+  frontImageUpload(){
+    this.imageUpload(this.frontimageFile, "front");
+  }
+
+  backImageUpload(){
+    this.imageUpload(this.backimageFile, "back");
+  }
+
+  leftImageUpload(){
+   this.imageUpload(this.leftimageFile, "left");
+  }
+
+  rightImageUpload(){
+   this.imageUpload(this.rightimageFile, "right");
+  }
+
+  interiorImageUpload(){
+    this.imageUpload(this.interiorimageFile, "interior");
+  }
+
+  topImageUpload(){
+    this.imageUpload(this.topimageFile, "top");
+  }
+
+
+  imageUpload(selectedfile: any, position: string) {
+    let imageUrl = '';
+    var n = Date.now();
+    const filePath = `NewSupplierServices/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(`NewSupplierServices/${n}`, selectedfile);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe(url => {
+            imageUrl = url;
+            if(position == "top"){
+              this.uploadedtopimageUrl = imageUrl;
+            }
+            if(position == "back"){
+              this.uploadedbackimageUrl = imageUrl;
+            }
+            if(position == "right"){
+              this.uploadedrightimageUrl = imageUrl;
+            }
+            if(position == "left"){
+              this.uploadedleftimageUrl = imageUrl;
+            }
+            if(position == "front"){
+              this.uploadedfrontimageUrl = imageUrl;
+            }
+            if(position == "interior"){
+              this.uploadedinteriorimageUrl = imageUrl;
+            }
+          });
+        })
+      )
+      .subscribe(url => {
+        if (url) {
+         // console.log(url);
+        }
+      });
+      //console.log(imageUrl);
+  }
+
 
   fetchServiceCentres(state: string){
+    this.assetRegistrationForm_Schedule.patchValue({
+      'price': ''
+    });
+    this.spinnerService.show();
     this.assetService.getServiceCentres(state).subscribe(res => {
+      this.spinnerService.hide();
       this.serviceCentres = res;
     });
   }
@@ -200,17 +322,23 @@ export class AddassetComponent implements OnInit {
     });
   }
 
-  selectServiceCentres(centre: string){
+  selectServiceCentres(service_desc: string){
     this.assetRegistrationForm_Schedule.patchValue({
       'price': ''
     });
-    let selectedCentre = this.serviceCentres.filter((x:ServiceCenterResponse)=>{ return x.centre_id == centre;})[0];
+    let selectedCentre = this.serviceCentres.filter((x:ServiceCenterResponse)=>{ return x.service_desc == service_desc;})[0];
     console.log(selectedCentre);
     this.assetRegistrationForm_Schedule.patchValue({
       'price': selectedCentre.amount,
     });
-    this.bookingPrice = Number.parseInt(selectedCentre.amount) ;
+    if(selectedCentre.amount == "" || selectedCentre.amount == null){
+      this.bookingPrice = 0;
+    }else{
+      this.bookingPrice = Number.parseInt(selectedCentre.amount) ;
+    }
+
   }
+
 
   getMakeName(): string{
     const makeId = Number.parseInt(this.seletedMake);
@@ -218,18 +346,26 @@ export class AddassetComponent implements OnInit {
     return selectedCar.name;
   }
 
-  getServiceCentre(centrId: string): ServiceCenterResponse{
-    const serviceCentre = this.serviceCentres.filter((x:ServiceCenterResponse) => x.centre_id == centrId)[0];
+  getServiceCentre(centreDesc: string): ServiceCenterResponse{
+    const serviceCentre = this.serviceCentres.filter((x:ServiceCenterResponse) => x.service_desc == centreDesc)[0];
     return serviceCentre;
   }
 
   addNewAsset(payref: string, paygateway: string){
+
+    // this.leftImageUpload();
+    // this.rightImageUpload();
+    // this.interiorImageUpload();
+    // this.topImageUpload();
+    // this.backImageUpload();
+
     const asset_1: AssetRegistrationForm_1 = this.assetRegistrationForm.value;
     const asset_2: AssetRegistrationForm_Visuals = this.assetRegistrationForm_Visuals.value;
     const asset_3: AssetRegistrationForm_Schedule = this.assetRegistrationForm_Schedule.value;
+
     const make = this.getMakeName();
     const serviceCentre = this.getServiceCentre(asset_3.center);
-    const profileId: string | undefined = localStorage.getItem('profileId')?.toString();
+    const profileId: any  = localStorage.getItem('profileId')?.toString();
     var asset: AddAsset = {
       serviceName: make + ' ' + asset_1.model,
       make: make,
@@ -239,27 +375,27 @@ export class AddassetComponent implements OnInit {
       trackerId: '',
       isAvailable: true,
       serialNumber: asset_1.chasis,
-      identificationNumber: asset_1.identificationnumber,
+      identificationNumber: asset_1.platenumber,
       referenceNumber1: asset_1.platenumber,
       referenceNumber2: '',
       referenceNumber3: '',
-      unitCostPrice: serviceCentre.amount,
-      averagePrice: serviceCentre.amount,
+      unitCostPrice: asset_3.price,
+      averagePrice: asset_3.price,
       standardDiscount: '',
       supplierId: 0,
-      frontViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
-      leftViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
-      rightViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
-      rearViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
-      topViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
-      interiorViewImage: 'https://firebasestorage.googleapis.com/v0/b/halo-biz.appspot.com/o/ServiceItem%2F1655281123984?alt=media&token=e94568e3-4a26-4d01-add3-d70522f74d21',
+      frontViewImage: this.uploadedfrontimageUrl,
+      leftViewImage: this.uploadedleftimageUrl,
+      rightViewImage: this.uploadedrightimageUrl,
+      rearViewImage: this.uploadedbackimageUrl,
+      topViewImage: this.uploadedbackimageUrl, // localStorage.getItem('interiorImage')?.toString(),
+      interiorViewImage: this.uploadedtopimageUrl, // localStorage.getItem('topImage')?.toString(),
       description: make + ' ' + asset_1.model,
       year: asset_1.year,
       paymentGateway: paygateway,
       paymentReference: payref,
       centreId: serviceCentre.centre_id,
       paymentType: 'online',
-      bookingAmount: serviceCentre.amount,
+      bookingAmount: asset_3.price, //serviceCentre.amount,
       bookingAddress: serviceCentre.address,
       bookingState: serviceCentre.state,
       appointmentDate: asset_3.date,
@@ -271,9 +407,28 @@ export class AddassetComponent implements OnInit {
 
     console.log(asset);
     this.assetService.addNewAsset(asset).subscribe(res =>{
-      this.spinnerService.hide();
         console.log(res);
         if (res.responseCode == "00"){
+
+          var transaction: PostTransactions = {
+            profileId: Number.parseInt(profileId),
+            paymentGateway: paygateway,
+            paymentReferenceInternal: '',
+            paymentReferenceGateway: payref,
+            contractId: 0,
+            paymentGatewayResponseCode: this.paymentStatus,
+            paymentGatewayResponseDescription: this.paymentStatus,
+            value: Number.parseInt(asset_3.price),
+            vat: 0,
+            transactionType: 'Supplier Payment',
+            transactionSource: 'Secure mobility Web',
+            paymentConfirmed: true
+          };
+
+          this.assetService.postTransaction(transaction).subscribe(res =>{
+            console.log(res);
+            this.spinnerService.hide();
+          })
           this.router.navigate(['/dashboard']);
         }
     })
@@ -303,9 +458,11 @@ export class AddassetComponent implements OnInit {
     this.modalService.dismissAll(ref);
     this.spinnerService.show();
     console.log(this.title, ref);
+    this.paymentStatus = ref.status;
     if(ref.status == 'success'){
         this.addNewAsset(ref.reference, 'paystack');
     }
+
   }
 
   paymentCancel() {
@@ -317,6 +474,18 @@ export class AddassetComponent implements OnInit {
     this.assetRegistrationForm.reset(this.assetRegistrationForm.value);
    this.assetRegistrationForm_Visuals.reset(this.assetRegistrationForm_Visuals.value);
    this.assetRegistrationForm_Schedule.reset(this.assetRegistrationForm_Schedule.value);
+  }
+
+  postTransaction(transaction: PostTransactions){
+    this.assetService.postTransaction(transaction).subscribe(res => {
+      if(res.responseCode == "00"){
+        return "success";
+      }
+      else
+      {
+        return "failed";
+      }
+    })
   }
 
 }

@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.calendar.getToday();
     const profileId = localStorage.getItem('profileId')?.toString();
-    this.assetservice.getDashboarsItems(profileId).subscribe(res => {
+    this.assetservice.getDashboardItems(profileId).subscribe(res => {
        this.dashboard = res;
     })
   }

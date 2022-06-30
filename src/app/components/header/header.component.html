@@ -24,14 +24,19 @@
              About
             </a>
           </li>
-          <li [style.visibility]="isLoggedIn == false" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+          <li [hidden]="isLoggedIn" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
             <a  id="signup"  routerLink="/authentication" tabindex="0" role="button">
                Sign up
             </a>
           </li>
-          <li [style.visibility]="isLoggedIn == false" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+          <li [hidden]="isLoggedIn" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
             <a  id="signin" routerLink="/authentication" tabindex="0" role="button">
              Sign in
+            </a>
+          </li>
+          <li [hidden]="!isLoggedIn" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+            <a  id="signOut" (click)="signOut()" tabindex="0" role="button">
+             Sign out
             </a>
           </li>
 

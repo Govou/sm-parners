@@ -1,18 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BusinessSignUp } from '../model/business-signup';
 import { IndividualSignup } from '../model/individual-signup';
+import { UserAuth } from '../model/user-auth';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignupService {
+export class AuthService {
 
+  user = new Subject<UserAuth>();
   constructor(private httpClient: HttpClient) { }
 
-  halobizBaseUrl = environment['halobizBaseUrl']
+  token: string = '';
+  profileId: any;
+  name: string = '';
+  email: string = '';
+  loggedIn: boolean = false;
+  halobizBaseUrl = environment['halobizBaseUrl'];
+
+  public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   individualSignupService(request: IndividualSignup){
     return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSAccount/CreateSupplierIndividualAccount`, request)
@@ -70,10 +80,28 @@ export class SignupService {
     return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSAuth/SupplierLogin`, request)
                           .pipe(map(res => {
                             console.log(res);
+                            if(res.responseCode == "00"){
+                              this.token = res.responseData.token;
+                              this.email = res.responseData.email;
+                              this.profileId = res.responseData.profileId;
+                              this.name = res.responseData.name;
+                              this.loggedIn = true
+                              localStorage.setItem('isLoggedIn', "true")
+                            }
                             return res;
                             })
+
                           )
 
   }
 
+
+  signOut(){
+    this.token = '';
+    this.email = '';
+    this.profileId = null;
+    this.name = '';
+    this.loggedIn = false;
+    localStorage.setItem('isLoggedIn', "false")
+  }
 }

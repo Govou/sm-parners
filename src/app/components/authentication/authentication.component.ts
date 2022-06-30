@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { slideInAnimation, frameAnimation } from 'src/app/animations/app.animation';
@@ -8,7 +8,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { IndividualAddress, IndividualDetails } from 'src/app/model/individual-account-registration';
 import { AccountLogin, IndividualSignup } from 'src/app/model/individual-signup';
-import { SignupService } from 'src/app/services/signup.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { BusinessContact, BusinessCred, BusinessDetail, BusinessLocation } from 'src/app/model/business-account-registration';
 import { BusinessSignUp } from 'src/app/model/business-signup';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -29,7 +29,7 @@ export class AuthenticationComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private toast: NgToastService,
     private utilitiesService: UtilitiesService,
-    private signupService: SignupService,
+    private signupService: AuthService,
     private spinnerService: NgxSpinnerService
     ) { }
 
@@ -40,6 +40,7 @@ export class AuthenticationComponent implements OnInit {
   errorMsg:any;
 
   email: string = '';
+  signIn: boolean = false;
 
   states: {stateName: string, stateId: number}[] = [];
   lgas: {lgaName: string, lgaId: number, stateId: number}[] = [];
@@ -123,7 +124,6 @@ export class AuthenticationComponent implements OnInit {
 
     this.signInForm = new FormGroup({
       'email': new FormControl(null, Validators.required)
-
     });
 
     this.signInFormPassword = new FormGroup({
@@ -281,7 +281,7 @@ onSubmitIndividualAccoutCreation(){
     street: indAdrress.address,
     address: address,
     imageUrl: '',
-    primaryContactName:  indDetail.firstname + " " + indDetail.lastname,
+    primaryContactName:  indDetail.firstname + ' ' + indDetail.lastname,
     primaryContactEmail: indDetail.email,
     primaryContactMobile: indDetail.phone,
     primaryContactGender: indDetail.email,
@@ -362,7 +362,6 @@ onSubmitVerifyCode(){
 
 onSubmitLogin(){
   this.spinnerService.show();
-  console.log("attempt");
   const ema: {email: string} = this.signInForm.value;
   const pass: {password: string} = this.signInFormPassword.value;
   const credentials = {email: ema.email, password: pass.password};
@@ -370,16 +369,22 @@ onSubmitLogin(){
     this.spinnerService.hide();
    if(res.responseCode == "00"){
      console.log(res);
-    localStorage.setItem('signInToken', res.responseData.token);
-    localStorage.setItem('profileId', res.responseData.userProfile.id)
+    //localStorage.setItem('profileId', res.responseData.userProfile.id)
+
+    localStorage.setItem('isLoggedIn', "true");
+    this.signIn = true;
     this.router.navigate(['dashboard']);
-    console.log('not responding');
    }
    else{
-
+    localStorage.setItem('isLoggedIn', "false")
+    this.signIn = false;
    }
   })
 
+  if(this.signIn == true){
+    console.log("kkk", this.signIn);
+    this.signupService.isUserLoggedIn?.next(true);
+  }
 
 }
 
@@ -395,5 +400,12 @@ resetForm(){
   this.signInForm.reset(this.signInForm.value);
   this.signInFormPassword.reset(this.signInFormPassword.value);
 }
+
+reloadComponent() {
+  let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+  }
 
 }
