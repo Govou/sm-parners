@@ -72,6 +72,9 @@ export class AddassetComponent implements OnInit {
   assetRegistrationForm_Visuals! : FormGroup;
   assetRegistrationForm_Schedule! : FormGroup;
 
+  error = null;
+  //isLoading: boolean = false;
+
   ngOnInit(): void {
     this.page = 'asset'
 
@@ -336,7 +339,6 @@ export class AddassetComponent implements OnInit {
     }else{
       this.bookingPrice = Number.parseInt(selectedCentre.amount) ;
     }
-
   }
 
 
@@ -428,8 +430,12 @@ export class AddassetComponent implements OnInit {
           this.assetService.postTransaction(transaction).subscribe(res =>{
             console.log(res);
             this.spinnerService.hide();
-          })
-          this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard']);
+        }, error => {
+          this.error = error.message;
+          this.spinnerService.hide();
+        })
+
         }
     })
   }
@@ -477,6 +483,7 @@ export class AddassetComponent implements OnInit {
   }
 
   postTransaction(transaction: PostTransactions){
+    console.log(transaction);
     this.assetService.postTransaction(transaction).subscribe(res => {
       if(res.responseCode == "00"){
         return "success";

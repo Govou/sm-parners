@@ -13,6 +13,8 @@ import { BusinessContact, BusinessCred, BusinessDetail, BusinessLocation } from 
 import { BusinessSignUp } from 'src/app/model/business-signup';
 import { NgxSpinnerService } from "ngx-spinner";
 import { coerceStringArray } from '@angular/cdk/coercion';
+import { DisplayService } from 'src/app/services/display.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-authentication',
@@ -30,7 +32,9 @@ export class AuthenticationComponent implements OnInit {
     private toast: NgToastService,
     private utilitiesService: UtilitiesService,
     private signupService: AuthService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private displayService: DisplayService,
+    private toasters: ToastrService
     ) { }
 
 
@@ -56,6 +60,8 @@ export class AuthenticationComponent implements OnInit {
   otpForm!: FormGroup;
   signInForm!: FormGroup;
   signInFormPassword!: FormGroup;
+
+  error = null;
 
   ngOnInit(): void {
     this.page='home';
@@ -370,7 +376,7 @@ onSubmitLogin(){
    if(res.responseCode == "00"){
      console.log(res);
     //localStorage.setItem('profileId', res.responseData.userProfile.id)
-
+     this.displayService.changeShowSignIns(true);
     localStorage.setItem('isLoggedIn', "true");
     this.signIn = true;
     this.router.navigate(['dashboard']);
@@ -379,12 +385,12 @@ onSubmitLogin(){
     localStorage.setItem('isLoggedIn', "false")
     this.signIn = false;
    }
+  }, error => {
+    this.spinnerService.hide();
+    console.log(error)
+    this.error = error;
+    this.toasters.error('An error has occured!')
   })
-
-  if(this.signIn == true){
-    console.log("kkk", this.signIn);
-    this.signupService.isUserLoggedIn?.next(true);
-  }
 
 }
 

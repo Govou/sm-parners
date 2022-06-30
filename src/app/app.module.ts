@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 // import {NgxPageScrollModule} from 'ngx-page-scroll';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxUiLoaderModule } from "ngx-ui-loader";
 import { Angular4PaystackModule } from 'angular4-paystack';
 
@@ -32,6 +32,8 @@ import { environment } from "../environments/environment";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from '@angular/fire/compat';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { ServerErrorsInterceptor } from './interceptors/error-handling.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -67,10 +69,20 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     Angular4PaystackModule.forRoot('pk_test_xxxxxxxxxxxxxxxxxxxxxxxx'),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), // Your config
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: "toast-bottom-left",
+    }),
   ],
   exports: [RouterModule],
-  providers: [AuthGuard, ],
+  // providers: [AuthGuard, {
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: ServerErrorsInterceptor,
+  //   multi:true
+  // }],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

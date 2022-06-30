@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { DisplayService } from 'src/app/services/display.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +11,15 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  subscription: Subscription = new Subscription();
+  public isLoggedIn: boolean = false;
 
-  isLoggedIn: boolean = false;
-  constructor(private location:Location,private router:Router, private authService: AuthService) { }
+  constructor(private location:Location,private router:Router, private authService: AuthService, private displayService: DisplayService) {
+    this.subscription = displayService.newShow.subscribe(
+      res => {
+          this.isLoggedIn = res;
+        })
+      }
   item:any;
   userName:any;
   ngOnInit(): void {
@@ -19,9 +27,7 @@ export class HeaderComponent implements OnInit {
     if(localStorage.getItem("isLoggedIn") == "true"){
       this.isLoggedIn = true;
     }
-    this.authService.isUserLoggedIn.subscribe( value => {
-      this.isLoggedIn = value;
-  });
+
 
     console.log(this.isLoggedIn)
     // if(this.location.path() != "/authentication")this.item = 'show';
@@ -29,13 +35,6 @@ export class HeaderComponent implements OnInit {
 
 
   homepage(){
-    if(localStorage.getItem("isLoggedIn") == "true"){
-      this.isLoggedIn = true;
-    }
-
-    this.authService.isUserLoggedIn.subscribe( value => {
-      this.isLoggedIn = value;
-  });
 
     // if(localStorage.getItem('token')){
     //   this.router.navigate(['/dashboard'])

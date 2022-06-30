@@ -24,19 +24,29 @@ export class AuthService {
 
   public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  error = new Subject<string>();
+
   individualSignupService(request: IndividualSignup){
     return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSAccount/CreateSupplierIndividualAccount`, request)
                           .pipe(map(res => {
                             let result = "";
+                            console.log('heyyyyyy')
                             if(res.responseCode =="00")
                             {
                               result = "success"
                             }
                             else{
-                              result = `failed - ${res.responseData}`
+                            //  result = `failed - ${res.responseData}`
+                            if(res.responseMsg){
+                              throw new Error(res.responseMsg)
+                            }
+                            else{
+                              throw new Error('A system error occured!')
+                            }
+
                             }
                             return result;
-                            })
+                            }),
                           )
 
   }
