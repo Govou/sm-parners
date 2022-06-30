@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { slideInAnimation, frameAnimation } from 'src/app/animations/app.animation';
@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     slideInAnimation, frameAnimation
   ]
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
     private endpoint:EndpointsService,
@@ -414,4 +414,7 @@ reloadComponent() {
       this.router.navigate([currentUrl]);
   }
 
+  ngOnDestroy(): void {
+   // this.displayService.ngOnDestroy();
+  }
 }

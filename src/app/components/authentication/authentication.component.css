@@ -33,9 +33,42 @@ h1{
 }
 .section1 .buttons{
     display: flex;
+    margin-top: 10px;
 }
 .section1 .buttons button{
     margin: 0 5px;
+}
+.section1 .buttons #signup{
+    color: #1C2B66;
+    border: 0.5px solid #1C2B66;
+border-radius: 10px;
+font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+padding: 20px;
+}
+.section1 .buttons #signup:hover{
+background: #1C2B66;
+color: #fff;
+
+}
+.section1 .buttons #signin{
+    padding: 20px 30px;
+    font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+color: #fff;
+background: #11437A;
+border-radius: 10px;
+}
+.section1 .buttons #signin:hover{
+    background: #062a51;
+}
+.footer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 10px;
 }
 #important{
     color:#11437A;
@@ -186,15 +219,21 @@ border: 0;
     font-family: 'Poppins', sans-serif;
 
 }
+ .form-control:focus{
+    outline: none;
+  }
 .login p{
+    font-weight: 400;
     font-size: 14px;
-    color: #007AFF;
+    line-height: 140%;    color: #11437A;
 }
 .login button{
-    margin-top: 10px;
+    margin-top: 20px;
     width: 100%;
     font-weight: 600;
     font-size: 17px;
+    background: #11437A;
+border-radius: 5px;
 }
 .loginPassword{
     width: 100%;
@@ -209,6 +248,8 @@ border: 0;
     width: 100%;
     font-weight: 600;
     font-size: 17px;
+    background: #11437A;
+
 }
 .loginPassword p{
     font-size: 14px;
@@ -236,6 +277,9 @@ border: 0;
 .info p span{
     color: #000;
     font-family: 'Poppins', sans-serif;
+}
+.btn-deepblue{
+    background: #11437A;
 }
 
 .individual,.individualAddress, .individualPassword{
@@ -342,5 +386,5 @@ border: 0;
 }
 
 .margintop{
-  margin-top: 10px;
+  margin: 15px 0;
 }

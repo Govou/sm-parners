@@ -34,6 +34,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { ServerErrorsInterceptor } from './interceptors/error-handling.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { NgToastModule } from 'ng-angular-popup';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 5000,
       positionClass: "toast-bottom-left",
     }),
+    NgToastModule
   ],
   exports: [RouterModule],
   // providers: [AuthGuard, {
