@@ -92,11 +92,11 @@ export class AuthService {
                             console.log(res);
                             if(res.responseCode == "00"){
                               this.token = res.responseData.token;
-                              this.email = res.responseData.email;
-                              this.profileId = res.responseData.profileId;
-                              this.name = res.responseData.name;
+                              this.email = res.responseData.userProfile.email;
+                              this.profileId = res.responseData.userProfile.id;
+                              localStorage.setItem('pid', this.profileId)
+                              this.name = res.responseData.userProfile.name;
                               this.loggedIn = true
-                              localStorage.setItem('isLoggedIn', "true")
                             }
                             return res;
                             })
@@ -112,6 +112,5 @@ export class AuthService {
     this.profileId = null;
     this.name = '';
     this.loggedIn = false;
-    localStorage.setItem('isLoggedIn', "false")
   }
 }

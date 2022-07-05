@@ -44,7 +44,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   errorMsg:any;
 
   email: string = '';
-  signIn: boolean = false;
+  signInFailed: boolean = false;
 
   states: {stateName: string, stateId: number}[] = [];
   lgas: {lgaName: string, lgaId: number, stateId: number}[] = [];
@@ -375,21 +375,22 @@ onSubmitLogin(){
     this.spinnerService.hide();
    if(res.responseCode == "00"){
      console.log(res);
-    //localStorage.setItem('profileId', res.responseData.userProfile.id)
+
      this.displayService.changeShowSignIns(true);
-    localStorage.setItem('isLoggedIn', "true");
-    this.signIn = true;
+    this.signInFailed = false;
+    console.log('66666')
     this.router.navigate(['dashboard']);
    }
    else{
-    localStorage.setItem('isLoggedIn', "false")
-    this.signIn = false;
+    this.signInFailed = true;
    }
   }, error => {
+
     this.spinnerService.hide();
+    this.signInFailed = true;
     console.log(error)
     this.error = error;
-    this.toasters.error('An error has occured!')
+   // this.toasters.error('An error has occured!')
   })
 
 }

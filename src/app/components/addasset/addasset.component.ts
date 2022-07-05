@@ -15,6 +15,7 @@ import { initializeApp } from "firebase/app";
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs';
 import { PostTransactions } from 'src/app/model/dtos/post-transactions';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-addasset',
@@ -28,7 +29,8 @@ export class AddassetComponent implements OnInit {
     private utilitiesService: UtilitiesService,
     private router: Router,
     private spinnerService: NgxSpinnerService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private authService: AuthService
     ) { }
 
   serviceCentres: ServiceCenterResponse[] = [];
@@ -367,7 +369,7 @@ export class AddassetComponent implements OnInit {
 
     const make = this.getMakeName();
     const serviceCentre = this.getServiceCentre(asset_3.center);
-    const profileId: any  = localStorage.getItem('profileId')?.toString();
+    const profileId: any  = this.authService.profileId;
     var asset: AddAsset = {
       serviceName: make + ' ' + asset_1.model,
       make: make,
@@ -389,15 +391,15 @@ export class AddassetComponent implements OnInit {
       leftViewImage: this.uploadedleftimageUrl,
       rightViewImage: this.uploadedrightimageUrl,
       rearViewImage: this.uploadedbackimageUrl,
-      topViewImage: this.uploadedbackimageUrl, // localStorage.getItem('interiorImage')?.toString(),
-      interiorViewImage: this.uploadedtopimageUrl, // localStorage.getItem('topImage')?.toString(),
+      topViewImage: this.uploadedbackimageUrl,
+      interiorViewImage: this.uploadedtopimageUrl,
       description: make + ' ' + asset_1.model,
       year: asset_1.year,
       paymentGateway: paygateway,
       paymentReference: payref,
       centreId: serviceCentre.centre_id,
       paymentType: 'online',
-      bookingAmount: asset_3.price, //serviceCentre.amount,
+      bookingAmount: asset_3.price,
       bookingAddress: serviceCentre.address,
       bookingState: serviceCentre.state,
       appointmentDate: asset_3.date,

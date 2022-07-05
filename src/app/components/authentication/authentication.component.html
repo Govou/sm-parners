@@ -435,7 +435,7 @@
                         <p><span>Business account</span> <span>Example@gmail.com</span></p>
                     </div>
                     <label for="password" class="form-label">Password</label>
-                    <span [hidden]="!signIn" class="error-message-signin">Invalid email or password</span>
+                    <span [hidden]="!signInFailed || error" class="error-message-signin">Invalid email or password</span>
                     <input class="form-control" type="password" formControlName="password" id="password">
                     <button type="submit" [disabled]="!signInFormPassword.valid" class="btn btn-primary margintop">Continue</button>
                     <p>Forgot your password? <a href="">Reset</a></p>
@@ -448,8 +448,7 @@
           <p style="color: white">Please Wait... </p>
           </ngx-spinner>
           <div class="alert alert-danger" *ngIf="error">
-            <h1>An error occured!</h1>
-            <p>{{ error }}</p>
+            <h3>A system error occured, Please contact the system Admin!</h3>
            </div>
     </ng-template>
 

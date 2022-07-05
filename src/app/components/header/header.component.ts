@@ -24,9 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userName:any;
   ngOnInit(): void {
     this.item = 'yes'
-    if(localStorage.getItem("isLoggedIn") == "true"){
-      this.isLoggedIn = true;
-    }
 
 
     console.log(this.isLoggedIn)
@@ -36,15 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   homepage(){
 
-    // if(localStorage.getItem('token')){
-    //   this.router.navigate(['/dashboard'])
-    //   window.location.reload();
-    // }
-    // else{
-    //   this.router.navigate(['/authentication'])
-    //   this.item='yes'
-    //   window.location.reload();
-    // }
+
 
   }
   collapsed = true;
