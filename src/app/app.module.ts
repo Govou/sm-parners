@@ -33,6 +33,8 @@ import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireModule } from '@angular/fire/compat';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgToastModule } from 'ng-angular-popup';
+import { AssetreviewComponent } from './components/assetreview/assetreview.component';
+import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
 
 
 
@@ -48,7 +50,9 @@ import { NgToastModule } from 'ng-angular-popup';
     InformationComponent,
     HeaderComponent,
     BodyComponent,
-    AssetsComponent
+    AssetsComponent,
+    AssetreviewComponent,
+    ServicecentersComponent
   ],
   imports: [
     BrowserModule,

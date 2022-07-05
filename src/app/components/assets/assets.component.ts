@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbAccordionConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+
 import * as $ from 'jquery';
 @Component({
   selector: 'app-assets',
@@ -9,11 +11,13 @@ import * as $ from 'jquery';
 })
 export class AssetsComponent implements OnInit {
 
-  constructor(config: NgbAccordionConfig) { config.type = 'dark' }
+  constructor(config: NgbAccordionConfig,private router: Router) { config.type = 'dark' }
 
   ngOnInit(): void {
 
   }
 
-  
+  addNewAsset(){
+    this.router.navigate(['/addasset']);
+  }
 }

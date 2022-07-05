@@ -1,21 +1,12 @@
 <main>
     <body>
-        <!-- <ng-template> -->
-        <div class="noasset">
-            <img src="/assets/images/Image (1).png" alt="" width="100%">
-            <h2>No asset added</h2>
-            <p>You have not added any asset under management</p>
-            <button class="btn btn-primary" (click)="addNewAsset()">Add a new asset</button>
-        </div>
-    <!-- </ng-template> -->
-    <ng-template>
         <div class="top">
             <div class="side1">
                 <div class="title">
                     <mat-icon>chevron_left</mat-icon>
-                    <b>Assets Under Management</b>
+                    <b>Assets Under Review</b>
                 </div>
-                <p>Assets that have been submitted and reviewed</p>
+                <p>Assets that have been submitted for reviewed</p>
             </div>
             <div class="side2">
                 <button class="btn btn-primary addAsset">Add asset</button>
@@ -42,31 +33,7 @@
                         </div>
                         <div class="lin2">
                             <h2>Toyota Hilux</h2>
-                            <p>Completed</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #DF4567GH</p>
-                        </div>
-                        <div class="lin4">
-                            <img src="/assets/images/ios-14-default-wallpapers-1.jpg" alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>100%</p></section>  
-                           <p><ngb-progressbar type="warning" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p> August 25, 2022 </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>Toyota Hilux</h2>
-                            <p>Completed</p>
+                            <p>Pending</p>
                         </div>
                         <div class="lin3">
                             <p>Plate Number: #DF4567GH</p>
@@ -90,7 +57,7 @@
                         </div>
                         <div class="lin2">
                             <h2>Toyota Hilux</h2>
-                            <p>Completed</p>
+                            <p>Pending</p>
                         </div>
                         <div class="lin3">
                             <p>Plate Number: #DF4567GH</p>
@@ -114,7 +81,31 @@
                         </div>
                         <div class="lin2">
                             <h2>Toyota Hilux</h2>
-                            <p>Completed</p>
+                            <p>Pending</p>
+                        </div>
+                        <div class="lin3">
+                            <p>Plate Number: #DF4567GH</p>
+                        </div>
+                        <div class="lin4">
+                            <img src="/assets/images/pexels-photo-112460.jpeg" alt="">
+                        </div>
+                        <div class="lin5">
+                           <section><p>Progress</p> <p>100%</p></section>  
+                           <p><ngb-progressbar type="warning" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="asset">
+                        <div class="lin1">
+                            <section>
+                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
+                                <p> August 25, 2022 </p>
+                            </section>
+                            <mat-icon>more_horiz</mat-icon>
+                        </div>
+                        <div class="lin2">
+                            <h2>Toyota Hilux</h2>
+                            <p>Pending</p>
                         </div>
                         <div class="lin3">
                             <p>Plate Number: #DF4567GH</p>
@@ -130,87 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="right">
-                <div class="status">
-                    <p>In Progress</p>
-                    <mat-icon>more_horiz</mat-icon>
-                </div>
-                <div class="assets">
-                    <div class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p class="daysleft"> August 25, 2022 </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>Toyota Hilux</h2>
-                            <p id="daysleft">2 days left</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #DF4567GH</p>
-                        </div>
-                        <div class="lin4">
-                            <img src="/assets/images/pexels-photo-112460.jpeg" alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>100%</p></section>  
-                           <p><ngb-progressbar type="warning" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p> August 25, 2022 </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>Toyota Hilux</h2>
-                            <p id="daysleft">2 days left</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #DF4567GH</p>
-                        </div>
-                        <div class="lin4">
-                            <img src="/assets/images/pexels-photo-112460.jpeg" alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>100%</p></section>  
-                           <p><ngb-progressbar type="warning" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p> August 25, 2022 </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>Toyota Hilux</h2>
-                            <p id="daysleft">2 days left</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #DF4567GH</p>
-                        </div>
-                        <div class="lin4">
-                            <img src="/assets/images/pexels-photo-112460.jpeg" alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>100%</p></section>  
-                           <p><ngb-progressbar type="warning" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-            </div>
+           
         </div>
-    </ng-template>
     </body>
 </main>

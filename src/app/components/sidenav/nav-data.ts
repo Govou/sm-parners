@@ -10,14 +10,24 @@ export const navbarData = [
         label: 'Home'
     },
     {
+        routerLink: '/addasset',
+        icon:'create_new_folder',
+        label: 'Add Asset'
+    },
+    {
         routerLink: '/asset',
         icon:'folder',
         label: 'Assets'
     },
     {
-        routerLink: '/addasset',
-        icon:'add_card',
-        label: 'Add Asset'
+        routerLink: '/assetreview',
+        icon:'rule_folder',
+        label: 'Asset Review'
+    },
+    {
+        routerLink: '/servicecenters',
+        icon:'settings_suggest',
+        label: 'Service Centers'
     },
     {
         routerLink: '/settings',

@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs';
 import { PostTransactions } from 'src/app/model/dtos/post-transactions';
 
+
 @Component({
   selector: 'app-addasset',
   templateUrl: './addasset.component.html',
@@ -130,6 +131,9 @@ export class AddassetComponent implements OnInit {
   page:any
   image=true;
 
+  home(){
+    this.router.navigate(['/home']);
+  }
   assetForm(){
     this.page = 'asset'
   }
