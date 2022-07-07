@@ -86,7 +86,7 @@ margin: 0;
 
 .assets{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(270px, 280px));
     padding: 10px;
     align-items: center;
     grid-gap: 30px;

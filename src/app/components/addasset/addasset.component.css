@@ -40,6 +40,7 @@ padding: 5px 100px;
 }
 
 .steps-form {
+  padding-right: 60px;
   display: table;
   width: 70%;
   position: relative; }
@@ -50,7 +51,7 @@ padding: 5px 100px;
   bottom: 0;
   position: absolute;
   content: " ";
-  width: 110%;
+  width: 100%;
   height: 3px;
   background: #11437A;
   }
@@ -110,8 +111,8 @@ form{
   .sec2{
     width: 100%;
     display: flex;
-    justify-content:right;
-    padding-right: 10%;
+    justify-content:center;
+    /* padding-right: 10%; */
 
   }
   #datetime{
