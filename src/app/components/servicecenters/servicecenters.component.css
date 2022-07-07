@@ -67,10 +67,11 @@ background: #11437A;;
     margin-top: 10px;
 }
 .bottom .side1{
+    padding: 20px 40px;
     flex-basis: 50%;
     color: #000;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     
 }
 .state{
@@ -105,8 +106,10 @@ margin-right: 20px;
 }
 .center{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    padding: 5px 0px;
+    border-bottom:  0.5px solid rgba(0, 0, 0, 0.15);
 }
 .side2{
     flex-basis: 50%;
