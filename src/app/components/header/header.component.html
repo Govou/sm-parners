@@ -34,15 +34,15 @@
              Sign in
             </a>
           </li>
-          <li [hidden]="!isLoggedIn" class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
+          <!-- <li  class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
             <a  id="signOut" (click)="signOut()" tabindex="0" role="button">
              Sign out
             </a>
-          </li>
+          </li> -->
 
         </ul>
         </ng-template>
-        <ng-template [ngIf]="item == 'show'">
+        <ng-template [ngIf]="isLoggedIn">
         <ul class="navbar-nav ms-auto">
 
           <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
@@ -60,7 +60,7 @@
               <div class="profile">
                 <img src="/assets/images/person.jpg" alt="" width="35px" height="35px" >
                 <section>
-                  <article>Lucky Daniel</article><span>User ID #23456</span>
+                  <article>{{supplierName}}</article><span>User ID #{{profId}}</span>
                 </section>
             </div>
             </a>

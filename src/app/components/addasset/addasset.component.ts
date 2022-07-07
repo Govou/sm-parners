@@ -389,6 +389,7 @@ export class AddassetComponent implements OnInit {
       serviceName: make + ' ' + asset_1.model,
       make: make,
       model: asset_1.model,
+      type: asset_1.type,
       modelNumber: asset_1.modelnumber,
       imageUrl: '',
       trackerId: '',

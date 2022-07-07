@@ -4,6 +4,7 @@ export interface AddAsset{
          description: string,
          make: string,
          model: string,
+         type: string,
          year: string,
          modelNumber: string,
          imageUrl: string,

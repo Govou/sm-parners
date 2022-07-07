@@ -14,6 +14,7 @@ export class AssetreviewComponent implements OnInit {
     completedReview: []
   };
 
+  filteredProperty:string = '';
   pendingReviewEmpty: boolean = false;
 
   constructor(private managedAssetsService: ManagedAssetsService, private ngxService: NgxUiLoaderService) { }

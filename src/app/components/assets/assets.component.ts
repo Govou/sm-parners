@@ -20,7 +20,7 @@ export class AssetsComponent implements OnInit {
     pendingReview: [],
     completedReview: []
   };
-
+  searchText: any;
   pendingReviewEmpty: boolean = false;
   completedReviewEmpty: boolean = false;
   allEmpty: boolean = false;
