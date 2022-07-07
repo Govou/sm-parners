@@ -11,11 +11,12 @@ import { AssetRegistrationForm_1, AssetRegistrationForm_Schedule, AssetRegistrat
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AngularFireStorage } from "@angular/fire/compat/storage";
-import { initializeApp } from "firebase/app";
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs';
 import { PostTransactions } from 'src/app/model/dtos/post-transactions';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
+
 
 @Component({
   selector: 'app-addasset',
@@ -30,15 +31,20 @@ export class AddassetComponent implements OnInit {
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private storage: AngularFireStorage,
-    private authService: AuthService
+    private authService: AuthService,
+    private ngxService: NgxUiLoaderService
     ) { }
-
+  SPINNER = SPINNER
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
   makes:  {makeId: number, name: string}[] = [];
   models: {modelId: number, name: string, makeId: number}[] = [];
   categories: {categoryId: number, categoryName: string}[] = [];
   carTypes: string[] = [];
+  selectedYear: number = 0;
+  years: number[] = [];
+
+  successfullyAdded: boolean = false;
 
   frontimageUrl: any;
   backimageUrl: any;
@@ -92,6 +98,11 @@ export class AddassetComponent implements OnInit {
       this.categories = res;
     })
 
+    this.selectedYear = new Date().getFullYear();
+    for (let year = this.selectedYear; year >= 1990; year--) {
+      this.years.push(year);
+    }
+
     this.frontimageUrl = environment["defaultImageUrl"];
     this.leftimageUrl = environment["defaultImageUrl"];
     this.rightimageUrl = environment["defaultImageUrl"];
@@ -135,6 +146,9 @@ export class AddassetComponent implements OnInit {
   page:any
   image=true;
 
+  home(){
+    this.router.navigate(['/home']);
+  }
   assetForm(){
     this.page = 'asset'
   }
@@ -312,9 +326,10 @@ export class AddassetComponent implements OnInit {
     this.assetRegistrationForm_Schedule.patchValue({
       'price': ''
     });
-    this.spinnerService.show();
+    //this.spinnerService.show();
+    this.ngxService.start();
     this.assetService.getServiceCentres(state).subscribe(res => {
-      this.spinnerService.hide();
+      this.ngxService.stop();
       this.serviceCentres = res;
     });
   }
@@ -369,7 +384,7 @@ export class AddassetComponent implements OnInit {
 
     const make = this.getMakeName();
     const serviceCentre = this.getServiceCentre(asset_3.center);
-    const profileId: any  = this.authService.profileId;
+    const profileId: any  = Number.parseInt(localStorage.getItem('pid') || '') //this.authService.profileId;
     var asset: AddAsset = {
       serviceName: make + ' ' + asset_1.model,
       make: make,
@@ -380,7 +395,7 @@ export class AddassetComponent implements OnInit {
       isAvailable: true,
       serialNumber: asset_1.chasis,
       identificationNumber: asset_1.platenumber,
-      referenceNumber1: asset_1.platenumber,
+      referenceNumber1: '',
       referenceNumber2: '',
       referenceNumber3: '',
       unitCostPrice: asset_3.price,
@@ -431,11 +446,12 @@ export class AddassetComponent implements OnInit {
 
           this.assetService.postTransaction(transaction).subscribe(res =>{
             console.log(res);
-            this.spinnerService.hide();
-            this.router.navigate(['/dashboard']);
+            this.ngxService.stop();
+            this.successfullyAdded = true;
+           // this.router.navigate(['/dashboard']);
         }, error => {
           this.error = error.message;
-          this.spinnerService.hide();
+          this.ngxService.stop();
         })
 
         }
@@ -464,7 +480,8 @@ export class AddassetComponent implements OnInit {
   paymentDone(ref: {message: string, reference: string, status: string }) {
     //this.closeModal(ref);
     this.modalService.dismissAll(ref);
-    this.spinnerService.show();
+    // this.spinnerService.show();
+    this.ngxService.start();
     console.log(this.title, ref);
     this.paymentStatus = ref.status;
     if(ref.status == 'success'){

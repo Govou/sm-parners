@@ -1,0 +1,39 @@
+<main>
+    <body>
+        <div class="top">
+            <div class="side1">
+                <div class="title">
+                    <mat-icon>chevron_left</mat-icon>
+                    <b>Service centers nearest to you</b>
+                </div>
+                <p>View service centers nearest to you</p>
+            </div>
+
+        </div>
+        <div class="bottom">
+            <div class="side1">
+                <div class="state">
+                    <label for="st">State</label>
+                    <select #stateSelected id="state" (change)="onStateSelected(stateSelected.value)" id="st" class="form-select">
+                      <option>--Select State--</option>
+                      <option *ngFor="let st of states" value= {{st.stateName}}>{{st.stateName}}</option>
+                    </select>
+                </div>
+                <div class="centers">
+                    <div class="center" *ngFor="let cs of serviceCentres">
+                        <div class="img"> <img src="/assets/images/Fuel station-pana 1.png" alt="" width="100%"></div>
+                        <p>{{cs.centre_id}} - {{cs.address}}</p>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="side2">
+                <img src="/assets/images/Fuel station-pana 1.png" alt="" width="100%">
+            </div>
+            <div style="position: relative">
+              <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
+            </div>
+        </div>
+    </body>
+</main>

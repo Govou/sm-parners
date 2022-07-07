@@ -1,275 +1,317 @@
 <main>
-
-
     <body>
+        <div class="success" [hidden]="!successfullyAdded">
+            <img src="/assets/images/Schedule booking.png" alt="" width="100%">
+            <h2>Congratulations !</h2>
+            <p>Your asset has been scheduled for inspection</p>
+            <button class="btn btn-primary" (click)="home()">Home</button>
+        </div>
+        <div [hidden]="successfullyAdded">
         <h1>Add New Assets</h1>
         <div class="assetDetail">
             <div class="steps-form ">
                 <div class="steps-row setup-panel">
                     <div class="steps-step">
-                        <a pageScroll (click)="assetForm()" type="button" class="btn btn-indigo btn-circle " [ngClass]="{'validForm':assetRegistrationForm.valid,'notValidForm':!assetRegistrationForm.valid}">1</a>
+                        <a pageScroll (click)="assetForm()" type="button" class="btn btn-indigo btn-circle "
+                            [ngClass]="{'validForm':assetRegistrationForm.valid,'notValidForm':!assetRegistrationForm.valid}">1</a>
                         <p>Asset information</p>
                     </div>
                     <div class="steps-step">
-                        <a (click)="visualsForm()" type="button" class="btn btn-default btn-circle " [ngClass]="{'validForm':assetRegistrationForm_Visuals.valid,'notValidForm':!assetRegistrationForm_Visuals.valid}"
+                        <a (click)="visualsForm()" type="button" class="btn btn-default btn-circle "
+                            [ngClass]="{'validForm':assetRegistrationForm_Visuals.valid,'notValidForm':!assetRegistrationForm_Visuals.valid}"
                             disabled="disabled">2</a>
                         <p>Visuals</p>
                     </div>
                     <div class="steps-step">
-                        <a (click)="scheduleForm()" type="button" class="btn btn-default btn-circle" [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
+                        <a (click)="scheduleForm()" type="button" class="btn btn-default btn-circle"
+                            [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
                             disabled="disabled">3</a>
                         <p>Schedule Inspection</p>
                     </div>
                     <div class="steps-step">
-                        <a pageScroll (click)="paymentPage(content)" type="button" class="btn btn-default btn-circle" [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}"
-                            >4</a>
+                        <a pageScroll (click)="paymentPage(content)" type="button" class="btn btn-default btn-circle"
+                            [ngClass]="{'validForm':assetRegistrationForm_Schedule.valid,'notValidForm':!assetRegistrationForm_Schedule.valid}">4</a>
                         <p>Payment</p>
                     </div>
                 </div>
                 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-                  <p style="color: white">Please Wait... </p>
-                  </ngx-spinner>
+                    <p style="color: white">Please Wait... </p>
+                </ngx-spinner>
             </div>
-            <ng-template [ngIf]="page == 'asset'">
-                <form [formGroup]="assetRegistrationForm" class="col-8" >
-                  <div class="form-container-align-items">
-                    <div class="col-12 right-padding">
-                        <label for="maker" class="form-label">Make of Car</label>
-                        <select formControlName="make" #makeSelected class="form-select" id="make" (change)="fetchModels(makeSelected.value)">
-                            <option [value]="mk.makeId" *ngFor="let mk of makes">{{mk.name}}</option>
-                        </select>
-                    </div>
-                    <div class="col-12 left-padding">
-                        <label for="model" class="form-label">Model of Car</label>
-                        <select formControlName="model" id="model" class="form-select">
-                          <option [value]="md.name" *ngFor="let md of models">{{md.name}}</option>
-                      </select>
-                    </div>
-                    <div class="col-12 right-padding">
-                      <label for="modelnumber" class="form-label">Model Number</label>
-                      <input formControlName="modelnumber" type="text" class="form-control" id="modelnumber">
-                  </div>
-                  <div class="col-12 left-padding">
-                    <label for="identificationnumber" class="form-label ">Identification Number</label>
-                    <input formControlName="identificationnumber" type="text" class="form-control" id="identificationnumber">
-                </div>
-                    <div class="col-12 right-padding">
-                        <label for="year" class="form-label">Year of Make</label>
-                        <input formControlName="year" type="number" class="form-control" id="year">
-                    </div>
-                    <div class="col-12 left-padding">
-                        <label for="type" class="form-label">Type</label>
-                        <select formControlName="type" name="type" class="form-select">
-                          <option [value]="ct" *ngFor="let ct of carTypes">{{ct}}</option>
 
-                      </select>
-                    </div>
-                    <div class="col-12 right-padding">
-                        <label for="platenumber" class="form-label">Plate Number</label>
-                        <input formControlName="platenumber" type="text" class="form-control" id="platenumber">
-                    </div>
-                    <div class="col-12 left-padding">
-                        <label for="chasis" class="form-label">Chasis Number</label>
-                        <input formControlName="chasis" type="text" class="form-control" id="chasis">
-                    </div>
-                  </div>
-                      <button type="button" class="btn btn-primary col-6 deepBlue" [disabled]="!assetRegistrationForm.valid" (click)="visualsForm()">Next</button>
-                </form>
-            </ng-template>
-            <ng-template [ngIf]="page == 'visuals'">
-              <form [formGroup]="assetRegistrationForm_Visuals" class="col-8" >
-                <div class="form-container-align-items">
-                    <div class="assetView right-padding">
-                        <p>Picture (Front)</p>
-                        <img [src]="frontimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
-                        <label for="frontImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage" class="material-icons-outlined">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
-                        </label>
-                        <input formControlName="frontImage" type="file"  id="frontImage" style="display:none" accept="image/*" (change)="onFrontImageChange($event)">
-                    </div>
-                    <div class="assetView left-padding">
-                        <p>Picture (Back)</p>
-                        <img  [src]="backimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.backImage">
-                        <label for="backImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.backImage" class="material-icons-outlined">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.backImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+            <div class="sec2">
+                <ng-template [ngIf]="page == 'asset'">
+                    <form [formGroup]="assetRegistrationForm" class="col-8">
+                        <div class="form-container-align-items">
+                            <div class="col-12 right-padding">
+                                <label for="maker" class="form-label">Make of Car</label>
+                                <select formControlName="make" #makeSelected class="form-select" id="make"
+                                    (change)="fetchModels(makeSelected.value)">
+                                    <option [value]="mk.makeId" *ngFor="let mk of makes">{{mk.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 left-padding">
+                                <label for="model" class="form-label">Model of Car</label>
+                                <select formControlName="model" id="model" class="form-select">
+                                    <option [value]="md.name" *ngFor="let md of models">{{md.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 right-padding">
+                                <label for="modelnumber" class="form-label">Model Number</label>
+                                <input formControlName="modelnumber" type="text" class="form-control" id="modelnumber">
+                            </div>
+                            <div class="col-12 left-padding">
+                                <label for="identificationnumber" class="form-label ">Identification Number</label>
+                                <input formControlName="identificationnumber" type="text" class="form-control"
+                                    id="identificationnumber">
+                            </div>
+                            <div class="col-12 right-padding">
+                                <label for="year" class="form-label">Year of Make</label>
+                                <select formControlName="year" id="year" name="type" class="form-select">
+                                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                              </select>
+                            </div>
+                            <div class="col-12 left-padding">
+                                <label for="type" class="form-label">Type</label>
+                                <select formControlName="type" name="type" class="form-select">
+                                    <option [value]="ct" *ngFor="let ct of carTypes">{{ct}}</option>
 
-                        </label>
-                        <input formControlName="backImage" type="file" id="backImage" style="display:none" accept="image/*" (change)="onBackImageChange($event)">
-                    </div>
-                    <div class="assetView right-padding">
-                        <p>Picture (Left Side)</p>
-                        <img  [src]="leftimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
-                        <label for="leftImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.leftImage" class="material-icons-outlined">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.leftImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+                                </select>
+                            </div>
+                            <div class="col-12 right-padding">
+                                <label for="platenumber" class="form-label">Plate Number</label>
+                                <input formControlName="platenumber" type="text" class="form-control" id="platenumber">
+                            </div>
+                            <div class="col-12 left-padding">
+                                <label for="chasis" class="form-label">Chasis Number</label>
+                                <input formControlName="chasis" type="text" class="form-control" id="chasis">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary col-6 deepBlue"
+                            [disabled]="!assetRegistrationForm.valid" (click)="visualsForm()">Next</button>
+                    </form>
+                </ng-template>
+                <ng-template [ngIf]="page == 'visuals'">
+                    <form [formGroup]="assetRegistrationForm_Visuals" class="col-8">
+                        <div class="form-container-align-items">
+                            <div class="assetView right-padding">
+                                <p>Picture (Front)</p>
+                                <img [src]="frontimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.frontImage">
+                                <label for="frontImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.frontImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.frontImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
+                                </label>
+                                <input formControlName="frontImage" type="file" id="frontImage" style="display:none"
+                                    accept="image/*" (change)="onFrontImageChange($event)">
+                            </div>
+                            <div class="assetView left-padding">
+                                <p>Picture (Back)</p>
+                                <img [src]="backimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.backImage">
+                                <label for="backImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.backImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.backImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
-                        </label>
-                        <input formControlName="leftImage"  type="file" id="leftImage" style="display:none" accept="image/*" (change)="onLeftImageChange($event)">
-                    </div>
-                    <div class="assetView left-padding">
-                        <p>Picture (Right Side)</p>
-                        <img [src]="rightimageUrl" title="Vehicle Picture"  [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
-                        <label for="rightImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.rightImage" class="material-icons-outlined">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.rightImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+                                </label>
+                                <input formControlName="backImage" type="file" id="backImage" style="display:none"
+                                    accept="image/*" (change)="onBackImageChange($event)">
+                            </div>
+                            <div class="assetView right-padding">
+                                <p>Picture (Left Side)</p>
+                                <img [src]="leftimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.leftImage">
+                                <label for="leftImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.leftImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.leftImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
-                        </label>
-                        <input formControlName="rightImage" type="file" id="rightImage" style="display:none" accept="image/*" (change)="onRightImageChange($event)">
-                    </div>
-                    <div class="assetView right-padding">
-                        <p>Picture (Interior)</p>
-                        <img [src]="interiorimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
-                        <label for="interiorImage" class="form-label" id="file">
-                            <mat-icon [hidden]="assetRegistrationForm_Visuals.value.interiorImage" class="material-icons-outlined">photo_camera</mat-icon>
-                            <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.interiorImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+                                </label>
+                                <input formControlName="leftImage" type="file" id="leftImage" style="display:none"
+                                    accept="image/*" (change)="onLeftImageChange($event)">
+                            </div>
+                            <div class="assetView left-padding">
+                                <p>Picture (Right Side)</p>
+                                <img [src]="rightimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.rightImage">
+                                <label for="rightImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.rightImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.rightImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
-                        </label>
-                        <input formControlName="interiorImage" type="file" id="interiorImage" style="display:none" accept="image/*"
-                            (change)="onInteriorImageChange($event)">
-                    </div>
-                    <div class="assetView left-padding">
-                      <p>Picture (Top)</p>
-                      <img [src]="topimageUrl" title="Vehicle Picture" [hidden]="!assetRegistrationForm_Visuals.value.topImage">
-                      <label for="topImage" class="form-label" id="file">
-                          <mat-icon [hidden]="assetRegistrationForm_Visuals.value.topImage" class="material-icons-outlined">photo_camera</mat-icon>
-                          <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.topImage" style="color: red;" class="material-icons-outlined">delete</mat-icon>
+                                </label>
+                                <input formControlName="rightImage" type="file" id="rightImage" style="display:none"
+                                    accept="image/*" (change)="onRightImageChange($event)">
+                            </div>
+                            <div class="assetView right-padding">
+                                <p>Picture (Interior)</p>
+                                <img [src]="interiorimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.interiorImage">
+                                <label for="interiorImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.interiorImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.interiorImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
 
-                      </label>
-                      <input formControlName="topImage" type="file" id="topImage" style="display:none" accept="image/*"
-                          (change)="onTopImageChange($event)">
-                  </div>
-                  </div>
-                        <button class="next btn btn-primary deepBlue" [disabled]="!assetRegistrationForm_Visuals.valid" (click)="scheduleForm()">Next</button>
+                                </label>
+                                <input formControlName="interiorImage" type="file" id="interiorImage"
+                                    style="display:none" accept="image/*" (change)="onInteriorImageChange($event)">
+                            </div>
+                            <div class="assetView left-padding">
+                                <p>Picture (Top)</p>
+                                <img [src]="topimageUrl" title="Vehicle Picture"
+                                    [hidden]="!assetRegistrationForm_Visuals.value.topImage">
+                                <label for="topImage" class="form-label" id="file">
+                                    <mat-icon [hidden]="assetRegistrationForm_Visuals.value.topImage"
+                                        class="material-icons-outlined">photo_camera</mat-icon>
+                                    <mat-icon [hidden]="!assetRegistrationForm_Visuals.value.topImage"
+                                        style="color: red;" class="material-icons-outlined">delete</mat-icon>
+
+                                </label>
+                                <input formControlName="topImage" type="file" id="topImage" style="display:none"
+                                    accept="image/*" (change)="onTopImageChange($event)">
+                            </div>
+                        </div>
+                        <button class="next btn btn-primary deepBlue" [disabled]="!assetRegistrationForm_Visuals.valid"
+                            (click)="scheduleForm()">Next</button>
                         <button class="next btn btn-default" (click)="assetForm()">Back</button>
 
-                </form>
-            </ng-template>
+                    </form>
+                </ng-template>
 
-            <ng-template [ngIf]="page == 'schedule'">
-                <form [formGroup]="assetRegistrationForm_Schedule" class="col-8" #schedule="ngForm">
-                    <div class="col-6">
-                        <label for="state" class="form-label">State</label>
-                        <select formControlName="statename" #stateSelected class="form-select" id="statename" (change)="fetchServiceCentres(stateSelected.value)">
-                            <option [value]="st.stateName" *ngFor="let st of states">{{st.stateName}}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-6">
-                        <label for="center" class="form-label">Service Center</label>
-                        <select formControlName="center" #centreSelected  id="center" class="form-select" (change)="selectServiceCentres(centreSelected.value)">
-                          <option [value]="sc.service_desc" *ngFor="let sc of serviceCentres">{{sc.service_desc + '  -  ' + sc.address }}</option>
-                      </select>
-                    </div>
-                    <div class="col-6" id="datetime">
+                <ng-template [ngIf]="page == 'schedule'">
+                    <form [formGroup]="assetRegistrationForm_Schedule" class="col-8" #schedule="ngForm">
                         <div class="col-6">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" formControlName="date" class="form-control" id="date">
+                            <label for="state" class="form-label">State</label>
+                            <select formControlName="statename" #stateSelected class="form-select" id="statename"
+                                (change)="fetchServiceCentres(stateSelected.value)">
+                                <option [value]="st.stateName" *ngFor="let st of states">{{st.stateName}}</option>
+                            </select>
                         </div>
-                        <div class="col-5">
-                            <label for="time" class="form-label">Time</label>
-                            <input formControlName="time" type="time" class="form-control" id="time">
-                        </div>
-                    </div>
-                    <div class="col-6" id="datetime">
-                        <label for="inputEmail3" class="col-2 col-form-label">Price &#8358; </label>
-                        <div class="col-10">
-                            <input formControlName="price" readonly id="price" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary col-6 deepBlue" [disabled]="!assetRegistrationForm_Schedule.valid" (click)="paymentPage(content)">Book Appointment</button>
-                    <button type="button" class="btn btn-default col-6" (click)="visualsForm()">Back</button>
-                </form>
-                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-                  <p style="color: white">Please Wait... </p>
-                  </ngx-spinner>
-            </ng-template>
 
-
-            <ng-template  #content let-c="close" let-d="dismiss">
-                <div class="closebtn">
-                    <button (click)="d('Cross click')">&#x2715;</button>
-                </div>
-                <div class="modal-body">
-                    <h1>How would you like to top-up</h1>
-                    <div class="paymentOptionGroup">
-                        <div class="paymentOption">
-                            <div class="paymentGateway">
-                                <input type="radio" id="flutterwave" ngModel name="payment" id="flutterwave"
-                                    value="flutterwave" [(ngModel)]="walletregistration.gateway">
-                                <label for="flutter"><img src="/assets/Flutterwave-logo 2.png" alt="">Flutterwave</label>
+                        <div class="col-6">
+                            <label for="center" class="form-label">Service Center</label>
+                            <select formControlName="center" #centreSelected id="center" class="form-select"
+                                (change)="selectServiceCentres(centreSelected.value)">
+                                <option [value]="sc.service_desc" *ngFor="let sc of serviceCentres">{{sc.service_desc +
+                                    ' -
+                                    ' + sc.address }}</option>
+                            </select>
+                        </div>
+                        <div class="col-6" id="datetime">
+                            <div class="col-6">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" formControlName="date" class="form-control" id="date">
                             </div>
-                            <div class="paymentGateway">
-                                <input type="radio" id="paystack" ngModel name="payment" id="paystack" value="paystack"
-                                    [(ngModel)]="walletregistration.gateway">
-                                <label for="flutter"><img src="/assets/Paystack-mark-white-twitter 2.png" alt="">
-                                    Paystack</label>
-                            </div>
-                            <div class="paymentGateway">
-                                <input type="radio" ngModel name="payment" id="remita" value="remita"
-                                    [(ngModel)]="walletregistration.gateway">
-                                <label for="flutter"><img src="/assets/unnamed 2.png" alt="">Remita</label>
-                            </div>
-                            <div class="paymentGateway">
-                                <input type="radio" ngModel name="payment" id="inter" value="inter"
-                                    [(ngModel)]="walletregistration.gateway">
-                                <label for="flutter"><img src="/assets/cropped-favicon 2.png" alt="">Interswitch
-                                    webpay</label>
+                            <div class="col-5">
+                                <label for="time" class="form-label">Time</label>
+                                <input formControlName="time" type="time" class="form-control" id="time">
                             </div>
                         </div>
-                        <img src="/assets/images/Wallet-rafiki 2 (1).png" alt="" width="100%">
+                        <div class="col-6" id="datetime">
+                            <label for="inputEmail3" class="col-2 col-form-label">Price &#8358; </label>
+                            <div class="col-10">
+                                <input formControlName="price" readonly id="price" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary col-6 deepBlue"
+                            [disabled]="!assetRegistrationForm_Schedule.valid" (click)="paymentPage(content)">Book
+                            Appointment</button>
+                        <button type="button" class="btn btn-default col-6" (click)="visualsForm()">Back</button>
+                    </form>
+                    <div style="position: relative">
+                      <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
                     </div>
+                </ng-template>
 
-                    <div class="amount">
-                        <p>Amount(&#8358;)</p>
-                        <div class="enterAmount">
-                            <span style="color: red;">{{walletMessage}}</span>
-                            <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
-                                [(ngModel)]="bookingPrice" disabled="true">
-                            <button
-                                [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
-                                angular4-paystack [email]="'mailexample@mail.com'"
-                                [amount]="bookingPrice * 100"
-                                [ref]="reference"
-                                [key]="key"
-                                 [class]="'btn btn-primary'" (paymentInit)="paymentInit()"
-                                (onClose)="paymentCancel()" (callback)="paymentDone($event)">Pay with
-                                Paystack</button>
-                            <button (click)="paymentInit()"
-                                [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
-                                with Flutter</button>
-                            <button (click)="paymentInit()"
-                                [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
-                                with Remita</button>
-                            <button (click)="paymentInit()"
-                                [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
-                                with Interswitch</button>
+
+                <ng-template #content let-c="close" let-d="dismiss">
+                    <div class="closebtn">
+                        <button (click)="d('Cross click')">&#x2715;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h1>How would you like to top-up</h1>
+                        <div class="paymentOptionGroup">
+                            <div class="paymentOption">
+                                <div class="paymentGateway">
+                                    <input type="radio" id="flutterwave" ngModel name="payment" id="flutterwave"
+                                        value="flutterwave" [(ngModel)]="walletregistration.gateway">
+                                    <label for="flutter"><img src="/assets/Flutterwave-logo 2.png"
+                                            alt="">Flutterwave</label>
+                                </div>
+                                <div class="paymentGateway">
+                                    <input type="radio" id="paystack" ngModel name="payment" id="paystack"
+                                        value="paystack" [(ngModel)]="walletregistration.gateway">
+                                    <label for="flutter"><img src="/assets/Paystack-mark-white-twitter 2.png" alt="">
+                                        Paystack</label>
+                                </div>
+                                <div class="paymentGateway">
+                                    <input type="radio" ngModel name="payment" id="remita" value="remita"
+                                        [(ngModel)]="walletregistration.gateway">
+                                    <label for="flutter"><img src="/assets/unnamed 2.png" alt="">Remita</label>
+                                </div>
+                                <div class="paymentGateway">
+                                    <input type="radio" ngModel name="payment" id="inter" value="inter"
+                                        [(ngModel)]="walletregistration.gateway">
+                                    <label for="flutter"><img src="/assets/cropped-favicon 2.png" alt="">Interswitch
+                                        webpay</label>
+                                </div>
+                            </div>
+                            <img src="/assets/images/Wallet-rafiki 2 (1).png" alt="" width="100%">
                         </div>
 
+                        <div class="amount">
+                            <p>Amount(&#8358;)</p>
+                            <div class="enterAmount">
+                                <span style="color: red;">{{walletMessage}}</span>
+                                <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
+                                    [(ngModel)]="bookingPrice" disabled="true">
+                                <button
+                                    [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
+                                    angular4-paystack [email]="'mailexample@mail.com'" [amount]="bookingPrice * 100"
+                                    [ref]="reference" [key]="key" [class]="'btn btn-primary'"
+                                    (paymentInit)="paymentInit()" (onClose)="paymentCancel()"
+                                    (callback)="paymentDone($event)">Pay with
+                                    Paystack</button>
+                                <button (click)="paymentInit()"
+                                    [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                    with Flutter</button>
+                                <button (click)="paymentInit()"
+                                    [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                    with Remita</button>
+                                <button (click)="paymentInit()"
+                                    [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                    with Interswitch</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="notes">
+                            <b>Please note</b>
+                            <ol>
+                                <li>Minimum top-up amount is NGN 100.00 - you can top-up at least NGN 100.00 in one
+                                    transaction.
+                                </li>
+                                <li>Maximum per transaction is NGN 9,999,999.00 - you can deposit up to NGN 9,999,999.00
+                                    in
+                                    one
+                                    transaction.</li>
+                                <li>Top-up is free, there are no transaction fees.</li>
+                            </ol>
+                        </div>
                     </div>
-                    <hr>
-                    <div class="notes">
-                        <b>Please note</b>
-                        <ol>
-                            <li>Minimum top-up amount is NGN 100.00 - you can top-up at least NGN 100.00 in one transaction.
-                            </li>
-                            <li>Maximum per transaction is NGN 9,999,999.00 - you can deposit up to NGN 9,999,999.00 in one
-                                transaction.</li>
-                            <li>Top-up is free, there are no transaction fees.</li>
-                        </ol>
+                    <div style="position: relative">
+                      <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
                     </div>
-                </div>
-                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-                  <p style="color: white">Please Wait... </p>
-                  </ngx-spinner>
-                 <div class="alert alert-danger" *ngIf="error">
-                  <h1>An error occured!</h1>
-                  <p>{{ error }}</p>
-                 </div>
-            </ng-template>
-
+                </ng-template>
+            </div>
         </div>
+      </div>
     </body>
 
 </main>

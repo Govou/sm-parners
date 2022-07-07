@@ -363,21 +363,21 @@
                     <p>Type in the secure code to verify your account</p>
                     <!-- <small style="color:red ;" >{{responseOtp}}</small> -->
                     <img src="/assets/images/undraw_Mail_sent_re_0ofv 1.png" alt="">
-                    <div>
+                    
                         <form class="otp" [formGroup]="otpForm">
-                            <input #txt1 maxlength="1" formControlName="txt1" (keyup)="move($event,'',txt1,txt2)" type="text" id="txt1">
+                            <input #txt1 maxlength="1" formControlName="txt1" (keyup)="move($event,'',txt1,txt2)" type="number" id="txt1">
                             <span>-</span>
-                            <input #txt2 maxlength="1" formControlName="txt2" type="text" (keyup)="move($event,txt1,txt2,txt3)" id="txt2">
+                            <input #txt2 maxlength="1" formControlName="txt2" type="number" (keyup)="move($event,txt1,txt2,txt3)" id="txt2">
                             <span>-</span>
-                            <input #txt3 maxlength="1" formControlName="txt3" type="text" (keyup)="move($event,txt2,txt3,txt4)" id="txt3">
+                            <input #txt3 maxlength="1" formControlName="txt3" type="number" (keyup)="move($event,txt2,txt3,txt4)" id="txt3">
                             <span>-</span>
-                            <input #txt4 maxlength="1" formControlName="txt4" type="text" (keyup)="move($event,txt3,txt4,txt5)" id="txt4">
+                            <input #txt4 maxlength="1" formControlName="txt4" type="number" (keyup)="move($event,txt3,txt4,txt5)" id="txt4">
                             <span>-</span>
-                            <input #txt5 maxlength="1" formControlName="txt5" type="text" (keyup)="move($event,txt4,txt5,txt6)" id="txt5">
+                            <input #txt5 maxlength="1" formControlName="txt5" type="number" (keyup)="move($event,txt4,txt5,txt6)" id="txt5">
                             <span>-</span>
-                            <input #txt6 maxlength="1" formControlName="txt6" type="text" (keyup)="move($event,txt5,txt6,'')" id="txt6">
+                            <input #txt6 maxlength="1" formControlName="txt6" type="number" (keyup)="move($event,txt5,txt6,'')" id="txt6">
                         </form>
-                    </div>
+                    
                     <!-- <button class="btn btn-primary" (click)="getOtp(otpForm.value)">Proceed</button> -->
                     <button class="btn btn-primary btn-deepblue" (click)="onSubmitVerifyCode()">Proceed</button>
                     <button class="btn btn-outline-primary" id="resend">Resend Email</button>

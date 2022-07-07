@@ -35,6 +35,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { ServerErrorsInterceptor } from './interceptors/error-handling.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { NgToastModule } from 'ng-angular-popup';
+import { AssetreviewComponent } from './components/assetreview/assetreview.component';
+import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
 
 
 @NgModule({
@@ -49,7 +51,9 @@ import { NgToastModule } from 'ng-angular-popup';
     InformationComponent,
     HeaderComponent,
     BodyComponent,
-    AssetsComponent
+    AssetsComponent,
+    AssetreviewComponent,
+    ServicecentersComponent
   ],
   imports: [
     BrowserModule,

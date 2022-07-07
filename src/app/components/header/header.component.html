@@ -46,7 +46,7 @@
         <ul class="navbar-nav ms-auto">
 
           <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
-            <a class="nav-link" tabindex="0" id="navbarDropdown3" role="button" >
+            <a class="nav-link" (click)="signOut()" tabindex="0" id="navbarDropdown3" role="button" >
              <mat-icon>logout</mat-icon>
             </a>
           </li>

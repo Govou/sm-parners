@@ -15,6 +15,26 @@ body{
     /* background-color: aquamarine; */
     padding:3rem 5rem;
 }
+.success{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.success img{
+  width: 40%;
+}
+.success h2{
+  font-weight: 600;
+font-size: 25px;
+letter-spacing: -0.02em;
+color: #2D3748;
+}
+.success button{
+  background: #11437A;
+border-radius: 10px;
+padding: 5px 100px;
+}
 .deepBlue{
   background: #11437A;
 }
@@ -60,13 +80,13 @@ body{
   }
   .validForm{
     background: #11437A;
-
   }
 
 .assetDetail{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
@@ -80,9 +100,19 @@ form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 80%;
+    /* padding-left: 20px; */
+    
   }
   form > *{
     margin: 10px 0;
+  }
+  .sec2{
+    width: 100%;
+    display: flex;
+    justify-content:right;
+    padding-right: 10%;
+
   }
   #datetime{
     display: flex;

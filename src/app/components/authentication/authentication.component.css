@@ -307,11 +307,10 @@ border-radius: 5px;
     flex-direction: column;
     border: 2px solid rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    width: 25rem;
+    width: 30rem;
     padding: 20px;
     /* margin: 20px 0;  */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
 }
 .otpCode h1,p{
     font-family: 'Poppins', sans-serif;
@@ -347,7 +346,14 @@ border-radius: 5px;
     outline-color: #007AFF;
     text-align: center;
 }
-
+.otp span{
+ margin: 0 3px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 /* otp styling ends here */
 
 .section2{

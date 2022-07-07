@@ -32,6 +32,15 @@ export class HomeComponent implements OnInit {
   addNewAsset(){
     this.router.navigate(['/addasset']);
   }
+  serviceCenter(){
+    this.router.navigate(['/servicecenters']);
+  }
+  assetReview(){
+    this.router.navigate(['/assetreview']);
+  }
+  assetManaged(){
+    this.router.navigate(['/asset']);
+  }
 showMessage(){
   this.showInfo('page not available'),
   alert('page not available')
