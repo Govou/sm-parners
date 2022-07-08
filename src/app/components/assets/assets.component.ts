@@ -24,7 +24,7 @@ export class AssetsComponent implements OnInit {
   pendingReviewEmpty: boolean = false;
   completedReviewEmpty: boolean = false;
   allEmpty: boolean = false;
-
+  filteredProperty:string = '';
   SPINNER = SPINNER
 
   ngOnInit(): void {

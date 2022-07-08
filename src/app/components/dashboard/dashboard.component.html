@@ -15,7 +15,7 @@
           <ngb-datepicker class="part2" #dp [(ngModel)]="model" ></ngb-datepicker>
         </div>
       </section>
-      
+
       <section class="section3">
         <div class="summ">
           <div class="image">
@@ -23,7 +23,7 @@
           </div>
           <div class="text">
             <h1>Total Number of Assets Under Management</h1>
-            <p>4</p>
+            <p>{{dashboard.totalAssetUnderManagement}}</p>
           </div>
         </div>
         <div class="summ">
@@ -32,12 +32,13 @@
           </div>
           <div class="text">
             <h1>Assets Awaiting Review</h1>
-            <p>4</p>
+            <p>{{dashboard.assetAwaitingInspection}}</p>
           </div>
         </div>
       </section>
 
-      <section class="section2">
+      <section>
+        <div  class="section2">
         <div class="completed">
           <div class="ico">
             <mat-icon>more_vert</mat-icon>
@@ -47,7 +48,7 @@
             <img src="/assets/images/checkmark-circle.png" alt="" width="30%">
           </div>
           <div class="row3">
-            | 75
+            | {{dashboard.totalAssetsDueForReAccreditation}}
           </div>
         </div>
         <div class="schedule">
@@ -59,7 +60,7 @@
             <img src="/assets/images/calendar.png" alt="" width="100%">
           </div>
           <div class="row3">
-            | 4
+            | {{dashboard.assetAddedInCurrentMonth}}
           </div>
         </div>
         <div class="resources">
@@ -71,7 +72,7 @@
             <img src="/assets/images/Resources.png" alt="" width="100%">
           </div>
           <div class="row3">
-            | 4
+            | {{dashboard.distinctTypes}}
           </div>
         </div>
         <div class="mostTraveled">
@@ -83,45 +84,17 @@
             <img src="/assets/images/Untitled-1v 1.png" alt="" >
           </div>
           <div class="row3">
-            | 0
+            | {{dashboard.preferredServiceCentre}}
           </div>
+        </div>
+      </div>
+        <div style="position: relative">
+          <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
         </div>
 
       </section>
 
-      <!-- <section class="section2">
-        <div class="completed">
-          <div class="ico">
-            <p>Total Assets</p>
-            <p>Under Management</p>
-          </div>
-          <div class="row2">
-            {{dashboard.totalAssetUnderManagement}}
-          </div>
-        </div>
-        <div class="schedule">
-          <div class="ico">
-            <p>Distinct Types</p>
-          </div>
-          <div class="row2">
-            {{dashboard.distinctTypes}}
-          </div>
-        </div>
-        <div class="resources">
-          <div class="ico">
-            <p>Assets Awaiting</p>
-            <p>Inspection / Review</p>
-          </div>
-          <div class="row2">
-            {{dashboard.assetAwaitingInspection}}
-          </div>
-        </div>
-
-      </section> -->
-
     </div>
     </body>
   </main>
-
-
 

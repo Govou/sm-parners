@@ -39,6 +39,7 @@ import { AssetreviewComponent } from './components/assetreview/assetreview.compo
 import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { SortParamsDirective } from './directives/sort.directive';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     AssetsComponent,
     AssetreviewComponent,
     ServicecentersComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    SortParamsDirective
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,7 @@
                 <select name="" id="" class="form-select">
                     <option value="">Sort</option>
                 </select>
-                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" id="" placeholder="&#61442; Search">
+                <input class="form-control" type="text" name="search" [(ngModel)] = "filteredProperty" autocomplete="off" id="" placeholder="Search">
             </div>
         </div>
         <div class="bottom">
@@ -31,9 +31,9 @@
                     <p >Completeted</p>
                     <mat-icon >more_horiz</mat-icon>
                 </div>
-                <div class="assets">
-                  <div>
-                    <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview" class="asset">
+                <div>
+                  <div class="assets">
+                    <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview | searchfilter: filteredProperty: 'serviceName'" class="asset">
                         <div class="lin1">
                             <section>
                                 <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
@@ -58,14 +58,15 @@
 
                         <hr>
                     </div>
-                    <div >
-                      <div [hidden]="!completedReviewEmpty" class="noasset">
-                        <img src="/assets/images/Image (1).png" alt="" width="100%">
-                        <h2>No asset completed</h2>
-                        <p>You have no completed reviewed any asset under management</p>
-                    </div>
+
                   </div>
+                  <div >
+                    <div [hidden]="!completedReviewEmpty" class="noasset">
+                      <img src="/assets/images/Image (1).png" alt="" width="100%">
+                      <h2>No asset completed</h2>
+                      <p>You have no completed reviewed any asset under management</p>
                   </div>
+                </div>
                 </div>
             </div>
             <div class="right">
@@ -74,7 +75,7 @@
                     <mat-icon>more_horiz</mat-icon>
                 </div>
                 <div class="assets">
-                    <div *ngFor="let mg of managedAssets.pendingReview" class="asset">
+                    <div *ngFor="let mg of managedAssets.pendingReview | searchfilter: filteredProperty: 'serviceName'" class="asset">
                         <div class="lin1">
                             <section>
                                 <mat-icon style="font-size:20px ;">calendar_today</mat-icon>

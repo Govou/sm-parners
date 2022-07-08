@@ -13,8 +13,8 @@
                 <select name="" id="" class="form-select">
                     <option value="">Sort</option>
                 </select>
-                <!-- <input class="form-control" type="text" name="" [(ngModel)] = "filteredProperty" id="" placeholder="Search"> -->
-                <input class="form-control" type="text" name="" ng-model="searchText" id="" placeholder="Search">
+                <input class="form-control" type="text" name="" [(ngModel)] = "filteredProperty" id="" placeholder="&#61442; Search">
+                <!-- <input class="form-control" type="text" name="searchTerm" [(ngModel)] = "searchTerm" id="" placeholder="Search"> -->
             </div>
         </div>
         <div class="bottom">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="assets">
                   <div *ngFor="let mg of managedAssets.pendingReview | searchfilter: filteredProperty: 'serviceName'" class="asset">
-                    <!-- <div *ngFor="let mg of managedAssets.pendingReview | filter:searchText" class="asset"> -->
+                    <!-- <div *ngFor="let mg of managedAssets.pendingReview | filter:searchTerm| sort:direction:type" class="asset"> -->
                     <div class="lin1">
                             <section>
                                 <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
