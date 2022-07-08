@@ -1,116 +1,130 @@
 <main>
+
     <body>
         <ng-template [ngIf]="allEmpty">
-        <div class="noasset">
-            <img src="/assets/images/Image (1).png" alt="" width="100%">
-            <h2>No asset added</h2>
-            <p>You have not added any asset under management</p>
-            <button class="btn btn-primary" (click)="addNewAsset()">Add a new asset</button>
-        </div>
-    </ng-template>
-     <ng-template [ngIf]="!allEmpty">
-        <div class="top">
-            <div class="side1">
-                <div class="title">
-                    <mat-icon>chevron_left</mat-icon>
-                    <b>Assets Under Management</b>
-                </div>
-                <p>Assets that have been submitted and reviewed</p>
+            <div class="noasset">
+                <img src="/assets/images/Image (1).png" alt="" width="100%">
+                <h2>No asset added</h2>
+                <p>You have not added any asset under management</p>
+                <button class="btn btn-primary" (click)="addNewAsset()">Add a new asset</button>
             </div>
-            <div class="side2">
-                <button class="btn btn-primary addAsset">Add asset</button>
-                <select name="" id="" class="form-select">
-                    <option value="">Sort</option>
-                </select>
-                <input class="form-control" type="text" name="" id="" placeholder="Search">
-            </div>
-        </div>
-        <div class="bottom">
-            <div class="left">
-                <div class="status">
-                    <p >Completeted</p>
-                    <mat-icon >more_horiz</mat-icon>
+        </ng-template>
+        <ng-template [ngIf]="!allEmpty">
+            <div class="top">
+                <div class="side1">
+                    <div class="title">
+                        <mat-icon>chevron_left</mat-icon>
+                        <b>Assets Under Management</b>
+                    </div>
+                    <p>Assets that have been submitted and reviewed</p>
                 </div>
-                <div class="assets">
-                  <div>
-                    <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview" class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p> {{mg.dateAdded}} </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>{{mg.serviceName}}</h2>
-                            <p>Completed</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #{{mg.plateNumber}}</p>
-                        </div>
-                        <div class="lin4">
-                            <img src= {{mg.imageUrl}} alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>100%</p></section>
-                           <p><ngb-progressbar type="warning" [value]="100" [striped]="true" [animated]="true"><i>100%</i></ngb-progressbar></p>
-                        </div>
+                <div class="side2">
+                    <button class="btn btn-primary addAsset">Add asset</button>
+                    <select name="" id="" class="form-select">
+                        <option value="">Sort</option>
+                    </select>
+                    <input class="form-control" type="text" name="" id="" placeholder="Search">
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="left">
+                    <div class="status">
+                        <p>Completeted</p>
+                        <mat-icon>more_horiz</mat-icon>
+                    </div>
+                    <div class="assets">
+                        <div>
+                            <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview"
+                                class="asset">
+                                <div class="lin1">
+                                    <section>
+                                        <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
+                                        <p> {{mg.dateAdded}} </p>
+                                    </section>
+                                    <mat-icon>more_horiz</mat-icon>
+                                </div>
+                                <div class="lin2">
+                                    <h2>{{mg.serviceName}}</h2>
+                                    <p>Completed</p>
+                                </div>
+                                <div class="lin3">
+                                    <p>Plate Number: #{{mg.plateNumber}}</p>
+                                </div>
+                                <div class="lin4">
+                                    <img src={{mg.imageUrl}} alt="">
+                                </div>
+                                <div class="lin5">
+                                    <section>
+                                        <p>Progress</p>
+                                        <p>100%</p>
+                                    </section>
+                                    <p>
+                                        <ngb-progressbar type="warning" [value]="100" [striped]="true"
+                                            [animated]="true"><i>100%</i></ngb-progressbar>
+                                    </p>
+                                </div>
 
-                        <hr>
+                                <hr>
+                            </div>
+                            <div>
+                                <div [hidden]="!completedReviewEmpty" class="noasset">
+                                    <img src="/assets/images/Image (1).png" alt="" width="100%">
+                                    <h2>No asset completed</h2>
+                                    <p>You have no completed reviewed any asset under management</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div >
-                      <div [hidden]="!completedReviewEmpty" class="noasset">
-                        <img src="/assets/images/Image (1).png" alt="" width="100%">
-                        <h2>No asset completed</h2>
-                        <p>You have no completed reviewed any asset under management</p>
+                </div>
+                <div class="right">
+                    <div class="status">
+                        <p>In Progress</p>
+                        <mat-icon>more_horiz</mat-icon>
                     </div>
-                  </div>
-                  </div>
+                    <div class="assets">
+                        <div *ngFor="let mg of managedAssets.pendingReview" class="asset">
+                            <div class="lin1">
+                                <section>
+                                    <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
+                                    <p class="daysleft">{{mg.dateAdded}} </p>
+                                </section>
+                                <mat-icon>more_horiz</mat-icon>
+                            </div>
+                            <div class="lin2">
+                                <h2>{{mg.serviceName}}</h2>
+                                <p id="daysleft">{{mg.daysLeft}} days left</p>
+                            </div>
+                            <div class="lin3">
+                                <p>Plate Number: #{{mg.plateNumber}}</p>
+                            </div>
+                            <div class="lin4">
+                                <img src={{mg.imageUrl}} alt="">
+                            </div>
+                            <div class="lin5">
+                                <section>
+                                    <p>Progress</p>
+                                    <p>{{mg.percentageCompleted}}%</p>
+                                </section>
+                                <p>
+                                    <ngb-progressbar type="warning" [value]=2 [striped]="true" [animated]="true">
+                                        <i>{{mg.percentageCompleted}}%</i></ngb-progressbar>
+                                </p>
+                            </div>
+                            <hr>
+                        </div>
+                        <div>
+                            <div [hidden]="!pendingReviewEmpty" class="noasset">
+                                <img src="/assets/images/Image (1).png" alt="" width="100%">
+                                <h2>No asset pending</h2>
+                                <p>You have no pending reviewed any asset under management</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="right">
-                <div class="status">
-                    <p>In Progress</p>
-                    <mat-icon>more_horiz</mat-icon>
-                </div>
-                <div class="assets">
-                    <div *ngFor="let mg of managedAssets.pendingReview" class="asset">
-                        <div class="lin1">
-                            <section>
-                                <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
-                                <p class="daysleft">{{mg.dateAdded}} </p>
-                            </section>
-                            <mat-icon>more_horiz</mat-icon>
-                        </div>
-                        <div class="lin2">
-                            <h2>{{mg.serviceName}}</h2>
-                            <p id="daysleft">{{mg.daysLeft}} days left</p>
-                        </div>
-                        <div class="lin3">
-                            <p>Plate Number: #{{mg.plateNumber}}</p>
-                        </div>
-                        <div class="lin4">
-                            <img src={{mg.imageUrl}} alt="">
-                        </div>
-                        <div class="lin5">
-                           <section><p>Progress</p> <p>{{mg.percentageCompleted}}%</p></section>
-                           <p><ngb-progressbar type="warning" [value]= 2 [striped]="true" [animated]="true"><i>{{mg.percentageCompleted}}%</i></ngb-progressbar></p>
-                        </div>
-                        <hr>
-                     </div>
-                     <div >
-                      <div [hidden]="!pendingReviewEmpty" class="noasset">
-                        <img src="/assets/images/Image (1).png" alt="" width="100%">
-                        <h2>No asset pending</h2>
-                        <p>You have no pending reviewed any asset under management</p>
-                    </div>
-                  </div>
-                </div>
+            <div style="position: relative">
+                <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
             </div>
-        </div>
-        <div style="position: relative">
-          <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
-        </div>
-    </ng-template>
+        </ng-template>
     </body>
 </main>
