@@ -28,13 +28,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
     private endpoint:EndpointsService,
-    private ngxService: NgxUiLoaderService,
     private toast: NgToastService,
     private utilitiesService: UtilitiesService,
     private signupService: AuthService,
     private spinnerService: NgxSpinnerService,
     private displayService: DisplayService,
-    private toasters: ToastrService
+    private toasters: ToastrService,
+    private ngxService: NgxUiLoaderService
     ) { }
 
 
@@ -260,7 +260,7 @@ fetchLGAs(state: string){
 }
 
 onSubmitIndividualAccoutCreation(){
-  this.spinnerService.show();
+  this.ngxService.start();
   const indDetail: IndividualDetails = this.individualRegistrationForm.value;
   const indAdrress: IndividualAddress = this.individualRegistrationForm_Location.value;
   const indCred: {password1: string, password2: string} = this.individualRegistrationForm_Credential.value;
@@ -296,7 +296,7 @@ onSubmitIndividualAccoutCreation(){
 
   this.signupService.individualSignupService(signUp).subscribe(res => {
     this.email = indDetail.email;
-    this.spinnerService.hide();
+    this.ngxService.stop();
     if(res == "success"){
       this.page = 'otp';
     }
@@ -308,7 +308,7 @@ onSubmitIndividualAccoutCreation(){
 }
 
 onSubmitBusinessAccoutCreation(){
-  this.spinnerService.show();
+  this.ngxService.start();
   const busDetail: BusinessDetail = this.businessRegistrationForm.value;
   const busAdrress: BusinessLocation = this.businessRegistrationForm_Location.value;
   const busCred: BusinessCred  = this.businessRegistrationForm_Credential.value;
@@ -342,7 +342,7 @@ onSubmitBusinessAccoutCreation(){
   }
 
   this.signupService.businessSignupService(signUp).subscribe(res => {
-    this.spinnerService.hide();
+    this.ngxService.stop();
     this.email = busDetail.email;
     if(res == "success"){
       this.page = 'otp';
@@ -353,12 +353,12 @@ onSubmitBusinessAccoutCreation(){
 }
 
 onSubmitVerifyCode(){
-  this.spinnerService.show();
+  this.ngxService.start();
    const otp: {txt1: string, txt2: string, txt3: string, txt4: string, txt5: string, txt6: string} = this.otpForm.value;
    const otpStr = otp.txt1 + otp.txt2 + otp.txt3 + otp.txt4 + otp.txt5 + otp.txt6;
 
    this.signupService.verifyCode({email: this.email, code: otpStr}).subscribe(res => {
-    this.spinnerService.hide();
+    this.ngxService.stop();
     if(res == "success"){
       this.page = 'successful';
     }
@@ -367,12 +367,12 @@ onSubmitVerifyCode(){
 }
 
 onSubmitLogin(){
-  this.spinnerService.show();
+  this.ngxService.start();
   const ema: {email: string} = this.signInForm.value;
   const pass: {password: string} = this.signInFormPassword.value;
   const credentials = {email: ema.email, password: pass.password};
   this.signupService.signIn(credentials).subscribe(res => {
-    this.spinnerService.hide();
+    this.ngxService.stop();
    if(res.responseCode == "00"){
      console.log(res);
 
@@ -386,7 +386,7 @@ onSubmitLogin(){
    }
   }, error => {
 
-    this.spinnerService.hide();
+    this.ngxService.stop();
     this.signInFailed = true;
     console.log(error)
     this.error = error;

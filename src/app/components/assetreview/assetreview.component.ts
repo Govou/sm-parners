@@ -14,10 +14,23 @@ export class AssetreviewComponent implements OnInit {
     completedReview: []
   };
 
+  filteredProperty:string = '';
   pendingReviewEmpty: boolean = false;
 
   constructor(private managedAssetsService: ManagedAssetsService, private ngxService: NgxUiLoaderService) { }
   SPINNER = SPINNER
+
+    // searchTerm:string= '';
+    // direction:string= 'asc';
+    // column:string= 'first';
+    // type:string= 'string';
+
+    // setSortParams(param:any){
+    // this.direction=param.dir;
+    // this.column=param.col;
+    // this.type=param.typ;
+    // }
+
   ngOnInit(): void {
     const profileId = Number.parseInt(localStorage.getItem('pid') || '');
     this.ngxService.start();

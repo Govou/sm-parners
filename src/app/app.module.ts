@@ -37,6 +37,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgToastModule } from 'ng-angular-popup';
 import { AssetreviewComponent } from './components/assetreview/assetreview.component';
 import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { SortParamsDirective } from './directives/sort.directive';
 
 
 @NgModule({
@@ -53,7 +56,9 @@ import { ServicecentersComponent } from './components/servicecenters/servicecent
     BodyComponent,
     AssetsComponent,
     AssetreviewComponent,
-    ServicecentersComponent
+    ServicecentersComponent,
+    SearchFilterPipe,
+    SortParamsDirective
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,8 @@ import { ServicecentersComponent } from './components/servicecenters/servicecent
       timeOut: 5000,
       positionClass: "toast-bottom-left",
     }),
-    NgToastModule
+    NgToastModule,
+    // Ng2SearchPipeModule
   ],
   exports: [RouterModule],
   // providers: [AuthGuard, {
