@@ -34,9 +34,7 @@
                         <p>Payment</p>
                     </div>
                 </div>
-                <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-                    <p style="color: white">Please Wait... </p>
-                </ngx-spinner>
+
             </div>
 
             <div class="sec2">
@@ -199,9 +197,7 @@
                             <label for="center" class="form-label">Service Center</label>
                             <select formControlName="center" #centreSelected id="center" class="form-select"
                                 (change)="selectServiceCentres(centreSelected.value)">
-                                <option [value]="sc.service_desc" *ngFor="let sc of serviceCentres">{{sc.service_desc +
-                                    ' -
-                                    ' + sc.address }}</option>
+                                <option [value]="sc.service_desc" *ngFor="let sc of serviceCentres">{{sc.service_desc + ' -  ' + sc.address }}</option>
                             </select>
                         </div>
                         <div class="col-6" id="datetime">
@@ -225,13 +221,13 @@
                             Appointment</button>
                         <button type="button" class="btn btn-default col-6" (click)="visualsForm()">Back</button>
                     </form>
-                    <div style="position: relative">
+                    <!-- <div style="position: relative">
                       <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
-                    </div>
+                    </div> -->
                 </ng-template>
 
-
-                <ng-template #content let-c="close" let-d="dismiss">
+                <div>
+                  <ng-template #content let-c="close" let-d="dismiss">
                     <div class="closebtn">
                         <button (click)="d('Cross click')">&#x2715;</button>
                     </div>
@@ -290,6 +286,7 @@
                                     with Interswitch</button>
                             </div>
                         </div>
+
                         <hr>
                         <div class="notes">
                             <b>Please note</b>
@@ -305,13 +302,17 @@
                             </ol>
                         </div>
                     </div>
-                    <div style="position: relative">
-                      <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
-                    </div>
+
                 </ng-template>
+
+                </div>
+                <div style="position: relative">
+                  <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
+                </div>
             </div>
         </div>
-      </div>
-    </body>
 
+      </div>
+
+    </body>
 </main>

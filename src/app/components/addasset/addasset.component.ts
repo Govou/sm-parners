@@ -371,7 +371,6 @@ export class AddassetComponent implements OnInit {
   }
 
   addNewAsset(payref: string, paygateway: string){
-
     // this.leftImageUpload();
     // this.rightImageUpload();
     // this.interiorImageUpload();
@@ -445,14 +444,15 @@ export class AddassetComponent implements OnInit {
             paymentConfirmed: true
           };
 
-          this.assetService.postTransaction(transaction).subscribe(res =>{
+         this.assetService.postTransaction(transaction).subscribe(res =>{
             console.log(res);
-            this.ngxService.stop();
+           //
             this.successfullyAdded = true;
+
+             console.log('stop')
            // this.router.navigate(['/dashboard']);
         }, error => {
           this.error = error.message;
-          this.ngxService.stop();
         })
 
         }
@@ -502,17 +502,18 @@ export class AddassetComponent implements OnInit {
    this.assetRegistrationForm_Schedule.reset(this.assetRegistrationForm_Schedule.value);
   }
 
-  postTransaction(transaction: PostTransactions){
-    console.log(transaction);
-    this.assetService.postTransaction(transaction).subscribe(res => {
-      if(res.responseCode == "00"){
-        return "success";
-      }
-      else
-      {
-        return "failed";
-      }
-    })
-  }
+  // postTransaction(transaction: PostTransactions){
+  //   console.log(transaction);
+  //   this.assetService.postTransaction(transaction).subscribe(res => {
+  //     this.ngxService.stop();
+  //     if(res.responseCode == "00"){
+  //       return "success";
+  //     }
+  //     else
+  //     {
+  //       return "failed";
+  //     }
+  //   })
+  // }
 
 }

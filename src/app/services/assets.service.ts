@@ -113,7 +113,8 @@ export class AssetsService {
   postTransaction(transaction: PostTransactions){
     return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSContract/PostSupplierTransaction`, transaction)
                           .pipe(map(res => {
-                            return res;
+                            let result = res;
+                            return result
                           })
                         )
 

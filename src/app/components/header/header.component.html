@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
-      <span style="cursor: pointer;" (click)="homepage()" class="navbar-brand"><img src="/assets/Untitled-1-Recovered 1.png" alt=""></span>
+      <span style="cursor: pointer;" (click)="homepage()" class="navbar-brand"><img src="/assets/images/halogen-image.jpeg" alt=""></span>
       <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
         <span class="navbar-toggler-icon"></span>
       </button>
 
 
       <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent" >
-        <ng-template [hidden]="isLoggedIn">
+        <ng-template [ngIf]="!isLoggedIn">
         <ul class="navbar-nav ms-auto"  >
           <li class="landingli" ngbDropdown display="dynamic" placement="bottom-end">
             <a class="landing" routerLink="/cart" tabindex="0" id="navbarDropdown3" role="button" routerLink="">

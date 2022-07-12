@@ -95,6 +95,8 @@ export class AuthService {
                               this.email = res.responseData.userProfile.email;
                               this.profileId = res.responseData.userProfile.id;
                               localStorage.setItem('pid', this.profileId)
+                              localStorage.setItem('pname', res.responseData.userProfile.name)
+                             // localStorage.setItem('pid', this.profileId)
                               this.name = res.responseData.userProfile.name;
                               this.loggedIn = true
                             }

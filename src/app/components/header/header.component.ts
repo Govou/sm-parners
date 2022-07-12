@@ -13,8 +13,8 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   public isLoggedIn: boolean = false;
-  supplierName: string = '';
-  profId: any
+  supplierName: any;
+  profId: any;
   constructor(private location:Location,private router:Router, private authService: AuthService, private displayService: DisplayService) {
     this.subscription = displayService.newShow.subscribe(
       res => {
@@ -26,8 +26,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.item = 'yes'
     const profileId =  this.authService.profileId// localStorage.getItem('profileId')?.toString();
-    this.profId = this.authService.profileId;
-    this.supplierName = this.authService.name;
+    this.profId = localStorage.getItem('pid')?.toString()  // this.authService.profileId;
+    this.supplierName = localStorage.getItem('pname')?.toString() //this.authService.name;
+    console.log(this.supplierName)
 
     console.log(this.isLoggedIn)
     // if(this.location.path() != "/authentication")this.item = 'show';

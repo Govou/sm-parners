@@ -18,7 +18,7 @@
                 <p>Assets that have been submitted and reviewed</p>
             </div>
             <div class="side2">
-                <button class="btn btn-primary addAsset">Add asset</button>
+                <button class="btn btn-primary addAsset" routerLink="addasset">Add asset</button>
                 <select name="" id="" class="form-select">
                     <option value="">Sort</option>
                 </select>
@@ -63,8 +63,8 @@
                   <div >
                     <div [hidden]="!completedReviewEmpty" class="noasset">
                       <img src="/assets/images/Image (1).png" alt="" width="100%">
-                      <h2>No asset completed</h2>
-                      <p>You have no completed reviewed any asset under management</p>
+                      <h2>No completely reviewed asset</h2>
+                      <p>You have no asset completely reviewed under management</p>
                   </div>
                 </div>
                 </div>

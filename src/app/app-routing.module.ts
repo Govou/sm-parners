@@ -11,35 +11,39 @@ import { AssetsComponent } from './components/assets/assets.component';
 import { AddassetComponent } from './components/addasset/addasset.component';
 import { AssetreviewComponent } from './components/assetreview/assetreview.component';
 import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
+import { AuthGuard } from './auth-guard.guard';
 
-const routes: Routes = [
-  {path:'dashboard', component:DashboardComponent},
-  {path:'', component:AuthenticationComponent},
-  {path:'asset', component:AssetsComponent},
-  {path:'sidenav', component:SidenavComponent},
-  {path: 'auth', component: AuthenticationComponent},
-  {path:'home', component:HomeComponent},
-  {path:'settings', component:SettingsComponent},
-  {path:'info', component:InformationComponent},
-  {path:'header', component:HeaderComponent},
-  {path:'addasset', component:AddassetComponent},
-  {path: 'assetreview', component:AssetreviewComponent},
-  {path: 'servicecenters', component:ServicecentersComponent},
-  {path: '**', redirectTo: '/auth'},
-];
 // const routes: Routes = [
-//   {path:'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
+//   {path:'dashboard', component:DashboardComponent},
 //   {path:'', component:AuthenticationComponent},
-//   {path:'asset', component:AssetsComponent, canActivate: [AuthGuard]},
-//   {path:'sidenav', component:SidenavComponent, canActivate: [AuthGuard]},
+//   {path:'asset', component:AssetsComponent},
+//   {path:'sidenav', component:SidenavComponent},
 //   {path: 'auth', component: AuthenticationComponent},
-//   {path:'home', component:HomeComponent, canActivate: [AuthGuard]},
-//   {path:'settings', component:SettingsComponent, canActivate: [AuthGuard]},
+//   {path:'home', component:HomeComponent},
+//   {path:'settings', component:SettingsComponent},
 //   {path:'info', component:InformationComponent},
 //   {path:'header', component:HeaderComponent},
-//   {path:'addasset', component:AddassetComponent, canActivate: [AuthGuard]},
+//   {path:'addasset', component:AddassetComponent},
+//   {path: 'assetreview', component:AssetreviewComponent},
+//   {path: 'servicecenters', component:ServicecentersComponent},
 //   {path: '**', redirectTo: '/auth'},
-// ];
+//];
+
+const routes: Routes = [
+  {path:'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
+  {path:'', component:AuthenticationComponent},
+  {path:'asset', component:AssetsComponent, canActivate: [AuthGuard]},
+  {path:'assetreview', component:AssetreviewComponent, canActivate: [AuthGuard]},
+  {path:'servicecenters', component:ServicecentersComponent, canActivate: [AuthGuard]},
+  {path:'sidenav', component:SidenavComponent, canActivate: [AuthGuard]},
+  {path: 'auth', component: AuthenticationComponent},
+  {path:'home', component:HomeComponent, canActivate: [AuthGuard]},
+  {path:'settings', component:SettingsComponent, canActivate: [AuthGuard]},
+  {path:'info', component:InformationComponent},
+  {path:'header', component:HeaderComponent},
+  {path:'addasset', component:AddassetComponent, canActivate: [AuthGuard]},
+  {path: '**', redirectTo: '/auth'},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
