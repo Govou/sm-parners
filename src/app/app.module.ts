@@ -40,6 +40,9 @@ import { ServicecentersComponent } from './components/servicecenters/servicecent
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { SortParamsDirective } from './directives/sort.directive';
+import { SortByPipe } from './pipes/sort.pipe';
+import { FlutterwaveModule } from 'flutterwave-angular-v3';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -58,6 +61,7 @@ import { SortParamsDirective } from './directives/sort.directive';
     AssetreviewComponent,
     ServicecentersComponent,
     SearchFilterPipe,
+    SortByPipe,
     SortParamsDirective
   ],
   imports: [
@@ -80,18 +84,20 @@ import { SortParamsDirective } from './directives/sort.directive';
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), // Your config
     LazyLoadImageModule,
+    FlutterwaveModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: "toast-bottom-left",
     }),
-    NgToastModule,
+    NgToastModule
+
     //Ng2SearchPipeModule
   ],
   exports: [RouterModule],
   // providers: [AuthGuard, {
   //   provide: HTTP_INTERCEPTORS,
-  //   useClass: ServerErrorsInterceptor,
+  //   useClass: AuthInterceptor,
   //   multi:true
   // }],
   providers: [AuthGuard],

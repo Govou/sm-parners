@@ -237,24 +237,24 @@
                             <div class="paymentOption">
                                 <div class="paymentGateway">
                                     <input type="radio" id="flutterwave" ngModel name="payment" id="flutterwave"
-                                        value="flutterwave" [(ngModel)]="walletregistration.gateway">
+                                        value="flutterwave" [(ngModel)]="payment.gateway">
                                     <label for="flutter"><img src="/assets/images/Flutterwave-logo 2.png"
                                             alt="">Flutterwave</label>
                                 </div>
                                 <div class="paymentGateway">
                                     <input type="radio" id="paystack" ngModel name="payment" id="paystack"
-                                        value="paystack" [(ngModel)]="walletregistration.gateway">
+                                        value="paystack" [(ngModel)]="payment.gateway">
                                     <label for="flutter"><img src="/assets/images/Paystack-mark-white-twitter 2.png" alt="">
                                         Paystack</label>
                                 </div>
                                 <div class="paymentGateway">
                                     <input type="radio" ngModel name="payment" id="remita" value="remita"
-                                        [(ngModel)]="walletregistration.gateway">
+                                        [(ngModel)]="payment.gateway">
                                     <label for="flutter"><img src="/assets/images/unnamed 2.png" alt="">Remita</label>
                                 </div>
                                 <div class="paymentGateway">
                                     <input type="radio" ngModel name="payment" id="inter" value="inter"
-                                        [(ngModel)]="walletregistration.gateway">
+                                        [(ngModel)]="payment.gateway">
                                     <label for="flutter"><img src="/assets/images/cropped-favicon 2.png" alt="">Interswitch
                                         webpay</label>
                                 </div>
@@ -265,24 +265,24 @@
                         <div class="amount">
                             <p>Amount(&#8358;)</p>
                             <div class="enterAmount">
-                                <span style="color: red;">{{walletMessage}}</span>
+                                <span style="color: red;">{{paymentMessage}}</span>
                                 <input type="text" placeholder="min 100" ngModel name="long" #long="ngModel"
                                     [(ngModel)]="bookingPrice" disabled="true">
                                 <button
-                                    [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == '') || (walletregistration.amount <= 100)"
+                                    [hidden]="(payment.gateway == 'flutterwave' || payment.gateway == 'remita' || payment.gateway == 'inter' || payment.gateway == '')"
                                     angular4-paystack [email]="'mailexample@mail.com'" [amount]="bookingPrice * 100"
                                     [ref]="reference" [key]="key" [class]="'btn btn-primary'"
                                     (paymentInit)="paymentInit()" (onClose)="paymentCancel()"
                                     (callback)="paymentDone($event)">Pay with
                                     Paystack</button>
-                                <button (click)="paymentInit()"
-                                    [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                <button (click)="makePayment()"
+                                    [hidden]="(payment.gateway == 'remita' || payment.gateway == 'inter' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
                                     with Flutter</button>
                                 <button (click)="paymentInit()"
-                                    [hidden]="(walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'inter' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                    [hidden]="(payment.gateway == 'flutterwave' || payment.gateway == 'inter' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
                                     with Remita</button>
                                 <button (click)="paymentInit()"
-                                    [hidden]="(walletregistration.gateway == 'remita' || walletregistration.gateway == 'flutterwave' || walletregistration.gateway == 'paystack' || walletregistration.gateway == '') || (walletregistration.amount <= 100)">Pay
+                                    [hidden]="(payment.gateway == 'remita' || payment.gateway == 'flutterwave' || payment.gateway == 'paystack' || payment.gateway == '')">Pay
                                     with Interswitch</button>
                             </div>
                         </div>

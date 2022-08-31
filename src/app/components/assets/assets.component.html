@@ -33,7 +33,7 @@
                 </div>
                 <div>
                   <div class="assets">
-                    <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview | searchfilter: filteredProperty: 'serviceName'" class="asset">
+                    <div [hidden]="completedReviewEmpty" *ngFor="let mg of managedAssets.completedReview | sortBy: 'asc':'serviceName':'date' | searchfilter: filteredProperty: 'serviceName'" class="asset">
                         <div class="lin1">
                             <section>
                                 <mat-icon style="font-size:20px ;">calendar_today</mat-icon>
@@ -75,7 +75,7 @@
                     <mat-icon>more_horiz</mat-icon>
                 </div>
                 <div class="assets">
-                    <div *ngFor="let mg of managedAssets.pendingReview | searchfilter: filteredProperty: 'serviceName'" class="asset">
+                    <div *ngFor="let mg of managedAssets.pendingReview | sortBy: 'asc':'dateAdded':'date' | searchfilter: filteredProperty: 'serviceName'" class="asset">
                         <div class="lin1">
                             <section>
                                 <mat-icon style="font-size:20px ;">calendar_today</mat-icon>

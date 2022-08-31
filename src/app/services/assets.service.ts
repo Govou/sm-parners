@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { ServiceCenterResponse } from '../model/dtos/service-centre-response';
 import { AddAsset } from '../model/dtos/addasset';
 import { DashboardDetails } from '../model/dashboard';
 import { PostTransactions } from '../model/dtos/post-transactions';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 
-export class activatewallet{
+export class Payment{
     constructor(
       public profileId: string,
       public securityQuestion: string,

@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { coerceStringArray } from '@angular/cdk/coercion';
 import { DisplayService } from 'src/app/services/display.service';
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-authentication',
@@ -34,7 +35,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private spinnerService: NgxSpinnerService,
     private displayService: DisplayService,
     private toasters: ToastrService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private tokenService: TokenStorageService
     ) { }
 
 
@@ -375,10 +377,9 @@ onSubmitLogin(){
     this.ngxService.stop();
    if(res.responseCode == "00"){
      console.log(res);
-
+   // this.tokenService.generateToken();
      this.displayService.changeShowSignIns(true);
     this.signInFailed = false;
-    console.log('66666')
     this.router.navigate(['dashboard']);
    }
    else{

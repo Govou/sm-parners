@@ -5,7 +5,7 @@ import { ServiceCenterResponse } from 'src/app/model/dtos/service-centre-respons
 import { AssetsService } from 'src/app/services/assets.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
-import { activatewallet } from 'src/app/model/wallet';
+import { Payment } from 'src/app/model/payment';
 import { NgbModalConfig,NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AssetRegistrationForm_1, AssetRegistrationForm_Schedule, AssetRegistrationForm_Visuals } from 'src/app/model/assetaddition';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { finalize } from 'rxjs';
 import { PostTransactions } from 'src/app/model/dtos/post-transactions';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
+import { Flutterwave, InlinePaymentOptions, PaymentSuccessResponse } from 'flutterwave-angular-v3';
 
 
 @Component({
@@ -32,8 +33,9 @@ export class AddassetComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private storage: AngularFireStorage,
     private authService: AuthService,
-    private ngxService: NgxUiLoaderService
-    ) { }
+    private ngxService: NgxUiLoaderService,
+    private flutterwave: Flutterwave
+    ) {  }
   SPINNER = SPINNER
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
@@ -75,7 +77,8 @@ export class AddassetComponent implements OnInit {
   bookingPrice = 0;
   seletedMake = '';
   paymentStatus = '';
-
+  payment = new Payment('','','','','',0,'','');
+  key= environment['paystackKey'];
   assetRegistrationForm!: FormGroup;
   assetRegistrationForm_Visuals! : FormGroup;
   assetRegistrationForm_Schedule! : FormGroup;
@@ -380,7 +383,7 @@ export class AddassetComponent implements OnInit {
     const asset_1: AssetRegistrationForm_1 = this.assetRegistrationForm.value;
     const asset_2: AssetRegistrationForm_Visuals = this.assetRegistrationForm_Visuals.value;
     const asset_3: AssetRegistrationForm_Schedule = this.assetRegistrationForm_Schedule.value;
-
+    this.bookingPrice = Number.parseInt(asset_3.price);
     const make = this.getMakeName();
     const serviceCentre = this.getServiceCentre(asset_3.center);
     const profileId: any  = Number.parseInt(localStorage.getItem('pid') || '') //this.authService.profileId;
@@ -432,7 +435,7 @@ export class AddassetComponent implements OnInit {
           var transaction: PostTransactions = {
             profileId: Number.parseInt(profileId),
             paymentGateway: paygateway,
-            paymentReferenceInternal: '',
+            paymentReferenceInternal: asset_1.platenumber,
             paymentReferenceGateway: payref,
             contractId: 0,
             paymentGatewayResponseCode: this.paymentStatus,
@@ -466,16 +469,15 @@ export class AddassetComponent implements OnInit {
     this.modalService.dismissAll(content)
   }
 
-  walletregistration = new activatewallet('','','','','',20000,'','');
-  key= environment['paystackKey'];
-  amt=''
-  eml:any
-  walletMessage:any
-  walletResult:any
+
+  // amt=''
+  // eml:any
+  paymentMessage:any
+  // walletResult:any
 
   paymentInit() {
     console.log('Payment initialized');
-    this.walletregistration.amount = 20000
+    this.payment.amount = this.bookingPrice;
   }
 
   paymentDone(ref: {message: string, reference: string, status: string }) {
@@ -515,5 +517,75 @@ export class AddassetComponent implements OnInit {
   //     }
   //   })
   // }
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////Flutterwave integration////////////////////
+publicKey = environment['flutterwaveKey'];
+
+  customerDetails = {
+    name: localStorage.getItem('name'),
+    email: localStorage.getItem('email'),
+    phone_number: localStorage.getItem('phonenumber')
+  };
+
+  customizations = {
+    title: "Halobiz",
+    description: "Halobiz Payment",
+    logo: "https://flutterwave.com/images/logo-colored.svg",
+  };
+
+  meta = { counsumer_id: "7898", consumer_mac: "kjs9s8ss7dd" };
+
+  paymentData: InlinePaymentOptions = {
+    public_key: this.publicKey,
+    tx_ref: this.generateReference(),
+    amount: this.bookingPrice,
+    currency: "NGN",
+    payment_options: "card,ussd",
+    redirect_url: "",
+    meta: this.meta,
+    customer: this.customerDetails,
+    customizations: this.customizations,
+    callback: this.makePaymentCallback,
+    onclose: this.closedPaymentModal,
+    callbackContext: this,
+
+  };
+  //Inject the flutterwave service
+  makePayment() {
+    this.paymentData.amount = this.bookingPrice;
+    this.flutterwave.inlinePay(this.paymentData);
+  }
+
+  makePaymentCallback(response: PaymentSuccessResponse): void {
+    this.flutterresponse = response;
+    this.closedPaymentModal();
+  }
+
+  flutterresponse: PaymentSuccessResponse = new PaymentSuccessResponse();
+  closedPaymentModal(): void {
+    this.flutterwave.closePaymentModal(3)
+
+    this.modalService.dismissAll();
+    // this.spinnerService.show();
+    this.ngxService.start();
+    console.log(this.title, this.flutterresponse);
+   // this.paymentStatus = response.status;
+    if(this.flutterresponse.status == 'completed'){
+        this.addNewAsset((this.flutterresponse.transaction_id || '').toString(), 'flutter');
+    }
+  }
+
+  generateReference(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+
 
 }

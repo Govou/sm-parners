@@ -8,14 +8,9 @@ export const environment = {
   halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
   defaultImageUrl: '../assets/images/CameraShutterColor.svg',
   paystackKey: 'pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447',
-  // firebaseConfig: {
-  //   apiKey: "AIzaSyAnFmIEWYpc8QYgBcp6uajH_1LvxR6VKEc",
-  //   authDomain: "halo-biz.firebaseapp.com",
-  //   projectId: "halo-biz",
-  //   storageBucket: "halo-biz.appspot.com",
-  //   messagingSenderId: "995912706561",
-  //   appId: "1:995912706561:web:f7e52139b03e85fa45ae00",
-  // }
+  flutterwaveKey: 'FLWPUBK_TEST-540620e287966341633afd1b6a789d9b-X',
+  halobizUsername: 'online.portal@halogen-group.com',
+  halobizPassword: 'rD:yfBj8;?%cdp*&38k',
    firebaseConfig: {
     apiKey: "AIzaSyCdQkShCc1pTOquUcBLKkPN1RX3JtdOtXI",
     authDomain: "my-halobiz-projects.firebaseapp.com",

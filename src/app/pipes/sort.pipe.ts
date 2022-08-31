@@ -1,4 +1,4 @@
-// import { Pipe, PipeTransform } from "@angular/core";
+//  import { Pipe, PipeTransform } from "@angular/core";
 
 // @Pipe({name:'sort'})
 // export class SortPipe implements PipeTransform{
@@ -30,3 +30,29 @@
 // })]
 // }
 // }
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+import { orderBy } from 'lodash';
+
+@Pipe({ name: 'sortBy' })
+export class SortByPipe implements PipeTransform {
+
+  transform(value: any[], order:any = '', column: string = '', type: any): any[] {
+    if (!value || order === '' || !order) { return value; } // no array
+    if (value.length <= 1) { return value; } // array with only one item
+    if (!column || column === '') {
+      console.log('sort')
+      if(order==='asc'){return value.sort()}
+      else{return value.sort().reverse();}
+    } // sort 1d array
+    if (!column || column === '') {
+      if(type==='date'){
+        value.sort((a: any, b: any) => {
+          console.log('date sort')
+          return new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime();
+        });}
+    }
+    return orderBy(value, [column], [order]);
+  }
+}

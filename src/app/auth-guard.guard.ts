@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot):
      boolean {
       if(this.authService.token != null && this.authService.token != ''){
-        console.log('my token', this.authService.token)
+        //console.log('my token', this.authService.token)
          return true;
       }
       this.router.navigate(['auth']);
