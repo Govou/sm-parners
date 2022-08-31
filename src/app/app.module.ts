@@ -43,6 +43,7 @@ import { SortParamsDirective } from './directives/sort.directive';
 import { SortByPipe } from './pipes/sort.pipe';
 import { FlutterwaveModule } from 'flutterwave-angular-v3';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { OngoingTripComponent } from './components/ongoing-trip/ongoing-trip.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     SearchFilterPipe,
     SortByPipe,
     SortParamsDirective
+
   ],
   imports: [
     BrowserModule,

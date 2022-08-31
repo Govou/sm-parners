@@ -36,10 +36,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   homepage(){
-
-
-
   }
+
   collapsed = true;
 
   signOut(){

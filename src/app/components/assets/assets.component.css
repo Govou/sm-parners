@@ -15,7 +15,7 @@ body{
     /* background: #fff; */
     /* background-color: #7a8ac9; */
     padding: 1.5rem;
-    color: #fff;
+    /* color: #fff; */
 }
 .noasset{
     display: flex;
@@ -32,10 +32,12 @@ border-radius: 10px;
 padding: 5px 40px;
 }
 .top{
-    border: 2px solid;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.backArrow{
+    cursor: pointer;
 }
 .side1{
     display: flex;
@@ -82,7 +84,7 @@ background: #11437A;;
     color: #000;
     border-radius: 10px;
     padding: 20px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .bottom .left .status{
@@ -99,10 +101,12 @@ margin: 0;
 }
 
 .assets{
+    /* border: 2px solid; */
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 280px));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
     padding: 10px;
     align-items: center;
+    justify-content: space-evenly;
     grid-gap: 20px;
 }
 .asset{
@@ -157,17 +161,37 @@ font-weight: 600;
     height: 170px;
     border-radius: 10px;
 }
+.asset .lin5 h2, .asset .lin5 p{
+    color: rgba(45, 55, 72, 0.55);
+    margin: 0px;
+}
 .asset .lin5 section{
 display: flex;
 justify-content: space-between;
-color: rgba(45, 55, 72, 0.55);
-font-weight: 400;
-
+/* color: rgba(45, 55, 72, 0.55); */
+font-weight: 500;
+}
+.active{
+    text-align: center;
+    /* width: 104px;
+height: 26px; */
+color: #40684B;
+padding: 5px 40px;
+background: #93E3A9;
+border-radius: 10px;
+}
+.renew{
+    color: #11437A;;
+    cursor: pointer;
+}
+.color{
+    color: #11437A;;
 }
 
 .bottom .right .status{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .bottom .right .status p{
 font-weight: 700;
@@ -176,11 +200,15 @@ letter-spacing: -0.02em;
 color: #FF9900;
 }
 .right{
-    flex-basis: 27%;
+    flex-basis: 28%;
     background: #F7F8FC;
     border-radius: 10px;
     color: #000;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
 }
 .bottom .right .status{
     display: flex;
@@ -191,3 +219,237 @@ color: #FF9900;
     background: #fff;
     color: #FF584D;
 }
+
+
+/* /////////////////////////// */
+
+/* .success{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .success img{
+    width: 40%;
+  }
+  .success h2{
+    font-weight: 600;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+  color: #2D3748;
+  }
+  .success button{
+    background: #11437A;
+  border-radius: 10px;
+  padding: 5px 100px;
+  } */
+  .deepBlue{
+    background: #11437A;
+  }
+  
+  .steps-form {
+    padding-right: 60px;
+    display: table;
+    width: 70%;
+    position: relative; }
+  .steps-form .steps-row {
+    display: table-row; }
+  .steps-form .steps-row:before {
+    top: 20px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 3px;
+    background: #11437A;
+    }
+  .steps-form .steps-row .steps-step {
+    display: table-cell;
+    text-align: center;
+    position: relative; }
+  .steps-form .steps-row .steps-step p {
+    margin-top: 0.5rem; }
+  .steps-form .steps-row .steps-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important; }
+  .steps-form .steps-row .steps-step .btn-circle {
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 20px;
+    border: 5px solid #fff;
+    margin-top: 0 ; }
+  
+    .notValidForm{
+      background: #C4C4C4;
+    }
+    .validForm{
+      background: #11437A;
+    }
+  
+  .assetDetail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      border-radius: 10px;
+      padding: 20px;
+  }
+  .assetDetail > *{
+    margin: 10px 0;
+  }
+  
+  form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80%;
+      /* padding-left: 20px; */
+      
+    }
+    form > *{
+      margin: 10px 0;
+    }
+    .sec2{
+      width: 100%;
+      display: flex;
+      justify-content:center;
+      /* padding-right: 10%; */
+  
+    }
+    #datetime{
+      display: flex;
+      justify-content: space-between;
+    }
+    #file{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 45px;
+      cursor: pointer;
+      border: 0.5px solid #1C2B66;
+  border-radius: 10px;
+    }
+  
+    .assetView img{
+      width: 320px;
+  height: 165px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+    }
+    .assetView p{
+      font-weight: 600;
+  font-size: 15px;
+  color: #2D3748;
+    }
+    .next{
+      /* color: #fff; */
+      width: 321px;
+  height: 45px;
+  /* background: #C4C4C4; */
+  border-radius: 10px;
+  /* border: 0; */
+    }
+  
+    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
+      border: 1px solid red;
+    }
+  
+  
+    .paymentOptionGroup{
+      display: flex;
+      align-items: center;
+      /* border: 2px solid; */
+      padding: 0 10px;
+      justify-content: space-between;
+  }
+  .paymentOptionGroup img{
+      width: 50%;
+  }
+  .paymentOption{
+  
+  }
+  .paymentGateway{
+      margin:10px;
+  }
+  .paymentGateway label{
+      margin-left: 10px;
+      font-weight: 600;
+  font-size: 15px;
+  }
+  .paymentGateway input{
+      opacity: 0.5;
+  
+  }
+  .paymentGateway img{
+      width: 25px;
+      margin-right: 5px;
+  }
+  .amount{
+      display: flex;
+      justify-content: center;
+  }
+  .amount p{
+      margin-top: 30px;
+  }
+  .amount .enterAmount{
+      display: flex;
+      flex-direction: column;
+  
+  }
+  .amount .enterAmount input{
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  outline-color: #007AFF;
+  width: 300px;
+  height: 45px;
+  padding: 10px;
+  }
+  .amount .enterAmount button{
+      background: #2FA84F;
+  border-radius: 10px;
+  width: 300px;
+  height: 45px;
+  border: 0;
+  }
+  .amount .enterAmount >*{
+      margin: 5px ;
+  }
+  .modal-footer {
+      text-align:left;
+  }
+  .closebtn{
+      text-align: right;
+  }
+  .closebtn button{
+      margin: 10px;
+      background-color: #fff;
+      color: #373737;
+      font-weight: 600;
+      font-size: 16px;
+      border: 0;
+  }
+  
+  
+  .form-container-align-items{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* justify-items: stretch; */
+  }
+  
+  .right-padding{
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+  
+  .left-padding{
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+  
