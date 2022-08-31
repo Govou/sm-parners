@@ -40,6 +40,7 @@ import { ServicecentersComponent } from './components/servicecenters/servicecent
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { SortParamsDirective } from './directives/sort.directive';
+import { OngoingTripComponent } from './components/ongoing-trip/ongoing-trip.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { SortParamsDirective } from './directives/sort.directive';
     AssetreviewComponent,
     ServicecentersComponent,
     SearchFilterPipe,
-    SortParamsDirective
+    SortParamsDirective,
+    OngoingTripComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,7 @@ import { SortParamsDirective } from './directives/sort.directive';
       positionClass: "toast-bottom-left",
     }),
     NgToastModule,
-    // Ng2SearchPipeModule
+    //Ng2SearchPipeModule
   ],
   exports: [RouterModule],
   // providers: [AuthGuard, {

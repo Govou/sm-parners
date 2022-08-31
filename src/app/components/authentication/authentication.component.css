@@ -91,7 +91,7 @@ border-radius: 10px;
     margin-left: 7px;
     cursor: pointer;
 
-}
+}.contain2
 .container{
     display: flex;
     flex-direction: column;
