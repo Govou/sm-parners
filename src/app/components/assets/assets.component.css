@@ -180,6 +180,15 @@ padding: 5px 40px;
 background: #93E3A9;
 border-radius: 10px;
 }
+.expired{
+    text-align: center;
+    /* width: 104px;
+height: 26px; */
+color: #FFFFFF;
+padding: 5px 40px;
+background: #F46F67;
+border-radius: 10px;
+}
 .renew{
     color: #11437A;;
     cursor: pointer;
