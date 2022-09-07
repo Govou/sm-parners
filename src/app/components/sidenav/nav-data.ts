@@ -17,7 +17,7 @@ export const navbarData = [
     {
         routerLink: '/asset',
         icon:'folder',
-        label: 'Assets'
+        label: 'My Assets'
     },
     {
         routerLink: '/assetreview',
@@ -38,5 +38,5 @@ export const navbarData = [
         routerLink: '/info',
         icon:'info',
         label: 'About'
-    }, 
+    },
 ];

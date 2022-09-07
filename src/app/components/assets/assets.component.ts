@@ -5,15 +5,14 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { ServiceCenterResponse } from 'src/app/model/dtos/service-centre-response';
 import { NgbModalConfig,NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { activatewallet } from 'src/app/model/wallet';
 import { environment } from 'src/environments/environment';
-
-
-
-import * as $ from 'jquery';
 import { ManagedAssetsService } from 'src/app/services/managed-assets.service';
 import { ManagedAssets } from 'src/app/model/dtos/managedassets';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
+import { Payment } from 'src/app/model/payment';
+import { Flutterwave, InlinePaymentOptions, PaymentSuccessResponse } from 'flutterwave-angular-v3';
+import { AssetsService } from 'src/app/services/assets.service';
+import { ServiceRenewal } from 'src/app/model/dtos/service-renewal';
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
@@ -24,9 +23,27 @@ export class AssetsComponent implements OnInit {
 
   constructor(config: NgbAccordionConfig,
     private modalService: NgbModal,
-    private router: Router, 
-    private managedAssetsService: ManagedAssetsService, 
-    private ngxService: NgxUiLoaderService) { config.type = 'dark' }
+    private router: Router,
+    private managedAssetsService: ManagedAssetsService,
+    private assetsService: AssetsService,
+    private ngxService: NgxUiLoaderService,
+    private flutterwave: Flutterwave) { config.type = 'dark' }
+
+    make: any;
+    model: any;
+    modelNumber: any;
+    serialNumber: any;
+    identificationNumber: any;
+    frontViewImage: any;
+    leftViewImage: any;
+    rightViewImage: any;
+    rearViewImage: any;
+    topViewImage: any;
+    interiorViewImage: any;
+    type: any;
+    vehicleIdentificationNumber:any;
+
+    renewalAmount: number = 2000;
 
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
@@ -36,8 +53,12 @@ export class AssetsComponent implements OnInit {
   carTypes: string[] = [];
   selectedYear: number = 0;
   years: number[] = [];
-
+  paymentMessage:any;
   successfullyAdded: boolean = false;
+
+  serviceId: any;
+
+  payment = new Payment('','','','','',0,'','');
 
   frontimageUrl: any;
   backimageUrl: any;
@@ -45,6 +66,8 @@ export class AssetsComponent implements OnInit {
   rightimageUrl:any;
   interiorimageUrl: any;
   topimageUrl: any;
+
+  gateway:string = '';
 
   uploadedfrontimageUrl: any;
   uploadedbackimageUrl: any;
@@ -65,7 +88,7 @@ export class AssetsComponent implements OnInit {
 
   reference = '';
   title = '';
-  bookingPrice = 0;
+  bookingPrice = 2000;
   seletedMake = '';
   paymentStatus = '';
 
@@ -85,7 +108,7 @@ export class AssetsComponent implements OnInit {
   completedReviewEmpty: boolean = false;
   allEmpty: boolean = false;
   filteredProperty:string = '';
-  
+  successfullyRenewed: boolean = false;
   SPINNER = SPINNER
   page: any;
   loaded:any
@@ -93,10 +116,12 @@ export class AssetsComponent implements OnInit {
   ngOnInit(): void {
     this.loaded = 'first';
     this.page = 'asset';
+    console.log('vv', this.gateway)
     const profileId = Number.parseInt(localStorage.getItem('pid') || '');
     this.ngxService.start();
     this.managedAssetsService.getManagedAssets(profileId).subscribe(res => {
       this.ngxService.stop();
+      console.log('manag', res);
       this.managedAssets = res;
       if(this.managedAssets.completedReview.length == 0){
         this.completedReviewEmpty = true;
@@ -110,12 +135,63 @@ export class AssetsComponent implements OnInit {
     })
     this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
 
+    this.assetRegistrationForm = new FormGroup({
+      'make': new FormControl(null),
+      'model': new FormControl(null),
+      'year': new FormControl(null),
+      'type': new FormControl(null),
+      'modelnumber': new FormControl(null),
+      'platenumber': new FormControl(null),
+      'chasis': new FormControl(null),
+      'identificationnumber': new FormControl(null)
+    });
+
+    this.assetRegistrationForm_Visuals = new FormGroup({
+      'frontImage': new FormControl(null),
+      'backImage': new FormControl(null),
+      'leftImage': new FormControl(null),
+      'rightImage': new FormControl(null),
+      'interiorImage': new FormControl(null),
+      'topImage': new FormControl(null)
+    });
+
+    this.assetRegistrationForm_Schedule = new FormGroup({
+      'statename': new FormControl(null),
+      'center': new FormControl(null),
+      'date': new FormControl(null),
+      'time': new FormControl(null),
+      'price': new FormControl(null)
+    })
   }
-  review(){
+  review(id: number){
+    this.serviceId = id;
+    this.ngxService.start();
+    this.assetsService.getSupplierServiceDetails(id).subscribe(res => {
+      console.log(res);
+      if(res.responseCode == "00"){
+        this.make = res.responseData.make;
+        this.model = res.responseData.model;
+        this.modelNumber = res.responseData.modelNumber;
+        this.serialNumber = res.responseData.serialNumber;
+        this.identificationNumber = res.responseData.identificationNumber;
+        this.frontViewImage = res.responseData.frontViewImage;
+        this.leftViewImage = res.responseData.leftViewImage;
+        this.rightViewImage = res.responseData.rightViewImage;
+        this.rearViewImage = res.responseData.rearViewImage;
+        this.topViewImage = res.responseData.topViewImage;
+        this.interiorViewImage = res.responseData.interiorViewImage;
+        this.type = res.responseData.type
+        this.vehicleIdentificationNumber = res.responseData.vehicleIdentificationNumber
+      }
+    })
     this.loaded = 'second'
   }
   backArrow(){
     this.loaded = 'first'
+  }
+
+  home(){
+    this.router.navigate(['/dashboard']);
   }
 
   addNewAsset(){
@@ -137,7 +213,7 @@ export class AssetsComponent implements OnInit {
     this.page = 'payment'
     this.modalService.open(content);
   }
-  walletregistration = new activatewallet('','','','','',20000,'','');
+  //walletregistration = new activatewallet('','','','','',20000,'','');
   key= environment['paystackKey'];
   amt=''
   eml:any
@@ -146,7 +222,7 @@ export class AssetsComponent implements OnInit {
 
   paymentInit() {
     console.log('Payment initialized');
-    this.walletregistration.amount = 20000
+    this.bookingPrice = 20000
   }
 
   paymentDone(ref: {message: string, reference: string, status: string }) {
@@ -158,6 +234,8 @@ export class AssetsComponent implements OnInit {
     this.paymentStatus = ref.status;
     if(ref.status == 'success'){
         // this.addNewAsset(ref.reference, 'paystack');
+        this.ngxService.start();
+        this.renewService(ref.reference, 'paystack');
     }
 
   }
@@ -167,5 +245,102 @@ export class AssetsComponent implements OnInit {
     this.page = 'payment'
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////
+////Flutterwave integration////////////////////
+publicKey = environment['flutterwaveKey'];
 
+customerDetails = {
+  name: localStorage.getItem('name'),
+  email:  localStorage.getItem('email')?.toString(),
+  phone_number: localStorage.getItem('phonenumber')
+};
+
+customizations = {
+  title: "Halobiz",
+  description: "Halobiz Payment",
+  logo: "https://flutterwave.com/images/logo-colored.svg",
+};
+
+meta = { counsumer_id: "7898", consumer_mac: "kjs9s8ss7dd" };
+
+paymentData: InlinePaymentOptions = {
+  public_key: this.publicKey,
+  tx_ref: this.generateReference(),
+  amount: this.bookingPrice,
+  currency: "NGN",
+  payment_options: "card,ussd",
+  redirect_url: "",
+  meta: this.meta,
+  customer: this.customerDetails,
+  customizations: this.customizations,
+  callback: this.makePaymentCallback,
+  onclose: this.closedPaymentModal,
+  callbackContext: this,
+
+};
+//Inject the flutterwave service
+makePayment() {
+  this.paymentData.amount = this.bookingPrice;
+  this.flutterwave.inlinePay(this.paymentData);
+}
+
+makePaymentCallback(response: PaymentSuccessResponse): void {
+  this.flutterresponse = response;
+  this.closedPaymentModal();
+}
+
+flutterresponse: PaymentSuccessResponse = new PaymentSuccessResponse();
+closedPaymentModal(): void {
+  this.flutterwave.closePaymentModal(3)
+
+  this.modalService.dismissAll();
+  // this.spinnerService.show();
+  this.ngxService.start();
+  console.log(this.title, this.flutterresponse);
+ // this.paymentStatus = response.status;
+  if(this.flutterresponse.status == 'completed'){
+    this.ngxService.start();
+      this.renewService((this.flutterresponse.transaction_id || '').toString(), 'flutter');
+  }
+}
+
+
+generateReference(){
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+renewService(payref: string, paygateway: string){
+  var post = new ServiceRenewal();
+  post.amount = this.bookingPrice;
+  post.paymentGateway = paygateway;
+  post.paymentReference = payref;
+  post.serviceId = this.serviceId;
+  post.supplierId = Number.parseInt(localStorage.getItem('pid') || '');
+  this.assetsService.postServiceRenewal(post).subscribe(res => {
+    console.log(res);
+
+     if(res.responseCode == "00"){
+      this.successfullyRenewed = true;
+      this.ngxService.stop();
+     }
+     else{
+      this.ngxService.stop();
+      alert('an error has occured')
+     }
+  }, (error:any) => {
+    this.ngxService.stop();
+      alert('an error has occured');
+  })
+
+  }
+
+  goToAddAsset(){
+    this.router.navigate(['/addasset'])
+  }
 }

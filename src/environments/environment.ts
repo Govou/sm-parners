@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
- // halobizBaseUrl: 'https://localhost:44353',
-  halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
+  halobizBaseUrl: 'https://localhost:44353',
+ // halobizBaseUrl: 'https://dev-online-backend.azurewebsites.net',
   defaultImageUrl: '../assets/images/CameraShutterColor.svg',
   paystackKey: 'pk_test_61980d19f89fe51c0bca4d5dbcf0e669be155447',
   flutterwaveKey: 'FLWPUBK_TEST-540620e287966341633afd1b6a789d9b-X',

@@ -23,7 +23,7 @@
           </div>
           <div class="text">
             <h1>Total Number of Assets Under Management</h1>
-            <p>{{dashboard.totalAssetUnderManagement}}</p>
+            <p>{{totalAssetUnderManagement}}</p>
           </div>
         </div>
         <div class="summ">
@@ -32,7 +32,7 @@
           </div>
           <div class="text">
             <h1>Assets Awaiting Review</h1>
-            <p>{{dashboard.assetAwaitingInspection}}</p>
+            <p>{{assetAwaitingInspection}}</p>
           </div>
         </div>
       </section>
@@ -48,7 +48,7 @@
             <img src="/assets/images/checkmark-circle.png" alt="" width="30%">
           </div>
           <div class="row3">
-            | {{dashboard.totalAssetsDueForReAccreditation}}
+            | {{totalAssetsDueForReAccreditation}}
           </div>
         </div>
         <div class="schedule">
@@ -60,7 +60,7 @@
             <img src="/assets/images/calendar.png" alt="" width="100%">
           </div>
           <div class="row3">
-            | {{dashboard.assetAddedInCurrentMonth}}
+            | {{assetAddedInCurrentMonth}}
           </div>
         </div>
         <div class="resources">
@@ -72,7 +72,7 @@
             <img src="/assets/images/Resources.png" alt="" width="100%">
           </div>
           <div class="row3">
-            | {{dashboard.distinctTypes}}
+            | {{distinctTypes}}
           </div>
         </div>
         <div class="mostTraveled">
@@ -84,17 +84,18 @@
             <img src="/assets/images/Untitled-1v 1.png" alt="" >
           </div>
           <div class="row3">
-            | {{dashboard.preferredServiceCentre}}
+            | {{preferredServiceCentre}}
           </div>
         </div>
       </div>
-        <div style="position: relative">
-          <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
-        </div>
 
       </section>
+      <div style="position: relative">
+        <ngx-ui-loader [fgsType]="SPINNER.threeStrings"></ngx-ui-loader>
+      </div>
 
     </div>
+
     </body>
   </main>
 

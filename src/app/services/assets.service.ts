@@ -6,6 +6,7 @@ import { AddAsset } from '../model/dtos/addasset';
 import { DashboardDetails } from '../model/dashboard';
 import { PostTransactions } from '../model/dtos/post-transactions';
 import { environment } from 'src/environments/environment';
+import { ServiceRenewal } from '../model/dtos/service-renewal';
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +118,24 @@ export class AssetsService {
                             return result
                           })
                         )
+
+  }
+
+  postServiceRenewal(request: ServiceRenewal){
+    return this.httpClient.post<any>(`${this.halobizBaseUrl}/api/SMSSupplier/ServiceRenewal`, request)
+                          .pipe(map(res => {
+                            let result = res;
+                            return result
+                          })
+                        )
+  }
+
+  getSupplierServiceDetails(id: any){
+    return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/GetSupplierServiceDetails?id=${id}`).pipe(map(res => {
+      let result = res;
+      return result
+    })
+    )
 
   }
 

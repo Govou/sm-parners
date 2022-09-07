@@ -22,16 +22,33 @@ export class DashboardComponent implements OnInit {
   dashboard!: DashboardDetails;
   supplierName: any
 
+  totalAssetUnderManagement: any;
+  assetAwaitingInspection: any;
+  totalAssetsDueForReAccreditation: any;
+  assetAddedInCurrentMonth: any;
+  distinctTypes: any;
+  preferredServiceCentre: any;
+
+
   SPINNER = SPINNER
 
   ngOnInit(): void {
-    this.model = this.calendar.getToday();
     this.ngxService.start();
+    this.model = this.calendar.getToday();
+
     const profileId =  this.authService.profileId// localStorage.getItem('profileId')?.toString();
     this.supplierName = this.authService.name;
     this.assetservice.getDashboardItems(profileId).subscribe(res => {
+
       this.ngxService.stop();
        this.dashboard = res;
+       this.assetAddedInCurrentMonth = res.assetAddedInCurrentMonth;
+       this.assetAwaitingInspection = res.assetAwaitingInspection;
+       this.totalAssetUnderManagement = res.totalAssetUnderManagement;
+       this.assetAddedInCurrentMonth = res.assetAddedInCurrentMonth;
+       this.distinctTypes = res.distinctTypes;
+       this.preferredServiceCentre = res.preferredServiceCentre;
+       this.totalAssetsDueForReAccreditation = res.totalAssetsDueForReAccreditation;
     })
   }
 
