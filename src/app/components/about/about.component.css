@@ -1,0 +1,36 @@
+main{
+  /* background-color: aquamarine; */
+  position: relative;
+  height: 90vh;
+  margin-left: 5rem;
+  overflow: scroll;
+}
+/* *{
+  font-family: Poppins;
+} */
+h1{
+  font-family: Poppins;
+  font-size: 200px;
+  font-weight: 600;
+  margin-right: 20px;
+}
+h2{
+  font-family: Poppins;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+body{
+  width:100%;
+  height:100%;
+  z-index: 0;
+  position: relative;
+  transition: all .5s ease;
+  /* background: #fff; */
+  background-color: #0f1b49;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}

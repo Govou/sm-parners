@@ -44,6 +44,7 @@ import { SortByPipe } from './pipes/sort.pipe';
 import { FlutterwaveModule } from 'flutterwave-angular-v3';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { OngoingTripComponent } from './components/ongoing-trip/ongoing-trip.component';
+import { AboutComponent } from './components/about/about.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { OngoingTripComponent } from './components/ongoing-trip/ongoing-trip.com
     ServicecentersComponent,
     SearchFilterPipe,
     SortByPipe,
-    SortParamsDirective
+    SortParamsDirective,
+    AboutComponent
 
   ],
   imports: [

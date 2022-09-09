@@ -119,8 +119,7 @@ export class AddassetComponent implements OnInit {
       'type': new FormControl(null, Validators.required),
       'modelnumber': new FormControl(null, Validators.required),
       'platenumber': new FormControl(null, [Validators.required, Validators.minLength(5)]),
-      'chasis': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-      'identificationnumber': new FormControl(null, Validators.required)
+      'chasis': new FormControl(null, [Validators.required, Validators.minLength(4)])
     });
 
     this.assetRegistrationForm_Visuals = new FormGroup({
@@ -346,19 +345,26 @@ export class AddassetComponent implements OnInit {
   }
 
   selectServiceCentres(service_desc: string){
+    this.ngxService.start();
     this.assetRegistrationForm_Schedule.patchValue({
       'price': ''
     });
-    let selectedCentre = this.serviceCentres.filter((x:ServiceCenterResponse)=>{ return x.service_desc == service_desc;})[0];
-    console.log(selectedCentre);
-    this.assetRegistrationForm_Schedule.patchValue({
-      'price': selectedCentre.amount,
-    });
-    if(selectedCentre.amount == "" || selectedCentre.amount == null){
-      this.bookingPrice = 0;
-    }else{
-      this.bookingPrice = Number.parseInt(selectedCentre.amount) ;
-    }
+    const asset_1: AssetRegistrationForm_1 = this.assetRegistrationForm.value;
+    var type = asset_1.type;
+    this.assetService.getSupplierBookingPrice(type).subscribe(res => {
+
+    this.ngxService.stop();
+      if(res.responseData == null){
+        this.bookingPrice = 0;
+      }else{
+        this.bookingPrice = res.responseData.bookingPrice ;
+        this.assetRegistrationForm_Schedule.patchValue({
+          'price': res.responseData.bookingPrice,
+        });
+      }
+    })
+
+
   }
 
 

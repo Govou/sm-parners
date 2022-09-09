@@ -41,7 +41,7 @@
                       <div>
                           <div class="assets">
                               <div [hidden]="completedReviewEmpty"
-                                  *ngFor="let mg of managedAssets.completedReview | searchfilter: filteredProperty: 'serviceName'"
+                                  *ngFor="let mg of managedAssets.completedReview | searchfilter: filteredProperty: 'plateNumber'"
                                   class="asset">
                                   <div class="lin1">
                                       <section>
@@ -69,7 +69,7 @@
                                         <p class="active">Active</p> <span class="renew" (click)="review(mg.id)">Renew</span>
                                     </section>
                                     <section [hidden]="mg.shouldRenew == true && mg.expired == true ? false : true">
-                                      <p class="inactive">Inactive</p> <span class="renew" (click)="review(mg.id)">Renew</span>
+                                      <p id="expired">Expired</p> <span class="renew" (click)="review(mg.id)">Renew</span>
                                   </section>
                                       <!-- <p><ngb-progressbar type="warning" [value]="100" [striped]="true" [animated]="true"><i>100%</i></ngb-progressbar></p> -->
                                       <p>Expires on <span class="color">{{mg.expiryDate}}</span></p>
@@ -96,7 +96,7 @@
                           <mat-icon>more_horiz</mat-icon>
                       </div>
                       <div class="assets">
-                          <div *ngFor="let mg of managedAssets.pendingReview | searchfilter: filteredProperty: 'serviceName'"
+                          <div *ngFor="let mg of managedAssets.pendingReview | searchfilter: filteredProperty: 'plateNumber'"
                               class="asset">
                               <div class="lin1">
                                   <section>
@@ -197,14 +197,9 @@
                                 <label for="modelnumber" class="form-label">Model Number</label>
                                 <input readonly value="{{modelNumber}}" type="text" class="form-control" id="modelnumber">
                             </div>
-                            <div class="col-12 left-padding">
-                                <label for="identificationnumber" class="form-label ">Identification Number</label>
-                                <input readonly value="{{vehicleIdentificationNumber}}" type="text" class="form-control"
-                                    id="identificationnumber">
-                            </div>
                             <div class="col-12 right-padding">
                                 <label for="year" class="form-label">Year of Make</label>
-                                <input readonly value="2000" type="text" class="form-control"
+                                <input readonly value="{{year}}" type="text" class="form-control"
                                     id="identificationnumber">
                             </div>
                             <div class="col-12 left-padding">
@@ -231,6 +226,7 @@
                             <div class="assetView right-padding">
                                 <p>Picture (Front)</p>
                                 <img [src]="frontViewImage" title="Vehicle Picture">
+
 
                             </div>
                             <div class="assetView left-padding">
@@ -267,23 +263,14 @@
                     <form class="col-8" #schedule="ngForm">
                         <div class="col-6">
                             <label for="state" class="form-label">State</label>
-                            <input readonly type="text"  class="form-control" id="date">
+                            <input readonly type="text" value="{{serviceCenterState}}"  class="form-control" id="date">
                         </div>
 
                         <div class="col-6">
                             <label for="center" class="form-label">Service Center</label>
-                            <input readonly type="text" class="form-control" id="date">
+                            <input readonly type="text" value="{{serviceCenterLocation}}" class="form-control" id="date">
                         </div>
-                        <div class="col-6" id="datetime">
-                            <div class="col-6">
-                                <label for="date" class="form-label">Date</label>
-                                <input readonly type="text" class="form-control" id="date">
-                            </div>
-                            <div class="col-5">
-                                <label for="time" class="form-label">Time</label>
-                                <input readonly type="text" class="form-control" id="time">
-                            </div>
-                        </div>
+
                         <div class="col-6" id="datetime">
                             <label for="inputEmail3" class="col-2 col-form-label">Price &#8358; </label>
                             <div class="col-10">

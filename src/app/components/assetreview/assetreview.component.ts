@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { ManagedAssets } from 'src/app/model/dtos/managedassets';
 import { ManagedAssetsService } from 'src/app/services/managed-assets.service';
@@ -17,7 +18,8 @@ export class AssetreviewComponent implements OnInit {
   filteredProperty:string = '';
   pendingReviewEmpty: boolean = false;
 
-  constructor(private managedAssetsService: ManagedAssetsService, private ngxService: NgxUiLoaderService) { }
+  constructor(private managedAssetsService: ManagedAssetsService,
+    private ngxService: NgxUiLoaderService, private router: Router) { }
   SPINNER = SPINNER
 
     // searchTerm:string= '';
@@ -44,4 +46,7 @@ export class AssetreviewComponent implements OnInit {
     })
   }
 
+  goToAddAsset(){
+    this.router.navigate(['/addasset'])
+  }
 }

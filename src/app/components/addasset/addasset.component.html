@@ -58,29 +58,29 @@
                                 <label for="modelnumber" class="form-label">Model Number</label>
                                 <input formControlName="modelnumber" type="text" class="form-control" id="modelnumber">
                             </div>
-                            <div class="col-12 left-padding">
+                            <!-- <div class="col-12 left-padding">
                                 <label for="identificationnumber" class="form-label ">Identification Number</label>
                                 <input formControlName="identificationnumber" type="text" class="form-control"
                                     id="identificationnumber">
-                            </div>
-                            <div class="col-12 right-padding">
+                            </div> -->
+                            <div class="col-12 left-padding">
                                 <label for="year" class="form-label">Year of Make</label>
                                 <select formControlName="year" id="year" name="type" class="form-select">
                                   <option *ngFor="let year of years" [value]="year">{{ year }}</option>
                               </select>
                             </div>
-                            <div class="col-12 left-padding">
+                            <div class="col-12 right-padding">
                                 <label for="type" class="form-label">Type</label>
                                 <select formControlName="type" name="type" class="form-select">
                                     <option [value]="ct" *ngFor="let ct of carTypes">{{ct}}</option>
 
                                 </select>
                             </div>
-                            <div class="col-12 right-padding">
+                            <div class="col-12 left-padding">
                                 <label for="platenumber" class="form-label">Plate Number</label>
                                 <input formControlName="platenumber" type="text" class="form-control" id="platenumber">
                             </div>
-                            <div class="col-12 left-padding">
+                            <div class="col-12 right-padding">
                                 <label for="chasis" class="form-label">Chasis Number</label>
                                 <input formControlName="chasis" type="text" class="form-control" id="chasis">
                             </div>

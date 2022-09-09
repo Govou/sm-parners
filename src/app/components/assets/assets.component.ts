@@ -41,9 +41,12 @@ export class AssetsComponent implements OnInit {
     topViewImage: any;
     interiorViewImage: any;
     type: any;
+    year: any;
+    serviceCenterLocation: any;
+    serviceCenterState: any;
     vehicleIdentificationNumber:any;
 
-    renewalAmount: number = 2000;
+    renewalAmount: number = 0;
 
   serviceCentres: ServiceCenterResponse[] = [];
   states: {stateName: string, stateId: number}[] = [];
@@ -182,6 +185,10 @@ export class AssetsComponent implements OnInit {
         this.interiorViewImage = res.responseData.interiorViewImage;
         this.type = res.responseData.type
         this.vehicleIdentificationNumber = res.responseData.vehicleIdentificationNumber
+        this.year = res.responseData.yearOfMake
+        this.serviceCenterLocation = res.responseData.serviceCenterLocation;
+        this.serviceCenterState = res.responseData.serviceCenterState
+        this.renewalAmount = res.responseData.unitCostPrice
       }
     })
     this.loaded = 'second'

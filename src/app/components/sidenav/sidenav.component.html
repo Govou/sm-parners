@@ -1,28 +1,37 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed':''">
-    <div class="logo-container">
-        <button class="logo" (click)="toggleCollapsed()">
-            <mat-icon aria-hidden="false">menu</mat-icon>
-        </button>
-        <div class="logo-text" *ngIf="collapsed">Menu</div>
-        <button class="btn-close btn-danger" *ngIf="collapsed" (click)="closeSidenav()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <hr>
-    <ul class="sidenav-nav">
-        <li class="sidenav-nav-item" *ngFor="let data of navData">
-            <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" #rla="routerLinkActive" [routerLinkActiveOptions]="{exact:true}">
-                <!-- <mat-icon class="sidenav-link-icon" aria-hidden="false">{{data.icon}}</mat-icon> -->
-                <mat-icon  fontSet="{{ rla.isActive ? '' : 'material-icons-outlined'}}" [ngClass]="{'active-sidenav-link-icon':rla.isActive}" class="sidenav-link-icon" aria-hidden="false">{{data.icon}}</mat-icon>
+  <div class="logo-container">
+      <button class="logo" (click)="toggleCollapsed()">
+          <mat-icon aria-hidden="false">menu</mat-icon>
+      </button>
+      <div class="logo-text" *ngIf="collapsed">Menu</div>
+      <button class="btn-close btn-danger" *ngIf="collapsed" (click)="closeSidenav()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <hr>
+  <ul class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of navData">
+          <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" #rla="routerLinkActive" [routerLinkActiveOptions]="{exact:true}">
+              <!-- <mat-icon class="sidenav-link-icon" aria-hidden="false">{{data.icon}}</mat-icon> -->
+              <mat-icon  fontSet="{{ rla.isActive ? '' : 'material-icons-outlined'}}" [ngClass]="{'active-sidenav-link-icon':rla.isActive}" class="sidenav-link-icon" aria-hidden="false">{{data.icon}}</mat-icon>
 
-                <!-- <mat-icon  aria-hidden="false" aria-label="Example home icon">{{data.icon}}</mat-icon> -->
+              <!-- <mat-icon  aria-hidden="false" aria-label="Example home icon">{{data.icon}}</mat-icon> -->
 
-                <!-- <i class="sidenav-link-icon" [class]="data.icon"></i> -->
-                <!-- <span  class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span> -->
-                <span [ngClass]="{'active-sidenav-link-text':rla.isActive}" class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+              <!-- <i class="sidenav-link-icon" [class]="data.icon"></i> -->
+              <!-- <span  class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span> -->
+              <span [ngClass]="{'active-sidenav-link-text':rla.isActive}" class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
 
-            </a>
-        </li>
-    </ul> 
-    
+          </a>
+      </li>
+  </ul>
+  <hr>
+  <ul class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of settingsabout">
+          <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active" #rla="routerLinkActive" [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon  fontSet="{{ rla.isActive ? '' : 'material-icons-outlined'}}" [ngClass]="{'active-sidenav-link-icon':rla.isActive}" class="sidenav-link-icon" aria-hidden="false">{{data.icon}}</mat-icon>
+              <span [ngClass]="{'active-sidenav-link-text':rla.isActive}" class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+
+          </a>
+      </li>
+  </ul>
+
 </div>
-
 

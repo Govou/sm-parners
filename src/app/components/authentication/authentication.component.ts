@@ -36,7 +36,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private displayService: DisplayService,
     private toasters: ToastrService,
     private ngxService: NgxUiLoaderService,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    private authService: AuthService
     ) { }
 
 
@@ -66,6 +67,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   error = null;
 
   ngOnInit(): void {
+    this.authService.signOut();
     this.page='home';
 
      this.utilitiesService.getStates().subscribe(res => {

@@ -12,6 +12,7 @@ import { AddassetComponent } from './components/addasset/addasset.component';
 import { AssetreviewComponent } from './components/assetreview/assetreview.component';
 import { ServicecentersComponent } from './components/servicecenters/servicecenters.component';
 import { AuthGuard } from './auth-guard.guard';
+import { AboutComponent } from './components/about/about.component';
 
 // const routes: Routes = [
 //   {path:'dashboard', component:DashboardComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path:'info', component:InformationComponent},
   {path:'header', component:HeaderComponent},
   {path:'addasset', component:AddassetComponent, canActivate: [AuthGuard]},
+  {path:'about', component:AboutComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: '/auth'},
 ];
 

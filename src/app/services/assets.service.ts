@@ -7,6 +7,7 @@ import { DashboardDetails } from '../model/dashboard';
 import { PostTransactions } from '../model/dtos/post-transactions';
 import { environment } from 'src/environments/environment';
 import { ServiceRenewal } from '../model/dtos/service-renewal';
+import { BookingPrice } from '../model/dtos/booking-price';
 
 @Injectable({
   providedIn: 'root'
@@ -132,6 +133,15 @@ export class AssetsService {
 
   getSupplierServiceDetails(id: any){
     return this.httpClient.get<any>(`${this.halobizBaseUrl}/api/SMSSupplier/GetSupplierServiceDetails?id=${id}`).pipe(map(res => {
+      let result = res;
+      return result
+    })
+    )
+
+  }
+
+  getSupplierBookingPrice(type: string){
+    return this.httpClient.get<BookingPrice>(`${this.halobizBaseUrl}/api/SMSSupplier/GetSupplierBookingPrice?type=${type}`).pipe(map(res => {
       let result = res;
       return result
     })
