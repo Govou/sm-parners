@@ -3,7 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { DisplayService } from 'src/app/services/display.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -13,25 +14,31 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   public isLoggedIn: boolean = false;
-  supplierName: any;
   profId: any;
-  constructor(private location:Location,private router:Router, private authService: AuthService, private displayService: DisplayService) {
+  constructor(private location:Location,private router:Router, private authService: AuthService, private toastr: ToastrService, private displayService: DisplayService) {
     this.subscription = displayService.newShow.subscribe(
       res => {
           this.isLoggedIn = res;
+        }, (err: any) => {
+          this.toastr.error('System error', 'A system error has occured', {
+            timeOut: 3000,
+          });
         })
       }
   item:any;
   userName:any;
+
+  get supplierName(): string {
+    return this.authService.profileName;
+}
+
+get profileId(): string {
+  return this.authService.profileId;
+}
+
   ngOnInit(): void {
     this.item = 'yes'
-    const profileId =  this.authService.profileId// localStorage.getItem('profileId')?.toString();
-    this.profId = localStorage.getItem('pid')?.toString()  // this.authService.profileId;
-    this.supplierName = localStorage.getItem('pname')?.toString() //this.authService.name;
-    console.log(this.supplierName)
-
-    console.log(this.isLoggedIn)
-    // if(this.location.path() != "/authentication")this.item = 'show';
+    this.profId =  this.profileId;
   }
 
 

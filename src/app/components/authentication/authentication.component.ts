@@ -37,6 +37,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private toasters: ToastrService,
     private ngxService: NgxUiLoaderService,
     private tokenService: TokenStorageService,
+    private toastr: ToastrService,
     private authService: AuthService
     ) { }
 
@@ -76,6 +77,10 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     this.utilitiesService.getBusinessTypes().subscribe(res => {
       this.businessTypes = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     });
 
     this.individualRegistrationForm = new FormGroup({
@@ -260,6 +265,10 @@ fetchLGAs(state: string){
   let stateId = Number.parseInt(state);
   this.utilitiesService.getLGAs(stateId).subscribe(res =>{
     this.lgas = res
+  }, (err: any) => {
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
   })
 }
 
@@ -300,10 +309,22 @@ onSubmitIndividualAccoutCreation(){
 
   this.signupService.individualSignupService(signUp).subscribe(res => {
     this.email = indDetail.email;
-    this.ngxService.stop();
+
     if(res == "success"){
+      this.ngxService.stop();
       this.page = 'otp';
     }
+    else{
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
+    }
+  }, (err: any) => {
+    this.ngxService.stop();
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
   });
 
   this.resetForm();
@@ -346,11 +367,23 @@ onSubmitBusinessAccoutCreation(){
   }
 
   this.signupService.businessSignupService(signUp).subscribe(res => {
-    this.ngxService.stop();
+
     this.email = busDetail.email;
     if(res == "success"){
+      this.ngxService.stop();
       this.page = 'otp';
     }
+    else{
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
+    }
+  }, (err: any) => {
+    this.ngxService.stop();
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
   });
 
  this.resetForm();
@@ -362,10 +395,22 @@ onSubmitVerifyCode(){
    const otpStr = otp.txt1 + otp.txt2 + otp.txt3 + otp.txt4 + otp.txt5 + otp.txt6;
 
    this.signupService.verifyCode({email: this.email, code: otpStr}).subscribe(res => {
-    this.ngxService.stop();
+
     if(res == "success"){
+      this.ngxService.stop();
       this.page = 'successful';
     }
+    else{
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
+    }
+  }, (err: any) => {
+    this.ngxService.stop();
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
   });
   this.resetForm();
 }
@@ -376,9 +421,10 @@ onSubmitLogin(){
   const pass: {password: string} = this.signInFormPassword.value;
   const credentials = {email: ema.email, password: pass.password};
   this.signupService.signIn(credentials).subscribe(res => {
-    this.ngxService.stop();
+
    if(res.responseCode == "00"){
      console.log(res);
+     this.ngxService.stop();
    // this.tokenService.generateToken();
      this.displayService.changeShowSignIns(true);
     this.signInFailed = false;
@@ -386,10 +432,17 @@ onSubmitLogin(){
    }
    else{
     this.signInFailed = true;
+    this.ngxService.stop();
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
    }
   }, error => {
 
     this.ngxService.stop();
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
     this.signInFailed = true;
     console.log(error)
     this.error = error;

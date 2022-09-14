@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { ServiceCenterResponse } from 'src/app/model/dtos/service-centre-response';
 import { AssetsService } from 'src/app/services/assets.service';
@@ -13,13 +14,17 @@ export class ServicecentersComponent implements OnInit {
 
   states: any;
   serviceCentres: ServiceCenterResponse[] = [];
-  constructor(private assetService: AssetsService, private utilService: UtilitiesService, private ngxService: NgxUiLoaderService ) { }
+  constructor(private assetService: AssetsService, private utilService: UtilitiesService, private ngxService: NgxUiLoaderService, private toastr: ToastrService) { }
   SPINNER = SPINNER
  state: string = "";
   ngOnInit(): void {
     console.log(this.state)
     this.utilService.getStates().subscribe(res => {
       this.states = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     }
     )
    // this.assetService.getServiceCentres()
@@ -36,6 +41,18 @@ export class ServicecentersComponent implements OnInit {
           (sc: ServiceCenterResponse, i: number, arr: ServiceCenterResponse[]) => arr.findIndex(t => t.centre_id === sc.centre_id) === i
         );
       }
+      else
+      {
+        this.ngxService.stop();
+        this.toastr.error('System error', 'A system error has occured', {
+          timeOut: 3000,
+        });
+      }
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
   }
 }

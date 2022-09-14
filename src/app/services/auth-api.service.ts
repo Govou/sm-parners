@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthAPIResponse } from '../model/dtos/auth-api-response';
@@ -9,7 +10,7 @@ import { AuthAPIResponse } from '../model/dtos/auth-api-response';
 })
 export class AuthApiService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
   halobizBaseUrl = environment['halobizBaseUrl'];
   halobizUsername = environment['halobizUsername'];
   halobizPassword = environment['halobizPassword'];
@@ -26,6 +27,11 @@ export class AuthApiService {
                              if(result.responseCode == "00"){
                               this.refreshToken = res.responseData.refreshToken;
                               this.token = res.responseData.token;
+                             }
+                             else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
                              }
                               console.log(result);
                               return result;
@@ -44,6 +50,11 @@ export class AuthApiService {
                             if(result.responseCode == "00"){
                              this.refreshToken = res.responseData.refreshToken;
                              this.token = res.responseData.token;
+                            }
+                            else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
                             }
                              console.log(result);
                              return result;

@@ -5,13 +5,14 @@ import { map } from 'rxjs/operators';
 import { ServiceCenterResponse } from '../model/dtos/service-centre-response';
 import { ServiceAddition } from '../model/service-addition';
 import { strictEqual } from 'assert';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilitiesService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
   halobizBaseUrl = environment['halobizBaseUrl']
 
@@ -25,6 +26,11 @@ export class UtilitiesService {
                                 {
                                   states.push({...res.responseData[key], id: key});
                                 }
+                              }
+                              else{
+                                this.toastr.error('System error', 'A system error has occured', {
+                                  timeOut: 3000,
+                                });
                               }
                               return states;
                             })
@@ -43,6 +49,11 @@ export class UtilitiesService {
                                   lgas.push({...res.responseData[key], id: key});
                                 }
                               }
+                              else{
+                                this.toastr.error('System error', 'A system error has occured', {
+                                  timeOut: 3000,
+                                });
+                              }
                               return lgas;
                             })
                           )
@@ -60,6 +71,11 @@ export class UtilitiesService {
                                 {
                                   businessTypes.push({...res.responseData[key], id: key});
                                 }
+                              }
+                              else{
+                                this.toastr.error('System error', 'A system error has occured', {
+                                  timeOut: 3000,
+                                });
                               }
                               return businessTypes;
                             })

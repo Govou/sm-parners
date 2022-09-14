@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { ManagedAssets } from 'src/app/model/dtos/managedassets';
+import { AuthService } from 'src/app/services/auth.service';
 import { ManagedAssetsService } from 'src/app/services/managed-assets.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class AssetreviewComponent implements OnInit {
   filteredProperty:string = '';
   pendingReviewEmpty: boolean = false;
 
-  constructor(private managedAssetsService: ManagedAssetsService,
+  constructor(private managedAssetsService: ManagedAssetsService, private authService: AuthService,
     private ngxService: NgxUiLoaderService, private router: Router) { }
   SPINNER = SPINNER
 
@@ -32,9 +33,12 @@ export class AssetreviewComponent implements OnInit {
     // this.column=param.col;
     // this.type=param.typ;
     // }
+  get profileId(): string{
+    return this.authService.profileId
+  }
 
-  ngOnInit(): void {
-    const profileId = Number.parseInt(localStorage.getItem('pid') || '');
+    ngOnInit(): void {
+    const profileId = Number.parseInt(this.profileId || '');
     this.ngxService.start();
     this.managedAssetsService.getManagedAssets(profileId).subscribe(res => {
       this.managedAssets = res;

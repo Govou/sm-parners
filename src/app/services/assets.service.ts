@@ -8,13 +8,14 @@ import { PostTransactions } from '../model/dtos/post-transactions';
 import { environment } from 'src/environments/environment';
 import { ServiceRenewal } from '../model/dtos/service-renewal';
 import { BookingPrice } from '../model/dtos/booking-price';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssetsService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
   halobizBaseUrl = environment['halobizBaseUrl']
 
@@ -40,6 +41,11 @@ export class AssetsService {
                                   serviceCentres.push({...res.responseData[key], sid: key});
                                 }
                               }
+                              else{
+                                this.toastr.error('System error', 'A system error has occured', {
+                                  timeOut: 3000,
+                                });
+                              }
                               return serviceCentres;
                             })
                           )
@@ -58,6 +64,11 @@ export class AssetsService {
                                 makes.push({...res.responseData[key], id: key});
                               }
                             }
+                            else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
+                            }
                             return makes;
                           })
                         )
@@ -74,6 +85,11 @@ export class AssetsService {
                               {
                                 models.push({...res.responseData[key], id: key});
                               }
+                            }
+                            else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
                             }
                             return models;
                           })
@@ -92,6 +108,11 @@ export class AssetsService {
                                 categories.push({...res.responseData[key], id: key});
                               }
                             }
+                            else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
+                            }
                             return categories;
                           })
                         )
@@ -105,6 +126,11 @@ export class AssetsService {
       if(res.responseCode =="00")
       {
          dashboard = res.responseData;
+      }
+      else{
+        this.toastr.error('System error', 'A system error has occured', {
+          timeOut: 3000,
+        });
       }
       return dashboard;
     })

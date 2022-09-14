@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BusinessSignUp } from '../model/business-signup';
@@ -21,6 +21,8 @@ export class AuthService {
   email: string = '';
   loggedIn: boolean = false;
   halobizBaseUrl = environment['halobizBaseUrl'];
+
+  profileName: string = '';
 
   public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -94,10 +96,7 @@ export class AuthService {
                               this.token = res.responseData.token;
                               this.email = res.responseData.userProfile.email;
                               this.profileId = res.responseData.userProfile.id;
-                              localStorage.setItem('pid', this.profileId)
-                              localStorage.setItem('pname', res.responseData.userProfile.name)
-                              localStorage.setItem('email', res.responseData.userProfile.email)
-                             // localStorage.setItem('pid', this.profileId)
+                              this.profileName = res.responseData.userProfile.name;
                               this.name = res.responseData.userProfile.name;
                               this.loggedIn = true
                             }

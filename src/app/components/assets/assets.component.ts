@@ -13,6 +13,8 @@ import { Payment } from 'src/app/model/payment';
 import { Flutterwave, InlinePaymentOptions, PaymentSuccessResponse } from 'flutterwave-angular-v3';
 import { AssetsService } from 'src/app/services/assets.service';
 import { ServiceRenewal } from 'src/app/model/dtos/service-renewal';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
@@ -24,9 +26,11 @@ export class AssetsComponent implements OnInit {
   constructor(config: NgbAccordionConfig,
     private modalService: NgbModal,
     private router: Router,
+    private authService: AuthService,
     private managedAssetsService: ManagedAssetsService,
     private assetsService: AssetsService,
     private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
     private flutterwave: Flutterwave) { config.type = 'dark' }
 
     make: any;
@@ -116,15 +120,17 @@ export class AssetsComponent implements OnInit {
   page: any;
   loaded:any
 
+  get profileId(): string{
+    return this.authService.profileId;
+  }
+
   ngOnInit(): void {
     this.loaded = 'first';
     this.page = 'asset';
-    console.log('vv', this.gateway)
-    const profileId = Number.parseInt(localStorage.getItem('pid') || '');
+    const profileId = Number.parseInt(this.profileId || '');
     this.ngxService.start();
     this.managedAssetsService.getManagedAssets(profileId).subscribe(res => {
       this.ngxService.stop();
-      console.log('manag', res);
       this.managedAssets = res;
       if(this.managedAssets.completedReview.length == 0){
         this.completedReviewEmpty = true;
@@ -135,6 +141,11 @@ export class AssetsComponent implements OnInit {
       if(this.completedReviewEmpty == true && this.pendingReviewEmpty == true){
         this.allEmpty = true;
       }
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
     this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
 
@@ -190,6 +201,17 @@ export class AssetsComponent implements OnInit {
         this.serviceCenterState = res.responseData.serviceCenterState
         this.renewalAmount = res.responseData.unitCostPrice
       }
+      else{
+        this.ngxService.stop();
+        this.toastr.error('System error', 'A system error has occured', {
+          timeOut: 3000,
+        });
+      }
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
     this.loaded = 'second'
   }
@@ -257,8 +279,8 @@ export class AssetsComponent implements OnInit {
 publicKey = environment['flutterwaveKey'];
 
 customerDetails = {
-  name: localStorage.getItem('name'),
-  email:  localStorage.getItem('email')?.toString(),
+  name:  this.profileName,
+  email:  this.profileEmail,
   phone_number: localStorage.getItem('phonenumber')
 };
 
@@ -328,7 +350,7 @@ renewService(payref: string, paygateway: string){
   post.paymentGateway = paygateway;
   post.paymentReference = payref;
   post.serviceId = this.serviceId;
-  post.supplierId = Number.parseInt(localStorage.getItem('pid') || '');
+  post.supplierId = Number.parseInt(this.profileId || '');
   this.assetsService.postServiceRenewal(post).subscribe(res => {
     console.log(res);
 
@@ -338,14 +360,27 @@ renewService(payref: string, paygateway: string){
      }
      else{
       this.ngxService.stop();
-      alert('an error has occured')
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
      }
   }, (error:any) => {
     this.ngxService.stop();
-      alert('an error has occured');
+    this.toastr.error('System error', 'A system error has occured', {
+      timeOut: 3000,
+    });
   })
 
   }
+
+  get profileName(): string {
+    return this.authService.profileName;
+  }
+
+  get profileEmail(): string {
+    return this.authService.email;
+  }
+
 
   goToAddAsset(){
     this.router.navigate(['/addasset'])

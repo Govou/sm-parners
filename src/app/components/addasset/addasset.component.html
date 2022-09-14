@@ -203,11 +203,11 @@
                         <div class="col-6" id="datetime">
                             <div class="col-6">
                                 <label for="date" class="form-label">Date</label>
-                                <input type="date" formControlName="date" class="form-control" id="date">
+                                <input type="date" min="12/08/2022"  class="form-control">
                             </div>
                             <div class="col-5">
                                 <label for="time" class="form-label">Time</label>
-                                <input formControlName="time" type="time" class="form-control" id="time">
+                                <input formControlName="time" min="{{minTime}}" max="{{maxTime}}" type="time" class="form-control" id="time">
                             </div>
                         </div>
                         <div class="col-6" id="datetime">

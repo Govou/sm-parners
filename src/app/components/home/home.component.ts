@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -11,7 +12,7 @@ import { NgToastService } from 'ng-angular-popup';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router,private toast: NgToastService) { }
+  constructor(private router: Router,private toast: NgToastService, private toastr: ToastrService) { }
 
   showSuccess(message: any) {
     this.toast.success({ detail: "SUCCESS", summary: message, duration: 5000 });
@@ -43,7 +44,9 @@ export class HomeComponent implements OnInit {
   }
 showMessage(){
   this.showInfo('page not available'),
-  alert('page not available')
+  this.toastr.error('System error', 'A system error has occured', {
+    timeOut: 3000,
+  });
   console.log('show alert')
 }
 

@@ -17,6 +17,7 @@ import { PostTransactions } from 'src/app/model/dtos/post-transactions';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { Flutterwave, InlinePaymentOptions, PaymentSuccessResponse } from 'flutterwave-angular-v3';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class AddassetComponent implements OnInit {
     private storage: AngularFireStorage,
     private authService: AuthService,
     private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
     private flutterwave: Flutterwave
     ) {  }
   SPINNER = SPINNER
@@ -47,6 +49,11 @@ export class AddassetComponent implements OnInit {
   years: number[] = [];
 
   successfullyAdded: boolean = false;
+
+  minDate: any;
+  maxDate: any;
+  minTime: any;
+  maxTime: any;
 
   frontimageUrl: any;
   backimageUrl: any;
@@ -89,16 +96,34 @@ export class AddassetComponent implements OnInit {
   ngOnInit(): void {
     this.page = 'asset'
 
+    var date = new Date();
+    this.minDate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+    console.log('mindate', this.minDate)
+    this.minTime = '9:00'
+    this.maxTime = '5:00';
+
     this.utilitiesService.getStates().subscribe(res => {
       this.states = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     });
 
     this.assetService.getVehicleMakes().subscribe(res => {
       this.makes = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     });
 
     this.assetService.getSupplierCategories().subscribe(res => {
       this.categories = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
 
     this.selectedYear = new Date().getFullYear();
@@ -319,6 +344,10 @@ export class AddassetComponent implements OnInit {
         if (url) {
          // console.log(url);
         }
+      }, (err: any) => {
+        this.toastr.error('System error', 'A system error has occured', {
+          timeOut: 3000,
+        });
       });
       //console.log(imageUrl);
   }
@@ -333,6 +362,11 @@ export class AddassetComponent implements OnInit {
     this.assetService.getServiceCentres(state).subscribe(res => {
       this.ngxService.stop();
       this.serviceCentres = res;
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     });
   }
 
@@ -341,6 +375,10 @@ export class AddassetComponent implements OnInit {
     let makeId = Number.parseInt(make);
     this.assetService.getVehicleModels(makeId).subscribe(res => {
       this.models = res;
+    }, (err: any) => {
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     });
   }
 
@@ -362,9 +400,12 @@ export class AddassetComponent implements OnInit {
           'price': res.responseData.bookingPrice,
         });
       }
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
-
-
   }
 
 
@@ -378,7 +419,9 @@ export class AddassetComponent implements OnInit {
     const serviceCentre = this.serviceCentres.filter((x:ServiceCenterResponse) => x.service_desc == centreDesc)[0];
     return serviceCentre;
   }
-
+  get profileId(): string {
+    return this.authService.profileId;
+  }
   addNewAsset(payref: string, paygateway: string){
     // this.leftImageUpload();
     // this.rightImageUpload();
@@ -392,7 +435,8 @@ export class AddassetComponent implements OnInit {
     this.bookingPrice = Number.parseInt(asset_3.price);
     const make = this.getMakeName();
     const serviceCentre = this.getServiceCentre(asset_3.center);
-    const profileId: any  = Number.parseInt(localStorage.getItem('pid') || '') //this.authService.profileId;
+
+    const profileId: any  = Number.parseInt(this.profileId || '') //this.authService.profileId;
     var asset: AddAsset = {
       serviceName: make + ' ' + asset_1.model,
       make: make,
@@ -460,11 +504,25 @@ export class AddassetComponent implements OnInit {
 
              console.log('stop')
            // this.router.navigate(['/dashboard']);
-        }, error => {
-          this.error = error.message;
+        }, (err: any) => {
+            this.ngxService.stop();
+            this.toastr.error('System error', 'A system error has occured', {
+              timeOut: 3000,
+            });
         })
 
         }
+        else{
+          this.ngxService.stop();
+          this.toastr.error('System error', 'A system error has occured', {
+            timeOut: 3000,
+          });
+        }
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
   }
 
@@ -510,28 +568,22 @@ export class AddassetComponent implements OnInit {
    this.assetRegistrationForm_Schedule.reset(this.assetRegistrationForm_Schedule.value);
   }
 
-  // postTransaction(transaction: PostTransactions){
-  //   console.log(transaction);
-  //   this.assetService.postTransaction(transaction).subscribe(res => {
-  //     this.ngxService.stop();
-  //     if(res.responseCode == "00"){
-  //       return "success";
-  //     }
-  //     else
-  //     {
-  //       return "failed";
-  //     }
-  //   })
-  // }
 
+  get profileName(): string {
+    return this.authService.profileName;
+  }
+
+  get profileEmail(): string {
+    return this.authService.email;
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////Flutterwave integration////////////////////
 publicKey = environment['flutterwaveKey'];
 
   customerDetails = {
-    name: localStorage.getItem('name'),
-    email: localStorage.getItem('email'),
+    name: this.profileName,
+    email: this.profileEmail,
     phone_number: localStorage.getItem('phonenumber')
   };
 

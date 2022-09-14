@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 import { DashboardDetails } from 'src/app/model/dashboard';
 import { AssetsService } from 'src/app/services/assets.service';
@@ -16,7 +17,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private calendar: NgbCalendar, private assetservice: AssetsService, private authService: AuthService, private ngxService: NgxUiLoaderService) { }
+  constructor(private calendar: NgbCalendar, private assetservice: AssetsService, private authService: AuthService,
+    private toastr: ToastrService, private ngxService: NgxUiLoaderService) { }
   model: NgbDateStruct | undefined;
 
   dashboard!: DashboardDetails;
@@ -49,6 +51,11 @@ export class DashboardComponent implements OnInit {
        this.distinctTypes = res.distinctTypes;
        this.preferredServiceCentre = res.preferredServiceCentre;
        this.totalAssetsDueForReAccreditation = res.totalAssetsDueForReAccreditation;
+    }, (err: any) => {
+      this.ngxService.stop();
+      this.toastr.error('System error', 'A system error has occured', {
+        timeOut: 3000,
+      });
     })
   }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ManagedAssets } from '../model/dtos/managedassets';
@@ -9,7 +10,7 @@ import { ManagedAssets } from '../model/dtos/managedassets';
 })
 export class ManagedAssetsService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
   halobizBaseUrl = environment['halobizBaseUrl']
 
   getManagedAssets(profileId: number){
@@ -19,7 +20,11 @@ export class ManagedAssetsService {
                             {
                                return res.responseData;
                             }
-
+                            else{
+                              this.toastr.error('System error', 'A system error has occured', {
+                                timeOut: 3000,
+                              });
+                            }
                           })
                         )
 
